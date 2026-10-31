@@ -1,0 +1,357 @@
+{
+  "slug": "small-habits-big-changes",
+  "title": "Small Habits, Big Changes",
+  "titleUz": "Kichik odatlar, katta o‘zgarishlar",
+  "author": "Bookly (namuna dars)",
+  "topic": "self-development",
+  "durationMin": 4,
+  "level": "intermediate",
+  "languages": [
+    "en",
+    "uz"
+  ],
+  "isFree": true,
+  "isPublished": true,
+  "coverColor": "#0B5D4B",
+  "tagline": "Har kuni takrorlangan kichik qadamlar qanday qilib katta natija beradi.",
+  "intro": "Bu qisqa darsda odatlar qanday shakllanishini va ularni kundalik hayotda qanday qilib oson boshlashni bilib olasiz. Inglizcha audioni tinglang, o‘zbekcha tarjima esa ma’noni tushunishga yordam beradi.",
+  "learnPoints": [
+    "Nega kichik harakatlar vaqt o‘tib katta natija beradi",
+    "Yangi odatni qanday qilib juda oson boshlash mumkin",
+    "Muhitingiz odatlaringizga qanday ta’sir qiladi",
+    "Bir kun o‘tkazib yuborsangiz nima qilish kerak"
+  ],
+  "attribution": "Bookly jamoasi tomonidan yozilgan original namuna dars. Muayyan kitobning qisqacha mazmuni emas.",
+  "sortOrder": 1,
+  "content": {
+    "sections": [
+      {
+        "id": "s1",
+        "heading": {
+          "en": "Why small habits matter",
+          "uz": "Nega kichik odatlar muhim"
+        },
+        "sentences": [
+          {
+            "id": "s1-1",
+            "en": "Small habits lead to big changes.",
+            "uz": "Kichik odatlar katta o‘zgarishlarga olib keladi."
+          },
+          {
+            "id": "s1-2",
+            "en": "A habit is something you do so often that you hardly think about it.",
+            "uz": "Odat — shunchalik ko‘p takrorlaydigan ishingizki, u haqida deyarli o‘ylamaysiz."
+          },
+          {
+            "id": "s1-3",
+            "en": "Brushing your teeth, checking your phone and the way you start your homework are all habits.",
+            "uz": "Tish yuvish, telefonni tekshirish va uy vazifasini qanday boshlashingiz — bularning barchasi odatlar."
+          },
+          {
+            "id": "s1-4",
+            "en": "One small action does not look important on a single day.",
+            "uz": "Bitta kichik harakat bir kunning o‘zida muhim bo‘lib ko‘rinmaydi."
+          },
+          {
+            "id": "s1-5",
+            "en": "But when you repeat it every day, the results add up.",
+            "uz": "Ammo uni har kuni takrorlasangiz, natijalar yig‘ilib boradi."
+          },
+          {
+            "id": "s1-6",
+            "en": "Reading ten pages a day becomes more than fifteen books in a year.",
+            "uz": "Kuniga o‘n bet o‘qish bir yilda o‘n beshtadan ortiq kitobga aylanadi."
+          },
+          {
+            "id": "s1-7",
+            "en": "Learning five new English words a day becomes more than eighteen hundred words a year.",
+            "uz": "Kuniga beshta yangi inglizcha so‘z o‘rganish bir yilda bir ming sakkiz yuzdan ortiq so‘zga aylanadi."
+          },
+          {
+            "id": "s1-8",
+            "en": "Progress is often invisible at first, and that is why many people give up too early.",
+            "uz": "Boshida o‘sish ko‘pincha ko‘rinmaydi, shuning uchun ko‘p odamlar juda erta taslim bo‘ladi."
+          }
+        ]
+      },
+      {
+        "id": "s2",
+        "heading": {
+          "en": "Start smaller than you think",
+          "uz": "O‘ylaganingizdan ham kichikroq boshlang"
+        },
+        "sentences": [
+          {
+            "id": "s2-1",
+            "en": "Most people try to change too much at once.",
+            "uz": "Ko‘pchilik bir vaqtning o‘zida juda ko‘p narsani o‘zgartirishga urinadi."
+          },
+          {
+            "id": "s2-2",
+            "en": "They promise to study for three hours every evening, and after a week they stop.",
+            "uz": "Ular har kuni kechqurun uch soat o‘qishga va’da berishadi, bir haftadan keyin esa to‘xtab qolishadi."
+          },
+          {
+            "id": "s2-3",
+            "en": "A better plan is to make the new habit so easy that you cannot say no.",
+            "uz": "Yaxshiroq reja — yangi odatni shunchalik osonlashtiringki, unga «yo‘q» deya olmang."
+          },
+          {
+            "id": "s2-4",
+            "en": "Instead of saying “I will study for three hours”, say “I will open my notebook and solve one problem”.",
+            "uz": "«Uch soat o‘qiyman» deyish o‘rniga, «Daftarimni ochib, bitta masala yechaman» deng."
+          },
+          {
+            "id": "s2-5",
+            "en": "Starting is the hardest part, and once you start, it is easier to continue.",
+            "uz": "Eng qiyini — boshlash; boshlaganingizdan keyin davom ettirish osonroq bo‘ladi."
+          },
+          {
+            "id": "s2-6",
+            "en": "First build the habit of showing up, and then slowly increase how much you do.",
+            "uz": "Avval har kuni ishga kirishish odatini shakllantiring, keyin esa uning hajmini asta-sekin oshiring."
+          }
+        ]
+      },
+      {
+        "id": "s3",
+        "heading": {
+          "en": "Use your environment",
+          "uz": "Muhitingizdan foydalaning"
+        },
+        "sentences": [
+          {
+            "id": "s3-1",
+            "en": "Your environment shapes your behaviour more than your motivation does.",
+            "uz": "Muhitingiz xatti-harakatlaringizga motivatsiyadan ko‘ra kuchliroq ta’sir qiladi."
+          },
+          {
+            "id": "s3-2",
+            "en": "If your phone is next to you while you study, you will probably check it.",
+            "uz": "Agar o‘qiyotganingizda telefoningiz yoningizda tursa, ehtimol, uni tekshirib qo‘yasiz."
+          },
+          {
+            "id": "s3-3",
+            "en": "If your English book is on your desk, you are more likely to open it.",
+            "uz": "Agar ingliz tili kitobingiz stolingizda tursa, uni ochish ehtimoli ortadi."
+          },
+          {
+            "id": "s3-4",
+            "en": "So put good habits where you can see them and bad habits where you cannot.",
+            "uz": "Shuning uchun yaxshi odatlarni ko‘z oldingizga, yomon odatlarni esa ko‘zdan uzoqroqqa qo‘ying."
+          },
+          {
+            "id": "s3-5",
+            "en": "You can also connect a new habit to something you already do.",
+            "uz": "Yangi odatni allaqachon qilib yurgan ishingizga bog‘lashingiz ham mumkin."
+          },
+          {
+            "id": "s3-6",
+            "en": "For example: after I have breakfast, I will listen to one English lesson.",
+            "uz": "Masalan: nonushta qilganimdan keyin bitta inglizcha dars tinglayman."
+          }
+        ]
+      },
+      {
+        "id": "s4",
+        "heading": {
+          "en": "Think about who you are becoming",
+          "uz": "Kim bo‘layotganingiz haqida o‘ylang"
+        },
+        "sentences": [
+          {
+            "id": "s4-1",
+            "en": "Goals show where you want to go, but habits decide where you actually arrive.",
+            "uz": "Maqsadlar qayerga bormoqchi ekaningizni ko‘rsatadi, ammo aslida qayerga yetib borishingizni odatlar hal qiladi."
+          },
+          {
+            "id": "s4-2",
+            "en": "A useful question is not only “What do I want to achieve?” but also “What kind of person do I want to be?”",
+            "uz": "Foydali savol faqat «Nimaga erishmoqchiman?» emas, balki «Qanday inson bo‘lishni xohlayman?» hamdir."
+          },
+          {
+            "id": "s4-3",
+            "en": "If you see yourself as a reader, reading a few pages feels natural.",
+            "uz": "Agar o‘zingizni kitobxon deb bilsangiz, bir necha bet o‘qish tabiiy tuyuladi."
+          },
+          {
+            "id": "s4-4",
+            "en": "Every small action is proof to yourself that you can change.",
+            "uz": "Har bir kichik harakat o‘zgara olishingizni o‘zingizga isbotlaydi."
+          }
+        ]
+      },
+      {
+        "id": "s5",
+        "heading": {
+          "en": "When you miss a day",
+          "uz": "Bir kunni o‘tkazib yuborsangiz"
+        },
+        "sentences": [
+          {
+            "id": "s5-1",
+            "en": "Nobody is perfect, and some days you will miss your habit.",
+            "uz": "Hech kim mukammal emas, ba’zi kunlari odatingizni o‘tkazib yuborasiz."
+          },
+          {
+            "id": "s5-2",
+            "en": "One missed day is a small break; a long pause is what really breaks a habit.",
+            "uz": "Bir kun o‘tkazib yuborish — kichik tanaffus; odatni haqiqatan buzadigan narsa esa uzoq to‘xtab qolishdir."
+          },
+          {
+            "id": "s5-3",
+            "en": "On difficult days, do a smaller version instead of doing nothing.",
+            "uz": "Qiyin kunlarda hech narsa qilmaslik o‘rniga, odatning kichikroq ko‘rinishini bajaring."
+          },
+          {
+            "id": "s5-4",
+            "en": "Read one page, write one sentence or listen for two minutes.",
+            "uz": "Bir bet o‘qing, bitta gap yozing yoki ikki daqiqa tinglang."
+          },
+          {
+            "id": "s5-5",
+            "en": "Keep a simple record, like a tick in a calendar, so you can see your progress.",
+            "uz": "Oddiy qayd yuriting — masalan, taqvimga belgi qo‘ying — shunda o‘sishingizni ko‘rib turasiz."
+          },
+          {
+            "id": "s5-6",
+            "en": "Small steps, repeated with patience, will take you further than you expect.",
+            "uz": "Sabr bilan takrorlangan kichik qadamlar sizni kutganingizdan ham uzoqroqqa olib boradi."
+          }
+        ]
+      }
+    ],
+    "vocab": [
+      {
+        "term": "habit",
+        "forms": [
+          "habits"
+        ],
+        "uz": "odat",
+        "definition": "something you do regularly, often without thinking",
+        "example": "Reading before bed is a good habit.",
+        "exampleUz": "Uxlashdan oldin kitob o‘qish — yaxshi odat."
+      },
+      {
+        "term": "repeat",
+        "forms": [
+          "repeated",
+          "repeats",
+          "repeating"
+        ],
+        "uz": "takrorlamoq",
+        "definition": "to do or say something again",
+        "example": "Repeat the new word three times.",
+        "exampleUz": "Yangi so‘zni uch marta takrorlang."
+      },
+      {
+        "term": "progress",
+        "uz": "o‘sish, rivojlanish",
+        "definition": "movement towards a better result",
+        "example": "I can see my progress in English.",
+        "exampleUz": "Ingliz tilidagi o‘sishimni ko‘ryapman."
+      },
+      {
+        "term": "give up",
+        "forms": [
+          "gave up",
+          "giving up",
+          "gives up"
+        ],
+        "uz": "taslim bo‘lmoq, voz kechmoq",
+        "definition": "to stop trying",
+        "example": "Don't give up after one bad day.",
+        "exampleUz": "Bitta yomon kundan keyin taslim bo‘lmang."
+      },
+      {
+        "term": "environment",
+        "uz": "muhit",
+        "definition": "the place and things around you",
+        "example": "A quiet environment helps me study.",
+        "exampleUz": "Tinch muhit menga o‘qishda yordam beradi."
+      },
+      {
+        "term": "motivation",
+        "uz": "motivatsiya, ishtiyoq",
+        "definition": "the feeling of wanting to do something",
+        "example": "Motivation comes and goes, but habits stay.",
+        "exampleUz": "Motivatsiya kelib-ketadi, odatlar esa qoladi."
+      },
+      {
+        "term": "behaviour",
+        "forms": [
+          "behavior"
+        ],
+        "uz": "xulq-atvor, xatti-harakat",
+        "definition": "the way a person acts",
+        "example": "Small changes in behaviour can bring big results.",
+        "exampleUz": "Xatti-harakatdagi kichik o‘zgarishlar katta natija berishi mumkin."
+      },
+      {
+        "term": "patience",
+        "uz": "sabr",
+        "definition": "the ability to wait calmly",
+        "example": "Learning a language takes patience.",
+        "exampleUz": "Til o‘rganish sabr talab qiladi."
+      }
+    ],
+    "questions": [
+      {
+        "id": "q1",
+        "prompt": "According to the summary, why do many people give up too early?",
+        "promptUz": "Matnga ko‘ra, nega ko‘p odamlar juda erta taslim bo‘ladi?",
+        "options": [
+          "Because progress is often invisible at first",
+          "Because good habits are always expensive",
+          "Because they read too many books"
+        ],
+        "optionsUz": [
+          "Chunki boshida o‘sish ko‘pincha ko‘rinmaydi",
+          "Chunki yaxshi odatlar doim qimmat",
+          "Chunki ular juda ko‘p kitob o‘qiydi"
+        ],
+        "answer": 0,
+        "explanationUz": "Birinchi bo‘limda aytilganidek, natija boshida sezilmaydi — shu sabab ko‘pchilik erta to‘xtaydi."
+      },
+      {
+        "id": "q2",
+        "prompt": "What is a better way to start a new study habit?",
+        "promptUz": "Yangi o‘qish odatini boshlashning yaxshiroq yo‘li qaysi?",
+        "options": [
+          "Study for three hours every evening",
+          "Make the habit so easy that you cannot say no",
+          "Wait until you feel very motivated"
+        ],
+        "optionsUz": [
+          "Har kuni kechqurun uch soat o‘qish",
+          "Odatni shunchalik osonlashtirish-ki, unga «yo‘q» deya olmaysiz",
+          "Juda katta ishtiyoq paydo bo‘lishini kutish"
+        ],
+        "answer": 1,
+        "explanationUz": "Ikkinchi bo‘lim: juda kichik boshlang — masalan, daftarni ochib bitta masala yeching."
+      },
+      {
+        "id": "q3",
+        "prompt": "What should you do on a difficult day?",
+        "promptUz": "Qiyin kunda nima qilish kerak?",
+        "options": [
+          "Skip the habit completely",
+          "Do a smaller version of the habit",
+          "Start a new, bigger goal"
+        ],
+        "optionsUz": [
+          "Odatni butunlay o‘tkazib yuborish",
+          "Odatning kichikroq ko‘rinishini bajarish",
+          "Yangi, kattaroq maqsad qo‘yish"
+        ],
+        "answer": 1,
+        "explanationUz": "Oxirgi bo‘limda aytilganidek: bir bet o‘qing yoki ikki daqiqa tinglang — hech narsa qilmagandan yaxshiroq."
+      }
+    ],
+    "takeaway": {
+      "en": "Choose one tiny habit for tomorrow and connect it to something you already do.",
+      "uz": "Ertangi kun uchun bitta juda kichik odat tanlang va uni allaqachon qilib yurgan ishingizga bog‘lang."
+    },
+    "audio": null
+  }
+}
