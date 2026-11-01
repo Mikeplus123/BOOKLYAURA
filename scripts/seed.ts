@@ -5,11 +5,14 @@ import { createClient } from "@supabase/supabase-js";
 
 for (const f of [".env.local", ".env"]) if (existsSync(f)) process.loadEnvFile(f);
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim().replace(/\/+$/, "").replace(/\/rest\/v1$/, "");
+const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
 if (!url || !key) {
   console.error("Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY (set them in .env.local).");
   process.exit(1);
+}
+if (!/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(url)) {
+  console.warn(`Warning: NEXT_PUBLIC_SUPABASE_URL looks unusual: "${url}". It should look like https://abcdxyz.supabase.co`);
 }
 const supabase = createClient(url, key, { auth: { persistSession: false } });
 
