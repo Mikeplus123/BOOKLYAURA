@@ -4,10 +4,11 @@ import { Icon } from "@/components/Icon";
 import type { ReadingMode } from "@/lib/types";
 
 // A live, self-contained preview of the reader on the landing page.
+// Real sentences from the "Atomic Habits" lesson.
 const LINES = [
-  { en: ["Small ", "habits", " lead to big changes."], uz: "Kichik odatlar katta o‘zgarishlarga olib keladi." },
-  { en: ["One small action does not look important on a single day."], uz: "Bitta kichik harakat bir kunning o‘zida muhim bo‘lib ko‘rinmaydi." },
-  { en: ["But when you repeat it every day, the results add up."], uz: "Ammo uni har kuni takrorlasangiz, natijalar yig‘ilib boradi." },
+  { en: ["For building a ", "habit", ", the second may be the more useful beginning."], uz: "Odat shakllantirish uchun ikkinchisi foydaliroq boshlanish bo‘lishi mumkin." },
+  { en: ["A goal can guide you, but the routine does the work."], uz: "Maqsad yo‘l ko‘rsatishi mumkin, lekin ishni kundalik tartib bajaradi." },
+  { en: ["Small actions also need time."], uz: "Kichik harakatlarga vaqt ham kerak." },
 ];
 
 const MODES: { id: ReadingMode; label: string }[] = [
@@ -33,8 +34,8 @@ export function BilingualDemo() {
     <div className="demo-device" aria-label="Bookly o‘quvchisining namunasi">
       <div className="demo-top">
         <span className="demo-dot" />
-        <span className="demo-title">Small Habits, Big Changes</span>
-        <span className="demo-meta">4 daq · B1</span>
+        <span className="demo-title">Atomic Habits</span>
+        <span className="demo-meta">5 daq · B1</span>
       </div>
       <div className="segmented segmented-sm" role="radiogroup" aria-label="Matn rejimi (namuna)">
         {MODES.map((m) => (
@@ -56,7 +57,7 @@ export function BilingualDemo() {
             {mode !== "uzbek" && (
               <p className="sentence-en" lang="en">
                 {line.en.map((part, j) =>
-                  part === "habits" ? (
+                  part === "habit" ? (
                     <button
                       key={j}
                       type="button"
@@ -80,7 +81,7 @@ export function BilingualDemo() {
             {i === 0 && word && mode !== "uzbek" && (
               <span className="demo-vocab" role="note">
                 <strong>habit</strong> → odat
-                <small>“Reading before bed is a good habit.”</small>
+                <small>“Reading one page before bed is a small habit.”</small>
               </span>
             )}
           </div>

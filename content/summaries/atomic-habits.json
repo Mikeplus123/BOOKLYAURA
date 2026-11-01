@@ -1,0 +1,645 @@
+{
+  "slug": "atomic-habits",
+  "title": "Atomic Habits",
+  "titleUz": "Atom odatlar",
+  "author": "James Clear",
+  "topic": "self-development",
+  "durationMin": 5,
+  "level": "intermediate",
+  "languages": [
+    "en",
+    "uz"
+  ],
+  "isFree": true,
+  "isPublished": true,
+  "coverColor": "#0B5D4B",
+  "tagline": "Foydali odatni boshlashni, takrorlashni va motivatsiya so‘nganda ham davom ettirishni osonlashtiring.",
+  "intro": "Nega ulkan rejalar ko‘pincha chorshanbagacha unutiladi-yu, besh daqiqalik kichik qadam esa ishlaydi? Bu darsda Jeyms Klirning maqsad va tizim, odatning to‘rt bosqichi va to‘rtta qonuni haqidagi g‘oyalarini talaba Aziz misolida ko‘rib chiqasiz.",
+  "learnPoints": [
+    "Maqsad va tizim o‘rtasidagi farq",
+    "Odatning to‘rt bosqichi: ishora, ishtiyoq, javob va mukofot",
+    "«Ikki daqiqa qoidasi» bilan yangi odatni qanday boshlash",
+    "Bir kunni o‘tkazib yuborsangiz nima qilish kerak"
+  ],
+  "attribution": "Independent Bookly summary and commentary on “Atomic Habits” by James Clear. Original examples by Bookly. AI-narrated. Not endorsed by the author or publisher. Muallif yoki nashriyot tomonidan tasdiqlanmagan mustaqil Bookly sharhi; kitobning tanlangan g‘oyalarini tanishtiradi va to‘liq kitob o‘rnini bosmaydi.",
+  "sortOrder": 1,
+  "content": {
+    "sections": [
+      {
+        "id": "s1",
+        "heading": {
+          "en": "Two evenings",
+          "uz": "Ikki xil oqshom"
+        },
+        "sentences": [
+          {
+            "id": "s1-1",
+            "en": "Imagine two versions of your evening.",
+            "uz": "Oqshomingizning ikki xil ko‘rinishini tasavvur qiling.",
+            "start": 0.0,
+            "end": 2.4
+          },
+          {
+            "id": "s1-2",
+            "en": "In the first, you promise to study for two hours, get distracted, and go to bed disappointed.",
+            "uz": "Birinchisida siz ikki soat o‘qishga va’da berasiz, chalg‘iysiz va hafsalangiz pir bo‘lib uxlashga yotasiz.",
+            "start": 2.65,
+            "end": 8.86
+          },
+          {
+            "id": "s1-3",
+            "en": "In the second, you open your notebook, solve one question, and stop after five minutes.",
+            "uz": "Ikkinchisida daftaringizni ochasiz, bitta savolni yechasiz va besh daqiqadan keyin to‘xtaysiz.",
+            "start": 9.21,
+            "end": 15.39
+          },
+          {
+            "id": "s1-4",
+            "en": "Which evening looks more successful?",
+            "uz": "Qaysi oqshom muvaffaqiyatliroq ko‘rinadi?",
+            "start": 15.69,
+            "end": 17.84
+          },
+          {
+            "id": "s1-5",
+            "en": "For building a habit, the second may be the more useful beginning.",
+            "uz": "Odat shakllantirish uchun ikkinchisi foydaliroq boshlanish bo‘lishi mumkin.",
+            "start": 18.11,
+            "end": 22.23
+          },
+          {
+            "id": "s1-6",
+            "en": "You're listening to Bookly's summary of Atomic Habits by James Clear, a book about how repeated small actions can change the direction of your life.",
+            "uz": "Siz Jeyms Klirning «Atomic Habits» («Atom odatlar») kitobi bo‘yicha Bookly qisqacha mazmunini tinglayapsiz — bu kitob takrorlanadigan kichik harakatlar hayotingiz yo‘nalishini qanday o‘zgartirishi haqida.",
+            "start": 22.72,
+            "end": 31.96
+          }
+        ]
+      },
+      {
+        "id": "s2",
+        "heading": {
+          "en": "Goals and systems",
+          "uz": "Maqsadlar va tizimlar"
+        },
+        "sentences": [
+          {
+            "id": "s2-1",
+            "en": "Clear distinguishes between goals and systems.",
+            "uz": "Klir maqsadlar va tizimlarni bir-biridan ajratadi.",
+            "start": 32.31,
+            "end": 35.72
+          },
+          {
+            "id": "s2-2",
+            "en": "A goal describes the result you want, such as improving your English.",
+            "uz": "Maqsad siz istagan natijani ifodalaydi, masalan, ingliz tilingizni yaxshilash.",
+            "start": 35.98,
+            "end": 40.41
+          },
+          {
+            "id": "s2-3",
+            "en": "A system is what you actually do: reviewing vocabulary after breakfast, practising a little each day, and returning to mistakes.",
+            "uz": "Tizim esa amalda nima qilishingizdir: nonushtadan keyin so‘zlarni takrorlash, har kuni ozgina mashq qilish va xatolaringizga qaytish.",
+            "start": 40.63,
+            "end": 49.43
+          },
+          {
+            "id": "s2-4",
+            "en": "A goal can guide you, but the routine does the work.",
+            "uz": "Maqsad yo‘l ko‘rsatishi mumkin, lekin ishni kundalik tartib bajaradi.",
+            "start": 49.67,
+            "end": 53.44
+          },
+          {
+            "id": "s2-5",
+            "en": "Consider a student we'll call Aziz.",
+            "uz": "Keling, Aziz deb ataydigan bir talabani ko‘rib chiqaylik.",
+            "start": 53.9,
+            "end": 56.59
+          },
+          {
+            "id": "s2-6",
+            "en": "Every Sunday, Aziz creates an ambitious study timetable.",
+            "uz": "Har yakshanba Aziz juda katta o‘qish jadvalini tuzadi.",
+            "start": 56.84,
+            "end": 60.83
+          },
+          {
+            "id": "s2-7",
+            "en": "By Wednesday, he's abandoned it.",
+            "uz": "Chorshanbaga kelib esa undan voz kechib bo‘ladi.",
+            "start": 61.1,
+            "end": 63.28
+          },
+          {
+            "id": "s2-8",
+            "en": "He keeps changing the timetable, but his evenings still begin with a laptop full of distracting tabs and no clear first task.",
+            "uz": "U jadvalni qayta-qayta o‘zgartiradi, ammo oqshomlari hamon chalg‘ituvchi oynalarga to‘la noutbuk bilan va aniq birinchi vazifasiz boshlanadi.",
+            "start": 63.45,
+            "end": 71.44
+          },
+          {
+            "id": "s2-9",
+            "en": "A practical application of Clear's approach would be to change that starting situation.",
+            "uz": "Klir yondashuvini amalda qo‘llash — aynan shu boshlang‘ich vaziyatni o‘zgartirish bo‘lardi.",
+            "start": 71.81,
+            "end": 76.7
+          },
+          {
+            "id": "s2-10",
+            "en": "Before dinner, Aziz leaves one practice question open on his desk.",
+            "uz": "Kechki ovqatdan oldin Aziz stolida bitta mashq savolini ochiq qoldiradi.",
+            "start": 76.91,
+            "end": 81.46
+          },
+          {
+            "id": "s2-11",
+            "en": "His next step becomes visible and specific.",
+            "uz": "Uning keyingi qadami ko‘rinadigan va aniq bo‘lib qoladi.",
+            "start": 81.71,
+            "end": 84.67
+          },
+          {
+            "id": "s2-12",
+            "en": "He doesn't have to decide where to begin while already feeling tired.",
+            "uz": "Endi u charchagan holatda nimadan boshlashni o‘ylab o‘tirishi shart emas.",
+            "start": 84.83,
+            "end": 88.75
+          }
+        ]
+      },
+      {
+        "id": "s3",
+        "heading": {
+          "en": "How a habit works",
+          "uz": "Odat qanday ishlaydi"
+        },
+        "sentences": [
+          {
+            "id": "s3-1",
+            "en": "Clear organizes habit formation into four stages: cue, craving, response, and reward.",
+            "uz": "Klir odat shakllanishini to‘rt bosqichga ajratadi: ishora, ishtiyoq, javob harakati va mukofot.",
+            "start": 89.03,
+            "end": 97.02
+          },
+          {
+            "id": "s3-2",
+            "en": "Something catches your attention, you anticipate a benefit, you act, and you experience an outcome.",
+            "uz": "Nimadir e’tiboringizni tortadi, siz foyda kutasiz, harakat qilasiz va natijani his qilasiz.",
+            "start": 97.42,
+            "end": 104.11
+          },
+          {
+            "id": "s3-3",
+            "en": "His four laws help you design that cycle.",
+            "uz": "Uning to‘rtta qonuni shu aylanishni o‘zingizga moslab qurishga yordam beradi.",
+            "start": 104.42,
+            "end": 107.36
+          }
+        ]
+      },
+      {
+        "id": "s4",
+        "heading": {
+          "en": "The four laws",
+          "uz": "To‘rtta qonun"
+        },
+        "sentences": [
+          {
+            "id": "s4-1",
+            "en": "First, make the cue obvious.",
+            "uz": "Birinchidan, ishorani ko‘zga tashlanadigan qiling.",
+            "start": 107.66,
+            "end": 110.64
+          },
+          {
+            "id": "s4-2",
+            "en": "Connect a new action to something you already do.",
+            "uz": "Yangi harakatni allaqachon qilib yurgan ishingizga bog‘lang.",
+            "start": 110.85,
+            "end": 114.02
+          },
+          {
+            "id": "s4-3",
+            "en": "After putting away your dinner plate, sit down and read one page.",
+            "uz": "Kechki ovqat likopchangizni yig‘ishtirgach, o‘tirib bir bet o‘qing.",
+            "start": 114.21,
+            "end": 118.41
+          },
+          {
+            "id": "s4-4",
+            "en": "An existing routine becomes a reminder, which is more dependable than hoping you'll remember later.",
+            "uz": "Mavjud odatingiz eslatmaga aylanadi — bu «keyin esimga tushar» deb umid qilishdan ancha ishonchliroq.",
+            "start": 118.6,
+            "end": 124.24
+          },
+          {
+            "id": "s4-5",
+            "en": "Second, make the activity attractive.",
+            "uz": "Ikkinchidan, mashg‘ulotni jozibali qiling.",
+            "start": 124.63,
+            "end": 127.77
+          },
+          {
+            "id": "s4-6",
+            "en": "Pair a useful task with something you enjoy, or join people who already practise it.",
+            "uz": "Foydali ishni o‘zingiz yoqtirgan narsa bilan juftlang yoki uni allaqachon mashq qilayotgan odamlarga qo‘shiling.",
+            "start": 128.05,
+            "end": 133.27
+          },
+          {
+            "id": "s4-7",
+            "en": "Aziz might review vocabulary with a friend who makes the session enjoyable.",
+            "uz": "Aziz so‘zlarni mashg‘ulotni qiziqarli qiladigan do‘sti bilan birga takrorlashi mumkin.",
+            "start": 133.6,
+            "end": 138.02
+          },
+          {
+            "id": "s4-8",
+            "en": "The point is to give the habit something to look forward to.",
+            "uz": "Maqsad — odatda intiqlik bilan kutadigan nimadir bo‘lishi.",
+            "start": 138.21,
+            "end": 141.4
+          },
+          {
+            "id": "s4-9",
+            "en": "Third, make it easy.",
+            "uz": "Uchinchidan, uni oson qiling.",
+            "start": 141.82,
+            "end": 144.23
+          },
+          {
+            "id": "s4-10",
+            "en": "Clear's two-minute rule suggests shrinking a new habit to an opening action that takes less than two minutes.",
+            "uz": "Klirning «ikki daqiqa qoidasi» yangi odatni ikki daqiqadan kam vaqt oladigan boshlang‘ich harakatgacha qisqartirishni taklif qiladi.",
+            "start": 144.45,
+            "end": 151.01
+          },
+          {
+            "id": "s4-11",
+            "en": "For Aziz, that could mean sitting down and attempting the first line of a problem.",
+            "uz": "Aziz uchun bu stolga o‘tirib, masalaning birinchi qatorini yechishga urinish bo‘lishi mumkin.",
+            "start": 151.24,
+            "end": 156.07
+          },
+          {
+            "id": "s4-12",
+            "en": "The small beginning establishes a routine that can grow into substantial practice.",
+            "uz": "Kichik boshlanish keyinchalik jiddiy mashg‘ulotga aylanishi mumkin bo‘lgan tartibni yo‘lga qo‘yadi.",
+            "start": 156.29,
+            "end": 161.36
+          },
+          {
+            "id": "s4-13",
+            "en": "Fourth, make the result satisfying.",
+            "uz": "To‘rtinchidan, natijani qoniqarli qiling.",
+            "start": 161.66,
+            "end": 164.75
+          },
+          {
+            "id": "s4-14",
+            "en": "A simple mark on a calendar can make completion visible.",
+            "uz": "Taqvimdagi oddiy belgi bajarilgan ishni ko‘rinadigan qiladi.",
+            "start": 164.98,
+            "end": 168.47
+          },
+          {
+            "id": "s4-15",
+            "en": "But the mark should represent the behaviour you care about.",
+            "uz": "Ammo bu belgi siz uchun muhim bo‘lgan xatti-harakatni anglatishi kerak.",
+            "start": 168.57,
+            "end": 171.85
+          },
+          {
+            "id": "s4-16",
+            "en": "Ticking a box after opening a textbook means little if you never engage with it.",
+            "uz": "Agar darslik bilan haqiqatan shug‘ullanmasangiz, uni ochganingiz uchun belgi qo‘yishning ma’nosi kam.",
+            "start": 171.78,
+            "end": 176.81
+          },
+          {
+            "id": "s4-17",
+            "en": "Track an honest, useful action.",
+            "uz": "Halol va foydali harakatni qayd eting.",
+            "start": 177.01,
+            "end": 179.61
+          }
+        ]
+      },
+      {
+        "id": "s5",
+        "heading": {
+          "en": "Breaking unwanted habits",
+          "uz": "Keraksiz odatlarni to‘xtatish"
+        },
+        "sentences": [
+          {
+            "id": "s5-1",
+            "en": "You can also reverse these ideas to interrupt unwanted habits.",
+            "uz": "Bu g‘oyalarni teskari qo‘llab, keraksiz odatlarni to‘xtatishingiz ham mumkin.",
+            "start": 179.82,
+            "end": 183.88
+          },
+          {
+            "id": "s5-2",
+            "en": "Hide distracting cues and add friction before the behaviour.",
+            "uz": "Chalg‘ituvchi ishoralarni yashiring va bu xatti-harakat oldiga to‘siq qo‘ying.",
+            "start": 184.07,
+            "end": 188.17
+          },
+          {
+            "id": "s5-3",
+            "en": "If Aziz keeps opening entertainment websites, logging out and closing those tabs before studying creates a small barrier.",
+            "uz": "Agar Aziz ko‘ngilochar saytlarni qayta-qayta ochaversa, o‘qishdan oldin akkauntdan chiqish va o‘sha oynalarni yopish kichik to‘siq bo‘ladi.",
+            "start": 188.49,
+            "end": 195.96
+          },
+          {
+            "id": "s5-4",
+            "en": "Meanwhile, his practice question is already waiting.",
+            "uz": "Bu orada uning mashq savoli allaqachon kutib turibdi.",
+            "start": 196.2,
+            "end": 199.36
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "heading": {
+          "en": "Identity, patience and missed days",
+          "uz": "O‘zlik, sabr va o‘tkazib yuborilgan kunlar"
+        },
+        "sentences": [
+          {
+            "id": "s6-1",
+            "en": "Another important idea is identity.",
+            "uz": "Yana bir muhim g‘oya — o‘zlik, ya’ni o‘zingizni kim deb bilishingiz.",
+            "start": 199.57,
+            "end": 202.43
+          },
+          {
+            "id": "s6-2",
+            "en": "When you repeatedly keep a small commitment, you collect evidence about the kind of person you are becoming.",
+            "uz": "Kichik va’dangizni qayta-qayta bajarganingizda, qanday insonga aylanayotganingiz haqida dalil to‘playsiz.",
+            "start": 202.61,
+            "end": 208.6
+          },
+          {
+            "id": "s6-3",
+            "en": "Aziz doesn't need to declare himself perfectly disciplined.",
+            "uz": "Aziz o‘zini mukammal intizomli deb e’lon qilishi shart emas.",
+            "start": 208.84,
+            "end": 212.22
+          },
+          {
+            "id": "s6-4",
+            "en": "Each completed session gives him a concrete reason to trust that he can return to learning.",
+            "uz": "Har bir yakunlangan mashg‘ulot unga o‘qishga qayta olishiga ishonish uchun aniq asos beradi.",
+            "start": 212.37,
+            "end": 217.78
+          },
+          {
+            "id": "s6-5",
+            "en": "Small actions also need time.",
+            "uz": "Kichik harakatlarga vaqt ham kerak.",
+            "start": 217.96,
+            "end": 220.59
+          },
+          {
+            "id": "s6-6",
+            "en": "A few evenings of revision may produce no obvious change in an exam score.",
+            "uz": "Bir necha oqshomlik takrorlash imtihon balida sezilarli o‘zgarish bermasligi mumkin.",
+            "start": 220.77,
+            "end": 225.33
+          },
+          {
+            "id": "s6-7",
+            "en": "That doesn't automatically mean the effort is wasted.",
+            "uz": "Bu harakat albatta behuda ketdi degani emas.",
+            "start": 225.65,
+            "end": 228.79
+          },
+          {
+            "id": "s6-8",
+            "en": "Look at whether your process is improving, while checking that the practice itself is useful.",
+            "uz": "Jarayoningiz yaxshilanayotganiga qarang va shu bilan birga mashqning o‘zi foydali ekanini tekshiring.",
+            "start": 229.01,
+            "end": 234.32
+          },
+          {
+            "id": "s6-9",
+            "en": "Repeating an ineffective method still needs correction.",
+            "uz": "Samarasiz usulni takrorlayverish baribir tuzatishni talab qiladi.",
+            "start": 234.46,
+            "end": 237.91
+          },
+          {
+            "id": "s6-10",
+            "en": "And when you miss a day, resume at the next reasonable opportunity.",
+            "uz": "Bir kunni o‘tkazib yuborsangiz, keyingi qulay imkoniyatda davom eting.",
+            "start": 238.07,
+            "end": 241.98
+          },
+          {
+            "id": "s6-11",
+            "en": "Let the missed session tell you something about the routine.",
+            "uz": "O‘tkazib yuborilgan mashg‘ulot sizga tartibingiz haqida nimanidir aytsin.",
+            "start": 242.16,
+            "end": 245.45
+          },
+          {
+            "id": "s6-12",
+            "en": "Perhaps the time was unrealistic, or the task was too large.",
+            "uz": "Balki vaqt noreal bo‘lgandir yoki vazifa juda katta bo‘lgandir.",
+            "start": 245.61,
+            "end": 249.45
+          },
+          {
+            "id": "s6-13",
+            "en": "Adjust it rather than treating one interruption as your identity.",
+            "uz": "Bitta uzilishni o‘zligingiz deb bilish o‘rniga, tartibni moslashtiring.",
+            "start": 249.68,
+            "end": 253.91
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "heading": {
+          "en": "Your Bookly challenge",
+          "uz": "Sizning Bookly topshirig‘ingiz"
+        },
+        "sentences": [
+          {
+            "id": "s7-1",
+            "en": "Here's your Bookly challenge.",
+            "uz": "Mana sizning Bookly topshirig‘ingiz.",
+            "start": 254.13,
+            "end": 255.96
+          },
+          {
+            "id": "s7-2",
+            "en": "Choose one behaviour you want to repeat tomorrow.",
+            "uz": "Ertaga takrorlamoqchi bo‘lgan bitta xatti-harakatni tanlang.",
+            "start": 256.17,
+            "end": 259.17
+          },
+          {
+            "id": "s7-3",
+            "en": "Attach it to an existing routine, reduce its starting step to under two minutes, and prepare the materials tonight.",
+            "uz": "Uni mavjud odatingizga bog‘lang, boshlang‘ich qadamini ikki daqiqadan kamga qisqartiring va kerakli narsalarni bugun kechqurun tayyorlab qo‘ying.",
+            "start": 259.45,
+            "end": 266.8
+          },
+          {
+            "id": "s7-4",
+            "en": "Then try it.",
+            "uz": "Keyin sinab ko‘ring.",
+            "start": 267.01,
+            "end": 268.39
+          },
+          {
+            "id": "s7-5",
+            "en": "A useful habit begins with an action you can actually take again.",
+            "uz": "Foydali odat haqiqatan ham qayta bajara oladigan harakatdan boshlanadi.",
+            "start": 268.59,
+            "end": 272.62
+          }
+        ]
+      }
+    ],
+    "vocab": [
+      {
+        "term": "habit",
+        "forms": [
+          "habits"
+        ],
+        "uz": "odat",
+        "definition": "something you do regularly, often without thinking",
+        "example": "Reading one page before bed is a small habit.",
+        "exampleUz": "Uxlashdan oldin bir bet o‘qish — kichik odat."
+      },
+      {
+        "term": "routine",
+        "forms": [
+          "routines"
+        ],
+        "uz": "kundalik tartib",
+        "definition": "the usual order in which you do things",
+        "example": "My morning routine starts with a glass of water.",
+        "exampleUz": "Ertalabki tartibim bir stakan suvdan boshlanadi."
+      },
+      {
+        "term": "cue",
+        "forms": [
+          "cues"
+        ],
+        "uz": "ishora, turtki",
+        "definition": "a signal that tells you to do something",
+        "example": "Seeing my running shoes is a cue to go for a walk.",
+        "exampleUz": "Krossovkalarimni ko‘rish menga sayrga chiqish uchun ishora bo‘ladi."
+      },
+      {
+        "term": "reward",
+        "uz": "mukofot",
+        "definition": "something good you get after an action",
+        "example": "A short break is my reward after studying.",
+        "exampleUz": "Qisqa tanaffus — o‘qishdan keyingi mukofotim."
+      },
+      {
+        "term": "distracted",
+        "forms": [
+          "distracting"
+        ],
+        "uz": "chalg‘igan; chalg‘ituvchi",
+        "definition": "unable to focus because something else takes your attention",
+        "example": "I get distracted when my phone is on the desk.",
+        "exampleUz": "Telefonim stolda tursa, chalg‘ib qolaman."
+      },
+      {
+        "term": "friction",
+        "uz": "to‘siq, qiyinchilik",
+        "definition": "something that makes an action a little harder to do",
+        "example": "Logging out adds friction to scrolling.",
+        "exampleUz": "Akkauntdan chiqish lenta varaqlashga to‘siq qo‘shadi."
+      },
+      {
+        "term": "identity",
+        "uz": "o‘zlik, shaxsiyat",
+        "definition": "who you believe you are",
+        "example": "Each small win shapes your identity as a learner.",
+        "exampleUz": "Har bir kichik yutuq o‘quvchi sifatidagi o‘zligingizni shakllantiradi."
+      },
+      {
+        "term": "commitment",
+        "uz": "va’da, majburiyat",
+        "definition": "a promise to do something",
+        "example": "Keep a small commitment every day.",
+        "exampleUz": "Har kuni kichik va’dangizni bajaring."
+      }
+    ],
+    "questions": [
+      {
+        "id": "q1",
+        "prompt": "What is the difference between a goal and a system?",
+        "promptUz": "Maqsad va tizim o‘rtasidagi farq nima?",
+        "options": [
+          "A goal is the result you want; a system is what you actually do",
+          "A goal is daily practice; a system is your exam score",
+          "They mean exactly the same thing"
+        ],
+        "optionsUz": [
+          "Maqsad — istagan natijangiz; tizim — amalda nima qilishingiz",
+          "Maqsad — kundalik mashq; tizim — imtihon balingiz",
+          "Ular aynan bir xil ma’noni anglatadi"
+        ],
+        "answer": 0,
+        "explanationUz": "Klirga ko‘ra, maqsad yo‘l ko‘rsatadi, lekin ishni kundalik tartib — tizim bajaradi."
+      },
+      {
+        "id": "q2",
+        "prompt": "What does the two-minute rule suggest?",
+        "promptUz": "«Ikki daqiqa qoidasi» nimani taklif qiladi?",
+        "options": [
+          "Study for at least two hours every day",
+          "Shrink a new habit to an opening action that takes less than two minutes",
+          "Stop every task after two minutes"
+        ],
+        "optionsUz": [
+          "Har kuni kamida ikki soat o‘qish",
+          "Yangi odatni ikki daqiqadan kam vaqt oladigan boshlang‘ich harakatgacha qisqartirish",
+          "Har qanday ishni ikki daqiqadan keyin to‘xtatish"
+        ],
+        "answer": 1,
+        "explanationUz": "Kichik boshlanish — masalan, masalaning birinchi qatori — keyinchalik jiddiy mashg‘ulotga aylanadigan tartibni yo‘lga qo‘yadi."
+      },
+      {
+        "id": "q3",
+        "prompt": "What should you do when you miss a day?",
+        "promptUz": "Bir kunni o‘tkazib yuborsangiz nima qilish kerak?",
+        "options": [
+          "Give up, because the habit is broken",
+          "Make a much bigger plan for next week",
+          "Resume at the next reasonable opportunity and adjust the routine"
+        ],
+        "optionsUz": [
+          "Taslim bo‘lish, chunki odat buzildi",
+          "Keyingi hafta uchun ancha katta reja tuzish",
+          "Keyingi qulay imkoniyatda davom etish va tartibni moslashtirish"
+        ],
+        "answer": 2,
+        "explanationUz": "O‘tkazib yuborilgan kun tartibingiz haqida nimanidir aytadi: vaqt yoki vazifani moslashtiring va davom eting."
+      }
+    ],
+    "takeaway": {
+      "en": "Attach one behaviour to an existing routine, shrink its first step to under two minutes, and prepare the materials tonight.",
+      "uz": "Bitta xatti-harakatni mavjud odatingizga bog‘lang, birinchi qadamini ikki daqiqadan kamga qisqartiring va kerakli narsalarni bugun kechqurun tayyorlab qo‘ying."
+    },
+    "audio": {
+      "url": "/audio/atomic-habits.mp3",
+      "voice": "AI narrator (ElevenLabs)",
+      "durationSec": 272.67
+    }
+  }
+}

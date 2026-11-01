@@ -1,8 +1,10 @@
 "use client";
 // Tap-to-sync: play the narration and press "Belgilash" (or Space) at the start of each sentence.
 // Afterwards, fine-tune any start time with ±0.1s buttons and test each sentence.
+// "Avtomatik sinxronlash" does the whole job from the audio's pauses in a second; review it after.
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon } from "@/components/Icon";
+import { autoSync } from "@/lib/autosync";
 import { flattenSentences, formatTime, sentenceEnd } from "@/lib/text";
 import type { Section } from "@/lib/types";
 
@@ -41,7 +43,11 @@ export function TimingTool({ audioUrl, sections, onChange }: Props) {
     onChange(
       sections.map((sec) => ({
         ...sec,
-        sentences: sec.sentences.map((s) => (typeof s.start === "number" ? { ...s, start: round(Math.max(0, s.start + delta)) } : s)),
+        sentences: sec.sentences.map((s) =>
+          typeof s.start === "number"
+            ? { ...s, start: round(Math.max(0, s.start + delta)), ...(typeof s.end === "number" ? { end: round(Math.max(0, s.end + delta)) } : {}) }
+            : s,
+        ),
       })),
     );
   };
@@ -50,6 +56,45 @@ export function TimingTool({ audioUrl, sections, onChange }: Props) {
     if (!confirm("Barcha vaqtlar o‘chirilsinmi?")) return;
     onChange(sections.map((sec) => ({ ...sec, sentences: sec.sentences.map(({ start: _s, end: _e, ...rest }) => rest) })));
     setCursor(0);
+  };
+
+  const [auto, setAuto] = useState<{ state: "idle" | "working" | "done" | "error"; message?: string }>({ state: "idle" });
+
+  const runAutoSync = async () => {
+    if (flat.some((s) => typeof s.start === "number") && !confirm("Mavjud vaqtlar avtomatik hisoblangan vaqtlar bilan almashtiriladi. Davom etilsinmi?")) return;
+    setAuto({ state: "working" });
+    try {
+      const t0 = performance.now();
+      const res = await fetch(audioUrl);
+      if (!res.ok) throw new Error(`Audio yuklanmadi (${res.status})`);
+      const buf = await res.arrayBuffer();
+      const ctx = new AudioContext();
+      const audio = await ctx.decodeAudioData(buf);
+      void ctx.close();
+      const mono = new Float32Array(audio.length);
+      for (let c = 0; c < audio.numberOfChannels; c++) {
+        const ch = audio.getChannelData(c);
+        for (let i = 0; i < ch.length; i++) mono[i] += ch[i] / audio.numberOfChannels;
+      }
+      const timings = autoSync(mono, audio.sampleRate, flat.map((s) => s.en));
+      let k = 0;
+      onChange(
+        sections.map((sec) => ({
+          ...sec,
+          sentences: sec.sentences.map((s) => {
+            const t = timings[k++];
+            return { ...s, start: t.start, end: Math.min(t.end, round(audio.duration)) };
+          }),
+        })),
+      );
+      setCursor(flat.length);
+      setAuto({
+        state: "done",
+        message: `${flat.length} ta jumla ${((performance.now() - t0) / 1000).toFixed(1)} soniyada vaqtga bog‘landi. Endi ▶ tugmalari bilan bir nechta jumlani tekshirib ko‘ring.`,
+      });
+    } catch (e) {
+      setAuto({ state: "error", message: e instanceof Error ? e.message : "Audio tahlil qilinmadi." });
+    }
   };
 
   const mark = () => {
@@ -113,6 +158,23 @@ export function TimingTool({ audioUrl, sections, onChange }: Props) {
       <p className="muted small">
         {timedCount}/{flat.length} jumla vaqtga bog‘langan · audio {formatTime(duration)} · hozir {time.toFixed(2)}s
       </p>
+
+      <div className="timing-auto">
+        <div>
+          <strong>
+            <Icon name="sparkle" /> Avtomatik sinxronlash
+          </strong>
+          <p className="muted small">
+            Audiodagi pauzalarni topib, har bir jumlaning boshlanish va tugash vaqtini o‘zi hisoblaydi (internet yoki AI kerak emas). Matn audio bilan aynan bir xil bo‘lishi kerak.
+          </p>
+        </div>
+        <button type="button" className="btn btn-primary" onClick={runAutoSync} disabled={auto.state === "working"}>
+          {auto.state === "working" ? "Tahlil qilinmoqda…" : "Avtomatik sinxronlash"}
+        </button>
+        {auto.message && <p className={`alert ${auto.state === "done" ? "alert-ok" : ""}`}>{auto.message}</p>}
+      </div>
+
+      <p className="timing-or">yoki qo‘lda belgilang:</p>
 
       <div className={`timing-mark${marking ? " is-on" : ""}`}>
         {!marking ? (
