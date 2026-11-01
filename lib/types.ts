@@ -103,6 +103,8 @@ export interface SummaryContent {
   questions: Question[];
   takeaway: { en: string; uz: string };
   audio: AudioTrack | null;
+  /** Set by scripts/sync-content.mts: hash of the repository JSON this content came from. */
+  sourceHash?: string;
 }
 
 export interface Summary extends SummaryMeta {

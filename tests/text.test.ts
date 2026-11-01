@@ -72,3 +72,49 @@ test("slugify makes URL-safe slugs from Uzbek and English", () => {
   assert.equal(slugify("Kichik odatlar, katta o‘zgarishlar"), "kichik-odatlar-katta-ozgarishlar");
   assert.equal(slugify("  Atomic Habits!! "), "atomic-habits");
 });
+
+import { splitSentences } from "../lib/text.ts";
+
+test("splitSentences keeps quotes together and groups paragraphs", () => {
+  const out = splitSentences(
+    'You could say, "The diagram is clearer. Thank you." Then stop. Ask Dr. Smith!\n\nNew paragraph? Yes.',
+  );
+  assert.deepEqual(out, [
+    ['You could say, "The diagram is clearer. Thank you."', "Then stop.", "Ask Dr. Smith!"],
+    ["New paragraph?", "Yes."],
+  ]);
+});
+
+import { parseLessonText } from "../lib/text.ts";
+import { alignToPauses } from "../lib/autosync.ts";
+
+test("parseLessonText pairs English and Uzbek sentences per section", () => {
+  const out = parseLessonText(
+    "## Goals | Maqsadlar\nA goal is a result. A system is a routine.\n\n## Habits | Odatlar\nStart small.",
+    "Maqsad — natija. Tizim — tartib.\n\nKichikdan boshlang.",
+  );
+  assert.equal(out.length, 2);
+  assert.deepEqual(out[0].heading, { en: "Goals", uz: "Maqsadlar" });
+  assert.deepEqual(out[0].uz, ["Maqsad — natija.", "Tizim — tartib."]);
+  assert.deepEqual(out[1].en, ["Start small."]);
+  assert.deepEqual(out[1].uz, ["Kichikdan boshlang."]);
+});
+
+test("splitSentences handles Uzbek «» quotes", () => {
+  assert.deepEqual(splitSentences("U «Salom. Qalaysan?» dedi. Keyin ketdi."), [["U «Salom. Qalaysan?» dedi.", "Keyin ketdi."]]);
+});
+
+test("alignToPauses puts boundaries in the pauses between sentences", () => {
+  // 3 sentences of weights 10/20/10 spoken at 0.1 s per unit, with a short pause inside sentence 2.
+  const pauses = [
+    { start: 1.0, end: 1.5 },
+    { start: 2.5, end: 2.6 },
+    { start: 3.6, end: 4.1 },
+  ];
+  const t = alignToPauses([10, 20, 10], pauses, 0, 5.1);
+  assert.deepEqual(t.map((x) => [x.start, x.end]), [
+    [0, 1.0],
+    [1.5, 3.6],
+    [4.1, 5.1],
+  ]);
+});

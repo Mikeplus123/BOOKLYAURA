@@ -1,0 +1,667 @@
+{
+  "slug": "7-habits-of-highly-effective-people",
+  "title": "The 7 Habits of Highly Effective People",
+  "titleUz": "Yuqori samarali odamlarning 7 odati",
+  "author": "Stephen R. Covey",
+  "topic": "productivity",
+  "durationMin": 5,
+  "level": "upper-intermediate",
+  "languages": [
+    "en",
+    "uz"
+  ],
+  "isFree": true,
+  "isPublished": true,
+  "coverColor": "#1F3B57",
+  "tagline": "Ustuvorliklaringizni tanlang, boshqalar bilan adolatli ishlang va olg‘a borishga imkon beradigan kuchingizni asrang.",
+  "intro": "Kun bo‘yi band bo‘lib, eng muhim ishga qo‘l ham tegmaganmi? Bu darsda Stiven Kovining yetti odatini maktab ko‘rgazmasiga tayyorlanayotgan o‘quvchilar jamoasi misolida bilib olasiz: mas’uliyatdan hamkorlik va yangilanishgacha.",
+  "learnPoints": [
+    "Proaktivlik: ta’sir qila oladigan narsaga kuch sarflash",
+    "Oxirini ko‘zlab boshlash va eng muhimini birinchi o‘ringa qo‘yish",
+    "«Ikki tomon ham yutsin», avval tushunish va sinergiya",
+    "«Arrani charxlash» — o‘zingizni qanday tiklash"
+  ],
+  "attribution": "Independent Bookly summary and commentary on “The 7 Habits of Highly Effective People” by Stephen R. Covey. Original examples by Bookly. AI-narrated. Not endorsed by the author or publisher. Muallif yoki nashriyot tomonidan tasdiqlanmagan mustaqil Bookly sharhi; kitobning tanlangan g‘oyalarini tanishtiradi va to‘liq kitob o‘rnini bosmaydi.",
+  "sortOrder": 2,
+  "content": {
+    "sections": [
+      {
+        "id": "s1",
+        "heading": {
+          "en": "A busy day that went nowhere",
+          "uz": "Hech qayerga olib bormagan band kun"
+        },
+        "sentences": [
+          {
+            "id": "s1-1",
+            "en": "Imagine reaching the end of a busy day.",
+            "uz": "Band kunning oxiriga yetganingizni tasavvur qiling.",
+            "start": 0.0,
+            "end": 2.72
+          },
+          {
+            "id": "s1-2",
+            "en": "You've answered every message, attended every meeting, and helped with three small problems.",
+            "uz": "Har bir xabarga javob berdingiz, har bir yig‘ilishda qatnashdingiz va uchta kichik muammoni hal qilishga yordamlashdingiz.",
+            "start": 2.89,
+            "end": 8.57
+          },
+          {
+            "id": "s1-3",
+            "en": "Yet the project that matters most is untouched.",
+            "uz": "Ammo eng muhim loyihaga hatto qo‘l ham tegmagan.",
+            "start": 8.8,
+            "end": 11.95
+          },
+          {
+            "id": "s1-4",
+            "en": "You were active all day.",
+            "uz": "Kun bo‘yi faol bo‘ldingiz.",
+            "start": 12.25,
+            "end": 14.18
+          },
+          {
+            "id": "s1-5",
+            "en": "Why does it feel as though you went nowhere?",
+            "uz": "Nega hech qayerga yetib bormagandek tuyulyapti?",
+            "start": 14.48,
+            "end": 16.69
+          },
+          {
+            "id": "s1-6",
+            "en": "Stephen Covey's The 7 Habits of Highly Effective People asks you to examine what your effort is serving.",
+            "uz": "Stiven Kovining «The 7 Habits of Highly Effective People» («Yuqori samarali odamlarning 7 odati») kitobi sa’y-harakatlaringiz nimaga xizmat qilayotganini tekshirib ko‘rishga undaydi.",
+            "start": 17.23,
+            "end": 24.1
+          },
+          {
+            "id": "s1-7",
+            "en": "This is Bookly's introduction to its seven connected habits.",
+            "uz": "Bu — kitobdagi bir-biriga bog‘liq yetti odat bilan Bookly tanishtiruvi.",
+            "start": 24.4,
+            "end": 28.24
+          }
+        ]
+      },
+      {
+        "id": "s2",
+        "heading": {
+          "en": "Character comes first",
+          "uz": "Avval xarakter"
+        },
+        "sentences": [
+          {
+            "id": "s2-1",
+            "en": "Covey starts with character: the principles behind your decisions, including responsibility, fairness, and integrity.",
+            "uz": "Kovi xarakterdan boshlaydi: qarorlaringiz ortidagi tamoyillar, jumladan mas’uliyat, adolat va halollik.",
+            "start": 28.55,
+            "end": 36.52
+          },
+          {
+            "id": "s2-2",
+            "en": "Looking productive or persuasive is less useful if people cannot rely on you.",
+            "uz": "Agar odamlar sizga tayana olmasa, samarali yoki ishontiruvchan ko‘rinishning foydasi kam.",
+            "start": 36.81,
+            "end": 41.8
+          },
+          {
+            "id": "s2-3",
+            "en": "Effectiveness begins with how you see situations and the choices you make within them.",
+            "uz": "Samaradorlik vaziyatlarni qanday ko‘rishingiz va ular ichida qanday tanlov qilishingizdan boshlanadi.",
+            "start": 42.16,
+            "end": 47.36
+          },
+          {
+            "id": "s2-4",
+            "en": "Let's follow an imaginary student team preparing a school exhibition.",
+            "uz": "Keling, maktab ko‘rgazmasiga tayyorlanayotgan xayoliy o‘quvchilar jamoasini kuzatamiz.",
+            "start": 47.69,
+            "end": 51.72
+          },
+          {
+            "id": "s2-5",
+            "en": "The deadline is approaching, the presentation is unfinished, and everyone thinks someone else is responsible.",
+            "uz": "Muddat yaqinlashmoqda, taqdimot tugallanmagan va har kim mas’uliyat boshqa birovda deb o‘ylaydi.",
+            "start": 51.92,
+            "end": 58.08
+          },
+          {
+            "id": "s2-6",
+            "en": "Covey's habits offer a way to respond.",
+            "uz": "Kovining odatlari bunga qanday javob berish yo‘lini ko‘rsatadi.",
+            "start": 58.32,
+            "end": 61.01
+          }
+        ]
+      },
+      {
+        "id": "s3",
+        "heading": {
+          "en": "Habits 1–3: leading yourself",
+          "uz": "1–3-odatlar: o‘zingizni boshqarish"
+        },
+        "sentences": [
+          {
+            "id": "s3-1",
+            "en": "Habit one: be proactive.",
+            "uz": "Birinchi odat: proaktiv bo‘ling, ya’ni tashabbusni qo‘lga oling.",
+            "start": 61.51,
+            "end": 63.98
+          },
+          {
+            "id": "s3-2",
+            "en": "You cannot control every obstacle, but you can take responsibility for your response.",
+            "uz": "Har bir to‘siqni nazorat qila olmaysiz, ammo unga qanday javob berishingiz uchun mas’uliyatni o‘z zimmangizga olishingiz mumkin.",
+            "start": 64.46,
+            "end": 69.86
+          },
+          {
+            "id": "s3-3",
+            "en": "A team member cannot change yesterday's delay.",
+            "uz": "Jamoa a’zosi kechagi kechikishni o‘zgartira olmaydi.",
+            "start": 70.09,
+            "end": 73.05
+          },
+          {
+            "id": "s3-4",
+            "en": "She can ask what remains, volunteer for a specific task, and explain when she'll finish.",
+            "uz": "U nima qolganini so‘rashi, aniq bir vazifani o‘z zimmasiga olishi va qachon tugatishini aytishi mumkin.",
+            "start": 73.21,
+            "end": 79.11
+          },
+          {
+            "id": "s3-5",
+            "en": "Proactivity means putting energy into what you can influence, while acknowledging the circumstances you face.",
+            "uz": "Proaktivlik — duch kelgan sharoitlarni tan olgan holda, kuchingizni ta’sir qila oladigan narsaga sarflash demakdir.",
+            "start": 79.37,
+            "end": 86.05
+          },
+          {
+            "id": "s3-6",
+            "en": "Habit two: begin with the end in mind.",
+            "uz": "Ikkinchi odat: oxirini ko‘zlab boshlang.",
+            "start": 86.59,
+            "end": 90.0
+          },
+          {
+            "id": "s3-7",
+            "en": "Before the team starts making slides, they need a shared answer to a basic question: what should visitors understand or experience?",
+            "uz": "Jamoa slaydlar tayyorlashdan oldin bitta oddiy savolga umumiy javob topishi kerak: tashrif buyuruvchilar nimani tushunishi yoki his qilishi lozim?",
+            "start": 90.37,
+            "end": 99.0
+          },
+          {
+            "id": "s3-8",
+            "en": "A beautiful presentation may fail if nobody understands the project.",
+            "uz": "Agar loyihani hech kim tushunmasa, chiroyli taqdimot ham muvaffaqiyatsiz bo‘lishi mumkin.",
+            "start": 99.29,
+            "end": 103.77
+          },
+          {
+            "id": "s3-9",
+            "en": "Defining the desired outcome helps them choose work that serves a purpose.",
+            "uz": "Kutilgan natijani aniqlash ularga maqsadga xizmat qiladigan ishni tanlashga yordam beradi.",
+            "start": 103.99,
+            "end": 108.35
+          },
+          {
+            "id": "s3-10",
+            "en": "This habit also applies beyond a deadline.",
+            "uz": "Bu odat faqat muddatlarga emas, kengroq qo‘llaniladi.",
+            "start": 108.65,
+            "end": 111.41
+          },
+          {
+            "id": "s3-11",
+            "en": "Ask what kind of student, friend, or teammate you want to become.",
+            "uz": "O‘zingizdan qanday o‘quvchi, do‘st yoki jamoadosh bo‘lishni xohlayotganingizni so‘rang.",
+            "start": 111.69,
+            "end": 115.89
+          },
+          {
+            "id": "s3-12",
+            "en": "Your values provide a direction when several tempting options compete for your attention.",
+            "uz": "Bir nechta jozibali imkoniyat e’tiboringiz uchun bellashganda, qadriyatlaringiz sizga yo‘nalish beradi.",
+            "start": 116.18,
+            "end": 121.24
+          },
+          {
+            "id": "s3-13",
+            "en": "Habit three: put first things first.",
+            "uz": "Uchinchi odat: eng muhimini birinchi o‘ringa qo‘ying.",
+            "start": 121.78,
+            "end": 124.97
+          },
+          {
+            "id": "s3-14",
+            "en": "Give time to important work before it becomes a crisis.",
+            "uz": "Muhim ish inqirozga aylanmasidan oldin unga vaqt ajrating.",
+            "start": 125.43,
+            "end": 129.09
+          },
+          {
+            "id": "s3-15",
+            "en": "The team wants to redesign its poster, but its demonstration still doesn't function.",
+            "uz": "Jamoa plakatini qayta bezamoqchi, ammo ularning namoyish qurilmasi hali ham ishlamayapti.",
+            "start": 129.36,
+            "end": 134.36
+          },
+          {
+            "id": "s3-16",
+            "en": "Testing the demonstration deserves a protected place in the schedule.",
+            "uz": "Namoyishni sinab ko‘rish jadvalda alohida, daxlsiz vaqtga loyiq.",
+            "start": 134.63,
+            "end": 138.45
+          },
+          {
+            "id": "s3-17",
+            "en": "Planning, preparation, and relationship maintenance often lack an urgent notification.",
+            "uz": "Rejalashtirish, tayyorgarlik va munosabatlarni asrash ko‘pincha shoshilinch eslatma bilan kelmaydi.",
+            "start": 138.63,
+            "end": 144.33
+          },
+          {
+            "id": "s3-18",
+            "en": "They still need time.",
+            "uz": "Lekin ularga baribir vaqt kerak.",
+            "start": 144.47,
+            "end": 146.13
+          }
+        ]
+      },
+      {
+        "id": "s4",
+        "heading": {
+          "en": "Habits 4–5: working with others",
+          "uz": "4–5-odatlar: boshqalar bilan ishlash"
+        },
+        "sentences": [
+          {
+            "id": "s4-1",
+            "en": "The first three habits develop personal responsibility and direction.",
+            "uz": "Dastlabki uchta odat shaxsiy mas’uliyat va yo‘nalishni rivojlantiradi.",
+            "start": 146.65,
+            "end": 150.73
+          },
+          {
+            "id": "s4-2",
+            "en": "The next three concern working effectively with other people.",
+            "uz": "Keyingi uchtasi boshqa odamlar bilan samarali ishlash haqida.",
+            "start": 150.97,
+            "end": 154.47
+          },
+          {
+            "id": "s4-3",
+            "en": "Independence matters, but many worthwhile results require cooperation.",
+            "uz": "Mustaqillik muhim, ammo ko‘plab arziydigan natijalar hamkorlikni talab qiladi.",
+            "start": 154.72,
+            "end": 159.64
+          },
+          {
+            "id": "s4-4",
+            "en": "Habit four: think win-win.",
+            "uz": "To‘rtinchi odat: «ikki tomon ham yutsin» deb o‘ylang.",
+            "start": 160.17,
+            "end": 163.01
+          },
+          {
+            "id": "s4-5",
+            "en": "Search for an arrangement that respects everyone's legitimate needs.",
+            "uz": "Har kimning asosli ehtiyojlarini hurmat qiladigan kelishuvni izlang.",
+            "start": 163.43,
+            "end": 167.41
+          },
+          {
+            "id": "s4-6",
+            "en": "Two students want to present onstage.",
+            "uz": "Ikki o‘quvchi sahnada chiqish qilishni xohlaydi.",
+            "start": 167.69,
+            "end": 170.19
+          },
+          {
+            "id": "s4-7",
+            "en": "Instead of turning it into a contest, they discuss their interests and divide meaningful speaking roles.",
+            "uz": "Buni musobaqaga aylantirish o‘rniga, ular o‘z qiziqishlarini muhokama qilib, mazmunli nutq rollarini bo‘lib olishadi.",
+            "start": 170.12,
+            "end": 176.53
+          },
+          {
+            "id": "s4-8",
+            "en": "Mutual benefit requires both consideration for others and the courage to explain your own needs.",
+            "uz": "O‘zaro manfaat ham boshqalarni hisobga olishni, ham o‘z ehtiyojlaringizni aytishga jasoratni talab qiladi.",
+            "start": 176.6,
+            "end": 182.92
+          },
+          {
+            "id": "s4-9",
+            "en": "Habit five: seek first to understand, then to be understood.",
+            "uz": "Beshinchi odat: avval tushunishga intiling, keyin tushunilishga.",
+            "start": 183.13,
+            "end": 188.07
+          },
+          {
+            "id": "s4-10",
+            "en": "One teammate has missed two meetings.",
+            "uz": "Jamoadoshlardan biri ikki yig‘ilishga kelmadi.",
+            "start": 188.33,
+            "end": 190.74
+          },
+          {
+            "id": "s4-11",
+            "en": "Before accusing him of not caring, ask what happened and listen to the answer.",
+            "uz": "Uni befarqlikda ayblashdan oldin nima bo‘lganini so‘rang va javobini tinglang.",
+            "start": 190.81,
+            "end": 195.65
+          },
+          {
+            "id": "s4-12",
+            "en": "Perhaps he has another commitment nobody knew about.",
+            "uz": "Balki uning hech kim bilmagan boshqa majburiyati bordir.",
+            "start": 195.85,
+            "end": 198.7
+          },
+          {
+            "id": "s4-13",
+            "en": "Understanding his situation doesn't remove the deadline.",
+            "uz": "Uning vaziyatini tushunish muddatni bekor qilmaydi.",
+            "start": 198.75,
+            "end": 202.17
+          },
+          {
+            "id": "s4-14",
+            "en": "It gives the team better information for making a fair plan.",
+            "uz": "Lekin jamoaga adolatli reja tuzish uchun yaxshiroq ma’lumot beradi.",
+            "start": 202.24,
+            "end": 205.81
+          },
+          {
+            "id": "s4-15",
+            "en": "Then explain your own concern clearly.",
+            "uz": "So‘ng o‘z xavotiringizni aniq tushuntiring.",
+            "start": 205.85,
+            "end": 208.78
+          },
+          {
+            "id": "s4-16",
+            "en": "Listening is the beginning of communication, not a requirement to remain silent about what matters to you.",
+            "uz": "Tinglash — muloqotning boshlanishi, siz uchun muhim narsa haqida jim turish majburiyati emas.",
+            "start": 208.83,
+            "end": 214.77
+          }
+        ]
+      },
+      {
+        "id": "s5",
+        "heading": {
+          "en": "Habits 6–7: synergy and renewal",
+          "uz": "6–7-odatlar: sinergiya va yangilanish"
+        },
+        "sentences": [
+          {
+            "id": "s5-1",
+            "en": "Habit six: synergize.",
+            "uz": "Oltinchi odat: sinergiya yarating.",
+            "start": 214.91,
+            "end": 217.49
+          },
+          {
+            "id": "s5-2",
+            "en": "Use differences to create a better option.",
+            "uz": "Farqlardan yaxshiroq yechim yaratish uchun foydalaning.",
+            "start": 217.52,
+            "end": 220.47
+          },
+          {
+            "id": "s5-3",
+            "en": "One student wants a technical demonstration; another wants something younger visitors can understand.",
+            "uz": "Bir o‘quvchi texnik namoyishni xohlaydi, boshqasi esa yoshroq tashrif buyuruvchilar ham tushuna oladigan narsani.",
+            "start": 220.58,
+            "end": 226.22
+          },
+          {
+            "id": "s5-4",
+            "en": "Together, they might build a simple interactive model with a deeper explanation available beside it.",
+            "uz": "Birgalikda ular oddiy interaktiv model yasab, yoniga chuqurroq tushuntirish qo‘yishlari mumkin.",
+            "start": 226.25,
+            "end": 232.14
+          },
+          {
+            "id": "s5-5",
+            "en": "Exploring their different perspectives produces an approach neither had proposed alone.",
+            "uz": "Turli nuqtai nazarlarni o‘rganish ularning hech biri yolg‘iz taklif qilmagan yondashuvni yuzaga chiqaradi.",
+            "start": 232.17,
+            "end": 237.14
+          },
+          {
+            "id": "s5-6",
+            "en": "Habit seven: sharpen the saw.",
+            "uz": "Yettinchi odat: arrani charxlang.",
+            "start": 237.18,
+            "end": 239.79
+          },
+          {
+            "id": "s5-7",
+            "en": "Maintain the person doing the work.",
+            "uz": "Ishni bajarayotgan insonni — o‘zingizni asrang.",
+            "start": 239.78,
+            "end": 242.27
+          },
+          {
+            "id": "s5-8",
+            "en": "Covey describes renewal across physical, mental, social and emotional, and spiritual dimensions.",
+            "uz": "Kovi yangilanishni jismoniy, aqliy, ijtimoiy-hissiy va ma’naviy jihatlarda tasvirlaydi.",
+            "start": 242.3,
+            "end": 248.95
+          },
+          {
+            "id": "s5-9",
+            "en": "In ordinary life, that can include sleep, exercise, learning, supportive relationships, and reflection on your values.",
+            "uz": "Oddiy hayotda bu uyqu, jismoniy mashq, o‘qish, qo‘llab-quvvatlovchi munosabatlar va qadriyatlaringiz haqida mulohaza qilishni o‘z ichiga olishi mumkin.",
+            "start": 249.06,
+            "end": 257.05
+          },
+          {
+            "id": "s5-10",
+            "en": "Constant exhaustion weakens your ability to practise the other habits.",
+            "uz": "Doimiy charchoq boshqa odatlarni amalda qo‘llash qobiliyatingizni susaytiradi.",
+            "start": 257.11,
+            "end": 261.33
+          },
+          {
+            "id": "s5-11",
+            "en": "These habits form an ongoing practice.",
+            "uz": "Bu odatlar uzluksiz amaliyotni tashkil etadi.",
+            "start": 261.43,
+            "end": 264.13
+          },
+          {
+            "id": "s5-12",
+            "en": "Take responsibility, choose a meaningful direction, give it time, cooperate with respect, and renew your capacity to continue.",
+            "uz": "Mas’uliyatni oling, mazmunli yo‘nalish tanlang, unga vaqt ajrating, hurmat bilan hamkorlik qiling va davom etish uchun kuchingizni tiklang.",
+            "start": 264.19,
+            "end": 273.0
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "heading": {
+          "en": "Your Bookly challenge",
+          "uz": "Sizning Bookly topshirig‘ingiz"
+        },
+        "sentences": [
+          {
+            "id": "s6-1",
+            "en": "For today's Bookly challenge, choose one important activity you've been postponing.",
+            "uz": "Bugungi Bookly topshirig‘i: kechiktirib kelayotgan bitta muhim ishni tanlang.",
+            "start": 273.12,
+            "end": 278.08
+          },
+          {
+            "id": "s6-2",
+            "en": "Decide what a useful result would look like, and reserve twenty minutes for it tomorrow.",
+            "uz": "Foydali natija qanday ko‘rinishini aniqlang va ertaga unga yigirma daqiqa ajrating.",
+            "start": 278.06,
+            "end": 283.02
+          },
+          {
+            "id": "s6-3",
+            "en": "If you need someone else's help, begin by understanding their situation.",
+            "uz": "Agar birovning yordami kerak bo‘lsa, avval uning vaziyatini tushunishdan boshlang.",
+            "start": 283.21,
+            "end": 287.62
+          },
+          {
+            "id": "s6-4",
+            "en": "Your next day can be busy and purposeful.",
+            "uz": "Ertangi kuningiz ham band, ham maqsadli bo‘lishi mumkin.",
+            "start": 287.73,
+            "end": 290.8
+          },
+          {
+            "id": "s6-5",
+            "en": "Give the important work a place before the day fills itself.",
+            "uz": "Kun o‘z-o‘zidan to‘lib ketmasidan oldin muhim ishga joy ajrating.",
+            "start": 290.81,
+            "end": 294.64
+          }
+        ]
+      }
+    ],
+    "vocab": [
+      {
+        "term": "proactive",
+        "forms": [
+          "proactivity"
+        ],
+        "uz": "proaktiv, tashabbuskor",
+        "definition": "acting early and taking responsibility instead of only reacting",
+        "example": "Be proactive and ask for help before the deadline.",
+        "exampleUz": "Tashabbuskor bo‘ling va muddatdan oldin yordam so‘rang."
+      },
+      {
+        "term": "responsibility",
+        "forms": [
+          "responsible"
+        ],
+        "uz": "mas’uliyat",
+        "definition": "a duty to deal with something",
+        "example": "She took responsibility for the slides.",
+        "exampleUz": "U slaydlar uchun mas’uliyatni o‘z zimmasiga oldi."
+      },
+      {
+        "term": "deadline",
+        "uz": "muddat, oxirgi muddat",
+        "definition": "the time by which something must be finished",
+        "example": "The deadline for the project is Friday.",
+        "exampleUz": "Loyihaning oxirgi muddati — juma."
+      },
+      {
+        "term": "outcome",
+        "uz": "natija",
+        "definition": "the result of an action",
+        "example": "Decide the outcome before you start.",
+        "exampleUz": "Boshlashdan oldin natijani aniqlab oling."
+      },
+      {
+        "term": "crisis",
+        "uz": "inqiroz, tang vaziyat",
+        "definition": "a time of serious difficulty",
+        "example": "Start early so the project never becomes a crisis.",
+        "exampleUz": "Loyiha tang vaziyatga aylanmasligi uchun erta boshlang."
+      },
+      {
+        "term": "cooperation",
+        "forms": [
+          "cooperate"
+        ],
+        "uz": "hamkorlik",
+        "definition": "working together towards the same goal",
+        "example": "Good results often need cooperation.",
+        "exampleUz": "Yaxshi natijalar ko‘pincha hamkorlikni talab qiladi."
+      },
+      {
+        "term": "perspective",
+        "forms": [
+          "perspectives"
+        ],
+        "uz": "nuqtai nazar",
+        "definition": "a way of seeing a situation",
+        "example": "Listen to a different perspective.",
+        "exampleUz": "Boshqacha nuqtai nazarni tinglang."
+      },
+      {
+        "term": "renewal",
+        "forms": [
+          "renew"
+        ],
+        "uz": "yangilanish, tiklanish",
+        "definition": "becoming fresh and strong again",
+        "example": "Sleep is an important part of renewal.",
+        "exampleUz": "Uyqu tiklanishning muhim qismi."
+      }
+    ],
+    "questions": [
+      {
+        "id": "q1",
+        "prompt": "According to Covey, what does it mean to be proactive?",
+        "promptUz": "Kovining fikricha, proaktiv bo‘lish nimani anglatadi?",
+        "options": [
+          "Waiting until someone tells you what to do",
+          "Putting energy into what you can influence",
+          "Blaming the circumstances you face"
+        ],
+        "optionsUz": [
+          "Kimdir nima qilishni aytmaguncha kutish",
+          "Kuchingizni ta’sir qila oladigan narsaga sarflash",
+          "Duch kelgan sharoitlarni ayblash"
+        ],
+        "answer": 1,
+        "explanationUz": "Birinchi odat: har bir to‘siqni nazorat qila olmaysiz, ammo javobingiz uchun mas’uliyatni olishingiz mumkin."
+      },
+      {
+        "id": "q2",
+        "prompt": "Why should the team test its demonstration before redesigning the poster?",
+        "promptUz": "Nega jamoa plakatni qayta bezashdan oldin namoyishni sinab ko‘rishi kerak?",
+        "options": [
+          "Important work needs time before it becomes a crisis",
+          "Posters are never useful",
+          "The teacher told them to"
+        ],
+        "optionsUz": [
+          "Muhim ishga inqirozga aylanmasidan oldin vaqt kerak",
+          "Plakatlar hech qachon foydali emas",
+          "O‘qituvchi shunday degan"
+        ],
+        "answer": 0,
+        "explanationUz": "Uchinchi odat — eng muhimini birinchi o‘ringa qo‘yish: muhim ishga shoshilinch bo‘lmasa ham vaqt ajrating."
+      },
+      {
+        "id": "q3",
+        "prompt": "What does “sharpen the saw” mean?",
+        "promptUz": "«Arrani charxlash» nimani anglatadi?",
+        "options": [
+          "Work without rest until the deadline",
+          "Buy better tools for the project",
+          "Renew yourself through sleep, exercise, learning, relationships and reflection"
+        ],
+        "optionsUz": [
+          "Muddatgacha dam olmasdan ishlash",
+          "Loyiha uchun yaxshiroq asboblar sotib olish",
+          "Uyqu, mashq, o‘qish, munosabatlar va mulohaza orqali o‘zingizni tiklash"
+        ],
+        "answer": 2,
+        "explanationUz": "Yettinchi odat ishni bajaradigan insonni asrash haqida: doimiy charchoq boshqa odatlarni zaiflashtiradi."
+      }
+    ],
+    "takeaway": {
+      "en": "Choose one important task you've been postponing, decide what a useful result looks like, and reserve twenty minutes for it tomorrow.",
+      "uz": "Kechiktirib kelayotgan bitta muhim ishni tanlang, foydali natija qanday bo‘lishini aniqlang va ertaga unga yigirma daqiqa ajrating."
+    },
+    "audio": {
+      "url": "/audio/7-habits-of-highly-effective-people.mp3",
+      "voice": "AI narrator (ElevenLabs)",
+      "durationSec": 294.69
+    }
+  }
+}

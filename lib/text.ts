@@ -174,3 +174,88 @@ export function slugify(input: string): string {
     .replace(/^-+|-+$/g, "")
     .slice(0, 80);
 }
+
+const ABBREVIATIONS = /(?:^|\s)(?:Mr|Mrs|Ms|Dr|Prof|St|Jr|Sr|vs|etc|e\.g|i\.e|No|Vol|p)\.$/i;
+
+/**
+ * Split prose into sentences. Paragraphs (blank-line separated) are kept as groups.
+ * Never splits inside quotation marks, and ignores common abbreviations.
+ */
+export function splitSentences(text: string): string[][] {
+  const paragraphs = text
+    .replace(/\r\n?/g, "\n")
+    .split(/\n\s*\n/)
+    .map((p) => p.replace(/\s*\n\s*/g, " ").trim())
+    .filter(Boolean);
+
+  return paragraphs.map((p) => {
+    const out: string[] = [];
+    let start = 0;
+    let inQuote = false;
+    for (let i = 0; i < p.length; i++) {
+      const ch = p[i];
+      if (ch === '"') inQuote = !inQuote;
+      else if (ch === "“" || ch === "«") inQuote = true;
+      else if (ch === "”" || ch === "»") inQuote = false;
+      if (ch !== "." && ch !== "!" && ch !== "?" && ch !== "…") continue;
+      // absorb trailing punctuation / closing quotes / brackets
+      let j = i + 1;
+      while (j < p.length && /[.!?…"”»’')\]]/.test(p[j])) {
+        if (p[j] === '"' || p[j] === "”" || p[j] === "»") inQuote = false;
+        j++;
+      }
+      if (inQuote) continue;
+      if (j < p.length && !/\s/.test(p[j])) continue;
+      const next = p.slice(j).trimStart();
+      if (next && !/^["“«‘'(\[]?[\p{Lu}\p{N}]/u.test(next)) continue;
+      if (ch === "." && ABBREVIATIONS.test(p.slice(start, i + 1))) continue;
+      out.push(p.slice(start, j).trim());
+      start = j;
+      i = j - 1;
+    }
+    const rest = p.slice(start).trim();
+    if (rest) out.push(rest);
+    return out;
+  });
+}
+
+export interface ImportedSection {
+  heading: { en: string; uz: string };
+  en: string[];
+  uz: string[];
+}
+
+/**
+ * Parse pasted lesson text. Sections start with a line "## English heading | O‘zbekcha sarlavha".
+ * The Uzbek text may repeat the "##" lines (pairs per section) or omit them (pairs in order).
+ */
+export function parseLessonText(english: string, uzbek: string): ImportedSection[] {
+  const bySection = (text: string) => {
+    const parts: { heading: string; body: string }[] = [];
+    let cur = { heading: "", body: "" };
+    for (const line of text.replace(/\r\n?/g, "\n").split("\n")) {
+      const m = line.match(/^\s*#{1,3}\s+(.*)$/);
+      if (m) {
+        if (cur.heading || cur.body.trim()) parts.push(cur);
+        cur = { heading: m[1].trim(), body: "" };
+      } else cur.body += line + "\n";
+    }
+    if (cur.heading || cur.body.trim()) parts.push(cur);
+    return parts.map((p) => ({ heading: p.heading, sentences: splitSentences(p.body).flat() }));
+  };
+  const en = bySection(english);
+  const uz = bySection(uzbek);
+  const uzHasSections = uz.length === en.length && uz.length > 1;
+  const uzFlat = uz.flatMap((s) => s.sentences);
+  let cursor = 0;
+  return en.map((sec, i) => {
+    const [hEn, hUz = ""] = sec.heading.split("|").map((x) => x.trim());
+    const uzSentences = uzHasSections ? uz[i].sentences : uzFlat.slice(cursor, cursor + sec.sentences.length);
+    cursor += sec.sentences.length;
+    return {
+      heading: { en: hEn || "", uz: hUz || (uzHasSections ? uz[i].heading : "") },
+      en: sec.sentences,
+      uz: uzSentences,
+    };
+  });
+}

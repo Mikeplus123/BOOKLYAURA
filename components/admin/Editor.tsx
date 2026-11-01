@@ -8,12 +8,13 @@ import { getSupabaseBrowser } from "@/lib/supabase/client";
 import { estimateTotalMinutes, flattenSentences, slugify, validateContent } from "@/lib/text";
 import type { Level, Section, SummaryContent, SummaryDocument, TopicId } from "@/lib/types";
 import { LEVELS, TOPICS } from "@/lib/types";
+import { TextImport } from "./TextImport";
 import { TimingTool } from "./TimingTool";
 
 type Tab = "meta" | "ai" | "text" | "audio" | "practice" | "publish";
 const TABS: { id: Tab; label: string }[] = [
   { id: "meta", label: "1. Ma’lumot" },
-  { id: "ai", label: "2. AI yordamchi" },
+  { id: "ai", label: "2. Matn kiritish" },
   { id: "text", label: "3. Matn va tarjima" },
   { id: "audio", label: "4. Audio va sinxron" },
   { id: "practice", label: "5. Lug‘at va savollar" },
@@ -128,7 +129,8 @@ export function Editor({ slug, localDocs }: { slug: string; localDocs: SummaryDo
   const exportJson = () => {
     if (!doc) return;
     const { id: _id, ...rest } = doc;
-    const blob = new Blob([JSON.stringify(rest, null, 2)], { type: "application/json" });
+    const { sourceHash: _hash, ...content } = rest.content;
+    const blob = new Blob([JSON.stringify({ ...rest, content }, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = `${doc.slug || "bookly-summary"}.json`;
@@ -254,7 +256,24 @@ export function Editor({ slug, localDocs }: { slug: string; localDocs: SummaryDo
       </div>
 
       {tab === "meta" && <MetaForm doc={doc} update={update} />}
-      {tab === "ai" && <AIBuilder doc={doc} apply={(next) => { setDoc(next); setDirty(true); setTab("text"); }} />}
+      {tab === "ai" && (
+        <>
+          <TextImport
+            hasContent={doc.content.sections.length > 0}
+            onApply={(sections, minutes) => {
+              update({ durationMin: doc.durationMin || minutes });
+              updateContent({ sections });
+              setTab("text");
+            }}
+          />
+          <details className="ai-details">
+            <summary>
+              <Icon name="sparkle" /> AI yordamchi (ixtiyoriy, ANTHROPIC_API_KEY kerak)
+            </summary>
+            <AIBuilder doc={doc} apply={(next) => { setDoc(next); setDirty(true); setTab("text"); }} />
+          </details>
+        </>
+      )}
       {tab === "text" && <SectionsEditor sections={doc.content.sections} onChange={(sections) => updateContent({ sections })} />}
       {tab === "audio" && <AudioPanel doc={doc} updateContent={updateContent} />}
       {tab === "practice" && <PracticeEditor content={doc.content} updateContent={updateContent} />}

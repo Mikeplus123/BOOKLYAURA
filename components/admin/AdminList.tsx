@@ -94,7 +94,7 @@ export function AdminList({ local }: { local: Row[] }) {
       ) : rows.length === 0 ? (
         <div className="empty">
           <h3>Hali dars yo‘q</h3>
-          <p>“Yangi dars” tugmasini bosing yoki <code>npm run seed</code> bilan namunalarni yuklang.</p>
+          <p>“Yangi dars” tugmasini bosing yoki <code>npm run seed</code> bilan repozitoriydagi darslarni yuklang.</p>
         </div>
       ) : (
         <div className="table-wrap">
