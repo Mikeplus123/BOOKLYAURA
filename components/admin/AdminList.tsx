@@ -11,6 +11,7 @@ interface Row extends Pick<SummaryMeta, "slug" | "title" | "titleUz" | "author" 
 }
 
 interface Stats {
+  waitlist: number;
   interest: number;
   completes: number;
   sessions: number;
@@ -41,14 +42,36 @@ export function AdminList({ local }: { local: Row[] }) {
       );
       const since = new Date(Date.now() - 30 * 864e5).toISOString();
       const count = (q: PromiseLike<{ count: number | null }>) => q.then((r) => r.count ?? 0);
-      const [interest, completes, sessions] = await Promise.all([
+      const [waitlist, interest, completes, sessions] = await Promise.all([
+        count(supabase.from("waitlist").select("*", { count: "exact", head: true }).eq("unsubscribed", false)),
         count(supabase.from("premium_interest").select("*", { count: "exact", head: true })),
         count(supabase.from("events").select("*", { count: "exact", head: true }).eq("name", "summary_complete").gte("created_at", since)),
         count(supabase.from("events").select("*", { count: "exact", head: true }).eq("name", "session_start").gte("created_at", since)),
       ]);
-      setStats({ interest, completes, sessions });
+      setStats({ waitlist, interest, completes, sessions });
     })();
   }, [supabase]);
+
+  // Download the launch waitlist as a CSV (opens in Excel / Google Sheets) for the launch announcement.
+  const exportWaitlist = async () => {
+    if (!supabase) return;
+    const { data, error } = await supabase
+      .from("waitlist")
+      .select("email,name,telegram,source,created_at,notified_at,unsubscribed")
+      .order("created_at", { ascending: true });
+    if (error || !data) return alert(`Yuklab bo‘lmadi: ${error?.message ?? ""}`);
+    const cols = ["email", "name", "telegram", "source", "created_at", "notified_at", "unsubscribed"] as const;
+    const esc = (v: unknown) => {
+      const t = v === null || v === undefined ? "" : String(v);
+      return /[",\n]/.test(t) ? `"${t.replace(/"/g, '""')}"` : t;
+    };
+    const csv = [cols.join(","), ...data.map((r) => cols.map((c) => esc((r as Record<string, unknown>)[c])).join(","))].join("\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" }));
+    a.download = `bookly-waitlist-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
 
   return (
     <div className="admin">
@@ -85,6 +108,13 @@ export function AdminList({ local }: { local: Row[] }) {
           <div className="stat">
             <strong>{stats.interest}</strong>
             <span>Premium qiziqish</span>
+          </div>
+          <div className="stat">
+            <strong>{stats.waitlist}</strong>
+            <span>kutish ro‘yxatida</span>
+            <button type="button" className="link-btn small" onClick={() => void exportWaitlist()}>
+              CSV yuklab olish
+            </button>
           </div>
         </div>
       )}

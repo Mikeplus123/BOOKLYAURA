@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { SummaryCard } from "@/components/SummaryCard";
 import { BilingualDemo } from "@/components/landing/BilingualDemo";
+import { WaitlistForm } from "@/components/WaitlistForm";
 import { getCatalog } from "@/lib/content";
 import { TOPICS } from "@/lib/types";
 
@@ -29,6 +30,7 @@ const FAQ = [
   { q: "Qisqacha mazmun kitobning o‘rnini bosadimi?", a: "Yo‘q. Bookly kitobning asosiy g‘oyalarini tanishtiradi va tushuntiradi. G‘oya yoqsa, to‘liq kitobni o‘qishni tavsiya qilamiz." },
   { q: "Ingliz tilim yaxshi emas. Menga mos keladimi?", a: "Ha. Har bir darsda daraja ko‘rsatilgan, tezlikni pasaytirish, jumlani qayta tinglash va o‘zbekcha tarjimani ko‘rish mumkin. Qiyin so‘zlarni bosib izohini ko‘rasiz." },
   { q: "Premium nimani beradi?", a: "Kengroq kutubxona, barcha mashqlar va ko‘proq AI tushuntirishlar. Narx va shartlar to‘lovdan oldin aniq ko‘rsatiladi; obunani istalgan vaqtda bekor qilish mumkin." },
+  { q: "Bookly hozir qaysi bosqichda?", a: "Bookly hozir beta (sinov) bosqichida: darslar bepul, fikr-mulohazalaringiz asosida yaxshilanmoqda. Rasmiy ishga tushish haqida xabar olish uchun kutish ro‘yxatiga yoziling." },
   { q: "Rus tili ham bo‘ladimi?", a: "Talab va kontent imkoniyatlariga qarab keyinroq qo‘shiladi. Hozir asosiy e’tibor o‘zbek tiliga qaratilgan." },
 ];
 
@@ -44,7 +46,7 @@ export default async function HomePage() {
         <div className="container hero-inner">
           <div className="hero-copy">
             <p className="eyebrow eyebrow-pill">
-              <span className="pulse-dot" aria-hidden /> O‘zbek tilida · ingliz tili amaliyoti bilan
+              <span className="pulse-dot" aria-hidden /> Beta · O‘zbek tilida · ingliz tili amaliyoti bilan
             </p>
             <h1 className="hero-title">
               5 daqiqada <span className="hl">katta g‘oyalar.</span>
@@ -232,6 +234,33 @@ export default async function HomePage() {
             <Link href="/premium" className="btn btn-gold btn-lg">
               Premium haqida <Icon name="arrow" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── waitlist ─── */}
+      <section className="section" id="waitlist" aria-labelledby="waitlist-title">
+        <div className="container">
+          <div className="waitlist-card">
+            <div className="waitlist-copy">
+              <p className="eyebrow eyebrow-gold">Kutish ro‘yxati</p>
+              <h2 className="section-title" id="waitlist-title">
+                Bookly hozir beta. Rasmiy ishga tushishni o‘tkazib yubormang.
+              </h2>
+              <p>Beta darslar hozir bepul. Ro‘yxatga yozilsangiz, to‘liq kutubxona va Premium ochilganda birinchilardan bo‘lib xabar olasiz.</p>
+              <ul className="waitlist-perks">
+                <li>
+                  <Icon name="star" size={16} /> Rasmiy ishga tushish haqida birinchi bo‘lib xabar
+                </li>
+                <li>
+                  <Icon name="book" size={16} /> Yangi kitoblar qo‘shilganda xabar
+                </li>
+                <li>
+                  <Icon name="check" size={16} /> Spam yo‘q — faqat muhim yangiliklar
+                </li>
+              </ul>
+            </div>
+            <WaitlistForm source="landing" />
           </div>
         </div>
       </section>

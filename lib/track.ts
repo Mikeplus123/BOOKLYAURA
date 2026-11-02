@@ -13,7 +13,8 @@ export type EventName =
   | "ai_explain"
   | "premium_view"
   | "premium_interest"
-  | "sign_in";
+  | "sign_in"
+  | "waitlist_join";
 
 let currentUserId: string | null = null;
 export function setTrackingUser(id: string | null) {
