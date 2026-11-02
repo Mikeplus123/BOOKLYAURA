@@ -25,8 +25,9 @@ export function SiteHeader() {
       </a>
       <header className="site-header">
         <div className="container header-inner">
-          <Link href="/" aria-label="Bookly — bosh sahifa">
+          <Link href="/" aria-label="Bookly — bosh sahifa" className="logo-link">
             <Logo />
+            <span className="beta-chip beta-chip-sm">BETA</span>
           </Link>
           <nav className="top-nav" aria-label="Asosiy menyu">
             {NAV.slice(1).map((n) => (

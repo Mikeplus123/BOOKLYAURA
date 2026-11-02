@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Icon } from "@/components/Icon";
 import { PremiumActions } from "@/components/PremiumActions";
+import { WaitlistForm } from "@/components/WaitlistForm";
 import { PREMIUM_PRICE_UZS, SUPPORT_TELEGRAM, formatUzs } from "@/lib/pricing";
 
 export const metadata: Metadata = {
@@ -60,6 +61,14 @@ export default function PremiumPage() {
           <PremiumActions />
         </article>
       </div>
+
+      <section className="premium-waitlist" aria-labelledby="pw-title">
+        <h2 className="h3" id="pw-title">
+          Rasmiy ishga tushishni kutyapsizmi?
+        </h2>
+        <p className="muted">Bookly hozir beta. Email qoldiring — Premium va to‘liq kutubxona ochilganda xabar beramiz.</p>
+        <WaitlistForm source="premium" compact />
+      </section>
 
       <section className="terms" aria-labelledby="terms-title">
         <h2 className="h3" id="terms-title">
