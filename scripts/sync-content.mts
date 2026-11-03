@@ -74,7 +74,13 @@ for (const file of files) {
     attribution: doc.attribution ?? "",
     sort_order: doc.sortOrder ?? 100,
   };
-  const { data, error } = await supabase.from("summaries").upsert(row, { onConflict: "slug" }).select("id").single();
+  let { data, error } = await supabase.from("summaries").upsert(row, { onConflict: "slug" }).select("id").single();
+  // Database without migration 0003 yet: sync everything except the cover image instead of failing the build.
+  if (error && /cover_image/.test(error.message)) {
+    console.warn(`[sync-content] ! ${doc.slug}: no cover_image column yet — run supabase/migrations/0003_reviews_and_covers.sql. Syncing without the cover.`);
+    const { cover_image: _skip, ...rest } = row;
+    ({ data, error } = await supabase.from("summaries").upsert(rest, { onConflict: "slug" }).select("id").single());
+  }
   if (error || !data) {
     fail(`${doc.slug}: ${error?.message}`);
     continue;

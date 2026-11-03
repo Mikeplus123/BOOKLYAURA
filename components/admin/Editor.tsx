@@ -178,9 +178,14 @@ export function Editor({ slug, localDocs }: { slug: string; localDocs: SummaryDo
       attribution: doc.attribution,
       sort_order: doc.sortOrder,
     };
-    const res = doc.id
-      ? await supabase.from("summaries").update(row).eq("id", doc.id).select("id").single()
-      : await supabase.from("summaries").insert(row).select("id").single();
+    const write = (r: Partial<typeof row>) =>
+      doc.id ? supabase.from("summaries").update(r).eq("id", doc.id).select("id").single() : supabase.from("summaries").insert(r).select("id").single();
+    let res = await write(row);
+    // Database without migration 0003 yet: save without the cover image rather than failing.
+    if (res.error && /cover_image/.test(res.error.message)) {
+      const { cover_image: _skip, ...rest } = row;
+      res = await write(rest);
+    }
     if (res.error || !res.data) {
       setSaving(false);
       setMessage({ kind: "error", text: res.error?.code === "23505" ? "Bu slug band. Boshqasini tanlang." : `Saqlab bo‘lmadi: ${res.error?.message}` });
