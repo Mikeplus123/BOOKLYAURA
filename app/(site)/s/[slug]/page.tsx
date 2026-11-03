@@ -5,7 +5,8 @@ import { BookCover } from "@/components/BookCover";
 import { Icon } from "@/components/Icon";
 import { SummaryActions } from "@/components/SummaryActions";
 import { SummaryCard } from "@/components/SummaryCard";
-import { getNextSuggestions, getSummary } from "@/lib/content";
+import { Reviews } from "@/components/Reviews";
+import { getNextSuggestions, getRatingStats, getSummary } from "@/lib/content";
 import { flattenSentences } from "@/lib/text";
 import { LANG_LABEL, levelLabel, topicLabel } from "@/lib/types";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
@@ -23,7 +24,7 @@ export default async function SummaryPage({ params }: Params) {
   const { slug } = await params;
   const { summary, viewer } = await getSummary(slug);
   if (!summary) notFound();
-  const next = await getNextSuggestions(summary);
+  const [next, ratingStats] = await Promise.all([getNextSuggestions(summary), getRatingStats(slug)]);
   const total = summary.content ? flattenSentences(summary.content.sections).length : 0;
 
   return (
@@ -64,6 +65,18 @@ export default async function SummaryPage({ params }: Params) {
             <li>
               <Icon name="globe" size={16} /> Ingliz tili: {levelLabel(summary.level)}
             </li>
+            {summary.content?.audioAlt && Object.keys(summary.content.audioAlt).length > 0 && (
+              <li>
+                <Icon name="headphones" size={16} /> Audio: EN · {Object.keys(summary.content.audioAlt).map((l) => l.toUpperCase()).join(" · ")}
+              </li>
+            )}
+            {ratingStats && ratingStats.count > 0 && (
+              <li>
+                <a href="#reviews" className="facts-rating">
+                  <Icon name="star" size={16} /> {ratingStats.avg.toFixed(1)} ({ratingStats.count} ta baho)
+                </a>
+              </li>
+            )}
           </ul>
           {summary.tagline && <p className="summary-tagline">{summary.tagline}</p>}
 
@@ -117,6 +130,7 @@ export default async function SummaryPage({ params }: Params) {
           </section>
         )}
         {summary.attribution && <p className="attribution">{summary.attribution}</p>}
+        <Reviews slug={slug} initialStats={ratingStats} />
       </div>
 
       {next.length > 0 && (

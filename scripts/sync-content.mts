@@ -67,6 +67,7 @@ for (const file of files) {
     is_free: doc.isFree,
     is_published: doc.isPublished,
     cover_color: doc.coverColor,
+    cover_image: doc.coverImage ?? null,
     tagline: doc.tagline ?? "",
     intro: doc.intro ?? "",
     learn_points: doc.learnPoints ?? [],

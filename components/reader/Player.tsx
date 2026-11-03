@@ -3,10 +3,10 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { Icon } from "@/components/Icon";
-import { flattenSentences, formatTime } from "@/lib/text";
+import { flattenSentences, formatTime, retimeSentences } from "@/lib/text";
 import { getState, saveProgress, setPrefs, setSaved, useBookly, type Theme } from "@/lib/store";
 import { track } from "@/lib/track";
-import type { ReadingMode, StudyFormat, Summary, SummaryContent, SummaryMeta } from "@/lib/types";
+import type { AudioLang, ReadingMode, StudyFormat, Summary, SummaryContent, SummaryMeta } from "@/lib/types";
 import { levelEn, topicLabel } from "@/lib/types";
 import { SentenceBlock } from "./SentenceBlock";
 import { RATES, usePlayback, type Playback } from "./usePlayback";
@@ -16,6 +16,21 @@ const MODES: { id: ReadingMode; label: string; hint: string }[] = [
   { id: "english", label: "Inglizcha", hint: "Faqat inglizcha; tarjimani bosib oching" },
   { id: "uzbek", label: "O‘zbekcha", hint: "Inglizcha audio + o‘zbekcha matn" },
 ];
+
+const AUDIO_LANGS: { id: AudioLang; label: string; hint: string }[] = [
+  { id: "en", label: "EN", hint: "Inglizcha audio" },
+  { id: "uz", label: "UZ", hint: "O‘zbekcha audio" },
+  { id: "ru", label: "RU", hint: "Ruscha audio" },
+];
+
+/** Reading-mode labels when the translation line is Russian (Russian narration). */
+const MODES_RU: typeof MODES = [
+  { id: "bilingual", label: "Ikki tilda", hint: "Inglizcha matn + ruscha tarjima" },
+  { id: "english", label: "Inglizcha", hint: "Faqat inglizcha; tarjimani bosib oching" },
+  { id: "uzbek", label: "Ruscha", hint: "Faqat ruscha matn" },
+];
+
+const audioLangKey = (slug: string) => `bookly:audio-lang:${slug}`;
 
 const FORMATS: { id: StudyFormat; label: string; icon: "book" | "headphones" | "both" }[] = [
   { id: "both", label: "O‘qib tinglash", icon: "both" },
@@ -41,6 +56,25 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
   const { content, slug } = summary;
   const sentences = useMemo(() => flattenSentences(content.sections), [content.sections]);
   const total = sentences.length;
+
+  // ─── narration language (English + optional Uzbek / Russian tracks) ───
+  const audioLangs = useMemo(
+    () => AUDIO_LANGS.filter((l) => l.id === "en" ? Boolean(content.audio?.url) : Boolean(content.audioAlt?.[l.id])),
+    [content.audio, content.audioAlt],
+  );
+  const [audioLang, setAudioLang] = useState<AudioLang>(() => {
+    try {
+      const saved = window.localStorage.getItem(audioLangKey(slug)) as AudioLang | null;
+      if (saved && saved !== "en" && content.audioAlt?.[saved]) return saved;
+    } catch {
+      /* storage unavailable */
+    }
+    return "en";
+  });
+  const altTrack = audioLang === "en" ? null : content.audioAlt?.[audioLang] ?? null;
+  const playSentences = useMemo(() => (altTrack ? retimeSentences(sentences, altTrack) : sentences), [sentences, altTrack]);
+  const trLang: "uz" | "ru" = audioLang === "ru" && sentences.some((s) => s.ru) ? "ru" : "uz";
+  const modes = trLang === "ru" ? MODES_RU : MODES;
   const prefs = useBookly((s) => s.prefs);
   const saved = useBookly((s) => s.library[slug]?.saved ?? false);
 
@@ -69,8 +103,8 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
   }, [slug, total]);
 
   const pb = usePlayback({
-    sentences,
-    audioUrl: content.audio?.url ?? null,
+    sentences: playSentences,
+    audioUrl: altTrack?.url ?? content.audio?.url ?? null,
     initialIndex: initial.index,
     initialRate: getState().prefs.rate,
     onFinish,
@@ -80,6 +114,27 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
     track("session_start", slug, { format, engine: pb.kind });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Switching narration keeps the current sentence and, if it was playing, carries on in the new language.
+  const resumeAfterSwitch = useRef(false);
+  const changeAudioLang = (l: AudioLang) => {
+    if (l === audioLang) return;
+    resumeAfterSwitch.current = pb.playing;
+    if (pb.playing) pb.pause();
+    setAudioLang(l);
+    try {
+      window.localStorage.setItem(audioLangKey(slug), l);
+    } catch {
+      /* storage unavailable */
+    }
+    track("mode_change", slug, { audioLang: l });
+  };
+  useEffect(() => {
+    if (!resumeAfterSwitch.current) return;
+    resumeAfterSwitch.current = false;
+    pb.goTo(pb.index, { play: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [audioLang]);
 
   // ─── progress saving ───
   const position = format === "read" && !pb.playing ? readIndex : pb.index;
@@ -253,12 +308,24 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
 
         <div className="reader-controls-row">
           <div className="segmented" role="radiogroup" aria-label="Matn rejimi">
-            {MODES.map((m) => (
+            {modes.map((m) => (
               <button key={m.id} type="button" role="radio" aria-checked={mode === m.id} title={m.hint} className={mode === m.id ? "is-on" : ""} onClick={() => changeMode(m.id)}>
                 {m.label}
               </button>
             ))}
           </div>
+          {audioLangs.length > 1 && format !== "read" && (
+            <div className="segmented segmented-sm audio-lang" role="radiogroup" aria-label="Audio tili">
+              <span className="audio-lang-icon" aria-hidden>
+                <Icon name="headphones" size={15} />
+              </span>
+              {audioLangs.map((l) => (
+                <button key={l.id} type="button" role="radio" aria-checked={audioLang === l.id} title={l.hint} className={audioLang === l.id ? "is-on" : ""} onClick={() => changeAudioLang(l.id)}>
+                  {l.label}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="format-switch" role="radiogroup" aria-label="O‘rganish usuli">
             {FORMATS.map((f) => (
               <button key={f.id} type="button" role="radio" aria-checked={format === f.id} aria-label={f.label} title={f.label} className={format === f.id ? "is-on" : ""} onClick={() => changeFormat(f.id)}>
@@ -312,14 +379,14 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
         )}
 
         {format === "listen" ? (
-          <ListenPanel pb={pb} total={total} sectionTitle={mode === "uzbek" ? currentSection?.heading.uz : currentSection?.heading.en} onShowText={() => changeFormat("both")} />
+          <ListenPanel pb={pb} total={total} sectionTitle={mode === "uzbek" ? (trLang === "ru" ? currentSection?.heading.ru ?? currentSection?.heading.uz : currentSection?.heading.uz) : currentSection?.heading.en} onShowText={() => changeFormat("both")} />
         ) : (
           <article className="reader-text" aria-label="Dars matni">
             {content.sections.map((section) => (
               <section key={section.id} className="reader-section">
                 <h2 className="reader-heading">
                   {mode !== "uzbek" && <span lang="en">{section.heading.en}</span>}
-                  {mode !== "english" && <small lang="uz">{section.heading.uz}</small>}
+                  {mode !== "english" && <small lang={trLang}>{trLang === "ru" ? section.heading.ru ?? section.heading.uz : section.heading.uz}</small>}
                 </h2>
                 {section.sentences.map((s) => {
                   const fs = sentences.find((x) => x.id === s.id)!;
@@ -329,6 +396,7 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
                         sentence={fs}
                         vocab={content.vocab}
                         mode={mode}
+                        trLang={trLang}
                         active={fs.index === activeIndex}
                         selected={fs.index === selected}
                         revealed={revealed.has(fs.index)}

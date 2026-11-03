@@ -19,6 +19,10 @@ for (const file of lessonFiles) {
     assert.ok(index.includes(`./${file}"`), `${file} is not imported in content/summaries/index.ts`);
     const audio = doc.content.audio?.url;
     if (audio?.startsWith("/")) assert.ok(existsSync(new URL(`../public${audio}`, import.meta.url)), `missing audio file public${audio}`);
+    for (const [lang, track] of Object.entries(doc.content.audioAlt ?? {})) {
+      if (track?.url.startsWith("/")) assert.ok(existsSync(new URL(`../public${track.url}`, import.meta.url)), `missing ${lang} audio file public${track.url}`);
+    }
+    if (doc.coverImage?.startsWith("/")) assert.ok(existsSync(new URL(`../public${doc.coverImage}`, import.meta.url)), `missing cover public${doc.coverImage}`);
   });
 }
 
@@ -36,6 +40,15 @@ for (const file of lessonFiles) {
       const last = flat[flat.length - 1];
       assert.ok((last.start ?? 0) < doc.content.audio.durationSec, "last sentence starts after the audio ends");
       for (const s of flat) assert.ok(s.end === undefined || s.end > (s.start ?? 0), `${s.id}: end before start`);
+    }
+    for (const [lang, track] of Object.entries(doc.content.audioAlt ?? {})) {
+      if (!track) continue;
+      for (const s of flat) {
+        const t = track.timings[s.id];
+        assert.ok(t, `${lang}: no timing for ${s.id}`);
+        assert.ok(t[1] > t[0], `${lang} ${s.id}: end before start`);
+        if (track.durationSec) assert.ok(t[0] < track.durationSec, `${lang} ${s.id}: starts after the audio ends`);
+      }
     }
   });
 }

@@ -38,6 +38,8 @@ export interface SummaryMeta {
   isFree: boolean;
   isPublished: boolean;
   coverColor: string;
+  /** Optional cover artwork (e.g. "/covers/<slug>.webp"). Falls back to the CSS-drawn cover. */
+  coverImage?: string | null;
   /** One-line hook in Uzbek. */
   tagline: string;
   /** Short Uzbek introduction: what the learner will get from this summary. */
@@ -48,6 +50,33 @@ export interface SummaryMeta {
   attribution: string;
   sortOrder: number;
   updatedAt?: string;
+  /** Learner ratings (from the summary_rating_stats view). Absent when there are none yet. */
+  rating?: RatingSummary;
+}
+
+/** Average learner rating for one summary. */
+export interface RatingSummary {
+  avg: number;
+  count: number;
+}
+
+/** Full rating breakdown shown on the summary page. `stars[0]` = number of 1★ ratings … `stars[4]` = 5★. */
+export interface RatingStats extends RatingSummary {
+  stars: [number, number, number, number, number];
+  comments: number;
+}
+
+/** One learner review (rating 1–5 + optional comment). */
+export interface Review {
+  id: string;
+  summarySlug: string;
+  userId: string;
+  rating: number;
+  comment: string | null;
+  authorName: string | null;
+  authorAvatar: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Sentence {
@@ -55,6 +84,8 @@ export interface Sentence {
   id: string;
   en: string;
   uz: string;
+  /** Russian translation (optional; only lessons with Russian audio have it). */
+  ru?: string;
   /** Audio start time in seconds (optional until timed). */
   start?: number;
   /** Audio end time in seconds (optional; defaults to next sentence start). */
@@ -65,7 +96,7 @@ export interface Sentence {
 
 export interface Section {
   id: string;
-  heading: { en: string; uz: string };
+  heading: { en: string; uz: string; ru?: string };
   sentences: Sentence[];
 }
 
@@ -97,12 +128,25 @@ export interface AudioTrack {
   durationSec?: number;
 }
 
+/** Narration languages. "en" is the main track (`content.audio` + sentence start/end). */
+export type AudioLang = "en" | "uz" | "ru";
+
+/**
+ * A narration in another language. Same sentences, its own timings:
+ * `timings[sentenceId] = [start, end]` in seconds.
+ */
+export interface AltAudioTrack extends AudioTrack {
+  timings: Record<string, [number, number]>;
+}
+
 export interface SummaryContent {
   sections: Section[];
   vocab: VocabItem[];
   questions: Question[];
   takeaway: { en: string; uz: string };
   audio: AudioTrack | null;
+  /** Optional Uzbek / Russian narrations of the same lesson (bilingual listening). */
+  audioAlt?: Partial<Record<"uz" | "ru", AltAudioTrack>>;
   /** Set by scripts/sync-content.mts: hash of the repository JSON this content came from. */
   sourceHash?: string;
 }

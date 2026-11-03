@@ -60,6 +60,7 @@ function rowsToDocument(row: any, content: SummaryContent | null): SummaryDocume
     isFree: row.is_free,
     isPublished: row.is_published,
     coverColor: row.cover_color,
+    coverImage: row.cover_image ?? null,
     tagline: row.tagline,
     intro: row.intro,
     learnPoints: row.learn_points ?? [],
@@ -170,6 +171,7 @@ export function Editor({ slug, localDocs }: { slug: string; localDocs: SummaryDo
       is_free: doc.isFree,
       is_published: doc.isPublished,
       cover_color: doc.coverColor,
+      cover_image: doc.coverImage || null,
       tagline: doc.tagline,
       intro: doc.intro,
       learn_points: doc.learnPoints,
@@ -366,6 +368,9 @@ function MetaForm({ doc, update }: { doc: SummaryDocument; update: (p: Partial<S
       </Field>
       <Field label="Muqova rangi">
         <input type="color" value={doc.coverColor} onChange={(e) => update({ coverColor: e.target.value })} />
+      </Field>
+      <Field label="Muqova rasmi (URL)" hint="Masalan /covers/slug.webp — bo‘sh bo‘lsa rangli muqova chiziladi">
+        <input type="text" value={doc.coverImage ?? ""} placeholder="/covers/slug.webp" onChange={(e) => update({ coverImage: e.target.value.trim() || null })} />
       </Field>
       <Field label="Tartib raqami" hint="Kichik raqam — yuqorida">
         <input type="number" value={doc.sortOrder} onChange={(e) => update({ sortOrder: Number(e.target.value) || 0 })} />
