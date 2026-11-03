@@ -7,6 +7,8 @@ interface Props {
   sentence: FlatSentence;
   vocab: VocabItem[];
   mode: ReadingMode;
+  /** Language of the translation line: Uzbek by default, Russian while listening to the Russian narration. */
+  trLang?: "uz" | "ru";
   active: boolean;
   selected: boolean;
   revealed: boolean;
@@ -15,10 +17,12 @@ interface Props {
 }
 
 /** One sentence pair. Memoised so playback ticks only re-render the sentences that change. */
-export const SentenceBlock = memo(function SentenceBlock({ sentence, vocab, mode, active, selected, revealed, onSelect, onVocab }: Props) {
+export const SentenceBlock = memo(function SentenceBlock({ sentence, vocab, mode, trLang = "uz", active, selected, revealed, onSelect, onVocab }: Props) {
   const tokens = useMemo(() => tokenize(sentence.en, vocab), [sentence.en, vocab]);
   const showEn = mode !== "uzbek";
   const showUz = mode === "bilingual" || mode === "uzbek" || revealed;
+  const translation = (trLang === "ru" && sentence.ru) || sentence.uz;
+  const translationLang = trLang === "ru" && sentence.ru ? "ru" : "uz";
 
   return (
     <div
@@ -27,7 +31,7 @@ export const SentenceBlock = memo(function SentenceBlock({ sentence, vocab, mode
       className={`sentence${active ? " is-active" : ""}${selected ? " is-selected" : ""}${mode === "uzbek" ? " is-uz-only" : ""}`}
       tabIndex={0}
       aria-current={active ? "true" : undefined}
-      aria-label={mode === "uzbek" ? sentence.uz : sentence.en}
+      aria-label={mode === "uzbek" ? translation : sentence.en}
       onClick={() => onSelect(sentence.index)}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
@@ -59,8 +63,8 @@ export const SentenceBlock = memo(function SentenceBlock({ sentence, vocab, mode
         </p>
       )}
       {showUz && (
-        <p className={`sentence-uz${mode === "english" ? " is-revealed" : ""}`} lang="uz">
-          {sentence.uz}
+        <p className={`sentence-uz${mode === "english" ? " is-revealed" : ""}`} lang={translationLang}>
+          {translation}
         </p>
       )}
     </div>

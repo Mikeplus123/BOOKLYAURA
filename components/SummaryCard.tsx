@@ -34,6 +34,14 @@ export function SummaryCard({ meta }: { meta: SummaryMeta }) {
           </span>
           <span aria-hidden>·</span>
           <span>{levelEn(meta.level)}</span>
+          {meta.rating && meta.rating.count > 0 && (
+            <>
+              <span aria-hidden>·</span>
+              <span className="card-rating" aria-label={`Baho ${meta.rating.avg.toFixed(1)}, ${meta.rating.count} ta`}>
+                <Icon name="star" size={13} /> {meta.rating.avg.toFixed(1)} <small>({meta.rating.count})</small>
+              </span>
+            </>
+          )}
         </p>
         <div className="card-foot">
           <span className="langs" aria-label="Tillar">

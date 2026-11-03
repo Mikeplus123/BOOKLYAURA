@@ -53,6 +53,25 @@ To keep a permanent copy in GitHub, press **JSON eksport** and follow B below.
    They check that every sentence pairs up, that every vocabulary word appears in the text, that the timings fit the audio, that the file is registered and that the audio exists.
 5. Commit and push to `main`. Vercel builds the site, and `scripts/sync-content.mts` copies the lesson into Supabase automatically.
 
+### Cover artwork (optional)
+
+Put the image in `public/covers/<slug>.webp` (3:4 portrait, e.g. 1086×1448) and set `"coverImage": "/covers/<slug>.webp"` in the JSON. Without it, Bookly draws a coloured cover from `coverColor`. In `/admin` the same field is **Muqova rasmi (URL)**.
+
+### Uzbek / Russian narration (optional)
+
+A lesson can carry extra narrations of the same text. Learners switch between them with the **EN · UZ · RU** buttons in the player, and the highlighted sentence stays in sync.
+
+1. Add the Russian text to each sentence as `"ru": "…"` (and `"ru"` to each section heading). The Uzbek audio uses the existing `"uz"` text, so make it match the narration word for word.
+2. Put the audio in `public/audio/<slug>.uz.mp3` / `<slug>.ru.mp3`.
+3. Add the tracks under `content.audioAlt`, with one `[start, end]` per sentence id:
+   ```json
+   "audioAlt": {
+     "ru": { "url": "/audio/<slug>.ru.mp3", "durationSec": 305.0, "timings": { "s1-1": [0, 2.66], "s1-2": [2.79, 9.67] } }
+   }
+   ```
+   The timings come from the same pause detection as the admin **Avtomatik sinxronlash** (`autoSync` in `lib/autosync.ts`).
+4. Add `"ru"` to `languages` so the RU badge shows. `npm test` checks that every sentence has a timing and that the files exist.
+
 ### How the sync behaves
 
 - A repository lesson is written to Supabase only when its JSON file **changed** since the last sync.

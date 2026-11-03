@@ -1,5 +1,5 @@
 // Pure helpers shared by the reader, admin tools and tests. No React, no I/O.
-import type { Section, Sentence, SummaryContent, VocabItem } from "./types";
+import type { AltAudioTrack, Section, Sentence, SummaryContent, VocabItem } from "./types";
 
 export interface FlatSentence extends Sentence {
   index: number;
@@ -12,6 +12,17 @@ export function flattenSentences(sections: Section[]): FlatSentence[] {
     for (const s of section.sentences) out.push({ ...s, index: out.length, sectionIndex });
   });
   return out;
+}
+
+/**
+ * The same sentences re-timed for another narration (Uzbek / Russian audio).
+ * Sentences without a timing in that track lose their start/end.
+ */
+export function retimeSentences<T extends Sentence>(sentences: T[], track: Pick<AltAudioTrack, "timings">): T[] {
+  return sentences.map((s) => {
+    const t = track.timings[s.id];
+    return { ...s, start: t?.[0], end: t?.[1] };
+  });
 }
 
 /** True when every sentence has a numeric start time in ascending order. */
@@ -150,6 +161,19 @@ export function validateContent(content: SummaryContent): ValidationIssue[] {
     if (timed === 0) issues.push({ level: "warning", message: "Audio bor, lekin jumlalar vaqtga bog‘lanmagan (sinxronlash kerak)." });
     else if (timed < flat.length) issues.push({ level: "warning", message: `${flat.length - timed} ta jumlaning boshlanish vaqti yo‘q.` });
     else if (!hasTimings(flat)) issues.push({ level: "error", message: "Jumla vaqtlari o‘sish tartibida emas." });
+  }
+
+  for (const [lang, track] of Object.entries(content.audioAlt ?? {})) {
+    if (!track) continue;
+    const name = lang.toUpperCase();
+    if (!track.url) issues.push({ level: "error", message: `${name} audio: fayl manzili yo‘q.` });
+    const missing = flat.filter((s) => !track.timings?.[s.id]).length;
+    if (missing) issues.push({ level: "error", message: `${name} audio: ${missing} ta jumlaning vaqti yo‘q.` });
+    else if (!hasTimings(retimeSentences(flat, track))) issues.push({ level: "error", message: `${name} audio: jumla vaqtlari o‘sish tartibida emas.` });
+    if (lang === "ru") {
+      const noRu = flat.filter((s) => !s.ru?.trim()).length;
+      if (noRu) issues.push({ level: "warning", message: `${noRu} ta jumlaning ruscha matni yo‘q.` });
+    }
   }
 
   content.questions.forEach((q, i) => {
