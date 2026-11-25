@@ -1,9 +1,15 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { isAppUserAgent } from "@/lib/platform";
 import { SUPABASE_KEY, SUPABASE_URL, isSupabaseConfigured } from "@/lib/supabase/config";
 
 // Keeps the Supabase auth session fresh on every navigation (rotates cookies before expiry).
 export async function proxy(request: NextRequest) {
+  // The content admin is a desktop tool; keep it out of the Android app.
+  if (request.nextUrl.pathname.startsWith("/admin") && isAppUserAgent(request.headers.get("user-agent"))) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   let response = NextResponse.next({ request });
   if (!isSupabaseConfigured) return response;
 
@@ -28,5 +34,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|brand/|audio/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp3|m4a|ogg|wav)$).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|sw\\.js|brand/|covers/|audio/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp3|m4a|ogg|wav)$).*)"],
 };

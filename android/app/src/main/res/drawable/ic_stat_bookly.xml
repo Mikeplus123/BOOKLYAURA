@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Notification icon: white book silhouette with the bookmark cut out (Android tints it). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M15,6h28a7,7 0,0 1,7 7v27a7,7 0,0 1,-7 7H15a9,9 0,0 1,-9 -9V15a9,9 0,0 1,9 -9z M29,6h9v15l-4.5,-3.4L29,21z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M22.5,43h27a5.5,5.5 0,0 1,0 11h-27a5.5,5.5 0,0 1,0 -11z M48.5,17a5.5,5.5 0,0 1,5.5 5.5v23a5.5,5.5 0,0 1,-11 0v-23a5.5,5.5 0,0 1,5.5 -5.5z" />
+</vector>

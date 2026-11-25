@@ -40,6 +40,8 @@ export interface Prefs {
   textSize: number;
   rate: number;
   mode: ReadingMode;
+  /** Vibration feedback on taps, answers and gestures (phones only). */
+  haptics: boolean;
   updatedAt: string;
 }
 
@@ -56,7 +58,7 @@ export type SyncStatus = "local" | "syncing" | "synced" | "error";
 const STORAGE_KEY = "bookly:v1";
 const EPOCH = new Date(0).toISOString();
 
-export const DEFAULT_PREFS: Prefs = { theme: "system", textSize: 1, rate: 1, mode: "bilingual", updatedAt: EPOCH };
+export const DEFAULT_PREFS: Prefs = { theme: "system", textSize: 1, rate: 1, mode: "bilingual", haptics: true, updatedAt: EPOCH };
 
 function emptyState(anonId = ""): BooklyState {
   return { progress: {}, library: {}, practice: {}, prefs: { ...DEFAULT_PREFS }, anonId };

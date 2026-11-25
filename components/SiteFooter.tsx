@@ -15,6 +15,11 @@ export function SiteFooter() {
           <Link href="/me">Mening darslarim</Link>
           <Link href="/login">Kirish</Link>
         </nav>
+        <nav className="footer-links footer-legal" aria-label="Huquqiy hujjatlar">
+          <Link href="/privacy">Maxfiylik siyosati</Link>
+          <Link href="/terms">Foydalanish shartlari</Link>
+          <Link href="/account/delete">Hisobni o‘chirish</Link>
+        </nav>
         <p className="footer-note">
           Bookly qisqacha mazmunlari kitob g‘oyalarini tanishtiradi va tushuntiradi — ular to‘liq kitobning o‘rnini bosmaydi. Har bir dars mualliflik huquqiga rioya qilgan holda tayyorlanadi.
         </p>

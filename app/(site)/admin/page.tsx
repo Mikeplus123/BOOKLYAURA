@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AdminGate } from "@/components/admin/AdminGate";
 import { AdminList } from "@/components/admin/AdminList";
+import { ReportsQueue } from "@/components/admin/ReportsQueue";
 import { LOCAL_SUMMARIES } from "@/content/summaries";
 import { canAccessAdmin } from "@/lib/admin-guard";
 
@@ -14,6 +15,7 @@ export default async function AdminPage() {
   return (
     <main id="main" className="container page">
       <AdminList local={local} />
+      <ReportsQueue />
     </main>
   );
 }

@@ -15,7 +15,14 @@ export type EventName =
   | "premium_interest"
   | "sign_in"
   | "waitlist_join"
-  | "review_submit";
+  | "review_submit"
+  | "content_report"
+  | "download"
+  | "reminder_set"
+  | "purchase_start"
+  | "purchase_complete"
+  | "app_open"
+  | "share";
 
 let currentUserId: string | null = null;
 export function setTrackingUser(id: string | null) {

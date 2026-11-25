@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Icon } from "@/components/Icon";
+import { PlayPremium } from "@/components/PlayPremium";
 import { PremiumActions } from "@/components/PremiumActions";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { PREMIUM_PRICE_UZS, SUPPORT_TELEGRAM, formatUzs } from "@/lib/pricing";
+import { isAppRequest } from "@/lib/platform-server";
 
 export const metadata: Metadata = {
   title: "Premium",
@@ -12,7 +14,10 @@ export const metadata: Metadata = {
 const FREE = ["Bir nechta to‘liq bepul dars", "O‘qish, tinglash va ikki tilli rejim", "Mashqlar (bepul darslarda)", "Kuniga 15 ta AI tushuntirish", "Progressni qurilmalararo saqlash"];
 const PREMIUM = ["Butun kutubxona — har oy yangi darslar", "Barcha darslarda mashq va lug‘at", "Kuniga 100 ta AI tushuntirish", "Yangi darslarga birinchilardan kirish", "Mavzuli o‘quv to‘plamlari (tez orada)"];
 
-export default function PremiumPage() {
+export default async function PremiumPage() {
+  // In the Android app, Premium is sold through Google Play Billing only (Play payments policy):
+  // no local-payment prices or wording, and the price comes from the Play Store.
+  const inApp = await isAppRequest();
   return (
     <main id="main" className="container page">
       <header className="page-head center">
@@ -41,7 +46,11 @@ export default function PremiumPage() {
             Premium <span className="badge badge-premium">Oylik</span>
           </h2>
           <p className="plan-price">
-            {PREMIUM_PRICE_UZS ? (
+            {inApp ? (
+              <>
+                Google Play orqali <small>oylik obuna</small>
+              </>
+            ) : PREMIUM_PRICE_UZS ? (
               <>
                 {formatUzs(PREMIUM_PRICE_UZS)} <small>/ oy</small>
               </>
@@ -58,10 +67,11 @@ export default function PremiumPage() {
               </li>
             ))}
           </ul>
-          <PremiumActions />
+          {inApp ? <PlayPremium /> : <PremiumActions />}
         </article>
       </div>
 
+      {!inApp && (
       <section className="premium-waitlist" aria-labelledby="pw-title">
         <h2 className="h3" id="pw-title">
           Rasmiy ishga tushishni kutyapsizmi?
@@ -69,6 +79,7 @@ export default function PremiumPage() {
         <p className="muted">Bookly hozir beta. Email qoldiring — Premium va to‘liq kutubxona ochilganda xabar beramiz.</p>
         <WaitlistForm source="premium" compact />
       </section>
+      )}
 
       <section className="terms" aria-labelledby="terms-title">
         <h2 className="h3" id="terms-title">
@@ -78,17 +89,17 @@ export default function PremiumPage() {
           <div>
             <Icon name="sync" />
             <h3>Yangilanish</h3>
-            <p>Obuna har oy avtomatik yangilanadi. Yangilanishdan oldin eslatma yuboramiz.</p>
+            <p>{inApp ? "Obuna har oy Google Play orqali avtomatik yangilanadi." : "Obuna har oy avtomatik yangilanadi. Yangilanishdan oldin eslatma yuboramiz."}</p>
           </div>
           <div>
             <Icon name="close" />
             <h3>Bekor qilish</h3>
-            <p>Istalgan vaqtda bekor qiling — to‘langan davr oxirigacha Premium ishlayveradi.</p>
+            <p>{inApp ? "Google Play → Obunalar bo‘limida istalgan vaqtda bekor qiling" : "Istalgan vaqtda bekor qiling"} — to‘langan davr oxirigacha Premium ishlayveradi.</p>
           </div>
           <div>
             <Icon name="lock" />
             <h3>Xavfsiz to‘lov</h3>
-            <p>To‘lov mahalliy to‘lov tizimlari orqali amalga oshiriladi. Karta ma’lumotlari Bookly’da saqlanmaydi.</p>
+            <p>{inApp ? "To‘lovni Google Play xavfsiz amalga oshiradi." : "To‘lov mahalliy to‘lov tizimlari orqali amalga oshiriladi."} Karta ma’lumotlari Bookly’da saqlanmaydi.</p>
           </div>
           <div>
             <Icon name="info" />

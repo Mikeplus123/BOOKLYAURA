@@ -1,12 +1,14 @@
 "use client";
 import Link from "next/link";
 import { useEffect } from "react";
+import { haptic } from "@/lib/native/haptics";
 import { setSaved, useBookly } from "@/lib/store";
 import { track } from "@/lib/track";
 import { Icon } from "./Icon";
+import { ShareButton } from "./ShareButton";
 
 /** Start / continue buttons + save toggle on the summary page (reads local progress). */
-export function SummaryActions({ slug, total, hasAudio }: { slug: string; total: number; hasAudio: boolean }) {
+export function SummaryActions({ slug, title, total, hasAudio }: { slug: string; title: string; total: number; hasAudio: boolean }) {
   const progress = useBookly((s) => s.progress[slug]);
   const saved = useBookly((s) => s.library[slug]?.saved ?? false);
   const practice = useBookly((s) => s.practice[slug]);
@@ -39,7 +41,10 @@ export function SummaryActions({ slug, total, hasAudio }: { slug: string; total:
         </Link>
       </div>
       <div className="summary-actions-row">
-        <button type="button" className={`btn btn-soft${saved ? " is-on" : ""}`} aria-pressed={saved} onClick={() => setSaved(slug, !saved)}>
+        <button type="button" className={`btn btn-soft${saved ? " is-on" : ""}`} aria-pressed={saved} onClick={() => {
+            haptic(saved ? "soft" : "success");
+            setSaved(slug, !saved);
+          }}>
           <Icon name={saved ? "bookmark-filled" : "bookmark"} /> {saved ? "Saqlangan" : "Saqlash"}
         </button>
         {progress?.completedAt && (
@@ -47,6 +52,7 @@ export function SummaryActions({ slug, total, hasAudio }: { slug: string; total:
             <Icon name="target" /> Mashq {practice ? `· ${practice.bestScore}/${practice.total}` : ""}
           </Link>
         )}
+        <ShareButton slug={slug} title={title} />
         <span className="muted small">{total} ta jumla</span>
       </div>
     </div>

@@ -1,8 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useMemo } from "react";
-import { useBookly, useSyncStatus } from "@/lib/store";
+import { getState, useBookly, useSyncStatus } from "@/lib/store";
+import { currentStreak } from "@/lib/streak";
 import type { SummaryMeta } from "@/lib/types";
+import { AppSettings } from "./AppSettings";
 import { useAuth } from "./AuthProvider";
 import { Icon } from "./Icon";
 import { SummaryCard } from "./SummaryCard";
@@ -51,6 +53,8 @@ export function MyLibrary({ catalog }: { catalog: SummaryMeta[] }) {
   const minutes = completed.reduce((acc, s) => acc + s.durationMin, 0);
   const practiceStats = Object.values(practice).reduce((acc, p) => ({ correct: acc.correct + p.bestScore, total: acc.total + p.total }), { correct: 0, total: 0 });
   const suggestion = catalog.find((s) => !progress[s.slug] && (s.isFree || isPremium));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const streak = useMemo(() => currentStreak(getState()), [progress, practice]);
 
   return (
     <div className="me">
@@ -89,6 +93,12 @@ export function MyLibrary({ catalog }: { catalog: SummaryMeta[] }) {
       </section>
 
       <section className="stats" aria-label="Statistika">
+        <div className={`stat stat-streak${streak.days > 0 ? " is-on" : ""}`}>
+          <strong>
+            <Icon name="flame" size={22} /> {streak.days}
+          </strong>
+          <span>{streak.today ? "kunlik seriya — bugun bajarildi!" : streak.days ? "kunlik seriya — bugun ham davom eting" : "kunlik seriya"}</span>
+        </div>
         <div className="stat">
           <strong>{completed.length}</strong>
           <span>tugatilgan dars</span>
@@ -133,6 +143,8 @@ export function MyLibrary({ catalog }: { catalog: SummaryMeta[] }) {
           )}
         </div>
       )}
+
+      <AppSettings />
     </div>
   );
 }
@@ -145,7 +157,7 @@ function Shelf({ title, items, empty }: { title: string; items: SummaryMeta[]; e
         {title} {items.length > 0 && <span className="chip-count">{items.length}</span>}
       </h2>
       {items.length ? (
-        <div className="grid-cards">
+        <div className="grid-cards shelf-scroll">
           {items.map((s) => (
             <SummaryCard key={s.slug} meta={s} />
           ))}
