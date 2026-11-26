@@ -5,6 +5,7 @@ import { getSupabaseBrowser } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { attachSync, detachSync } from "@/lib/store";
 import { setTrackingUser, track } from "@/lib/track";
+import { isNativeApp } from "@/lib/platform";
 
 interface Profile {
   display_name: string | null;
@@ -21,7 +22,9 @@ interface AuthValue {
   isPremium: boolean;
   isAdmin: boolean;
   signInWithGoogle: (next?: string) => Promise<void>;
-  signOut: () => Promise<void>;
+  /** Last native sign-in error (Android app), shown by the login UI. */
+  signInError: string | null;
+  signOut: (redirectTo?: string) => Promise<void>;
   refreshEntitlements: () => Promise<void>;
 }
 
@@ -33,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isPremium, setIsPremium] = useState(false);
+  const [signInError, setSignInError] = useState<string | null>(null);
 
   const loadEntitlements = useCallback(
     async (u: User | null) => {
@@ -87,7 +91,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async (next = "/me") => {
       if (!supabase) return;
       const safeNext = next.startsWith("/") && !next.startsWith("//") ? next : "/me";
-      track("sign_in", undefined, { provider: "google" });
+      track("sign_in", undefined, { provider: "google", native: isNativeApp() });
+      setSignInError(null);
+
+      if (isNativeApp()) {
+        // Android app: native account picker → ID token → Supabase session (no WebView OAuth).
+        const { nativeGoogleSignIn } = await import("@/lib/native/auth");
+        const res = await nativeGoogleSignIn(supabase);
+        if (!res.ok) {
+          if (!res.cancelled) setSignInError(res.error);
+          return;
+        }
+        const { haptic } = await import("@/lib/native/haptics");
+        haptic("success");
+        // Full navigation so server-rendered pages pick up the new session cookies.
+        window.location.assign(safeNext);
+        return;
+      }
+
       await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
@@ -99,12 +120,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [supabase],
   );
 
-  const signOut = useCallback(async () => {
-    if (!supabase) return;
-    await detachSync();
-    await supabase.auth.signOut();
-    window.location.assign("/");
-  }, [supabase]);
+  const signOut = useCallback(
+    async (redirectTo = "/") => {
+      if (!supabase) return;
+      await detachSync();
+      await supabase.auth.signOut();
+      if (isNativeApp()) {
+        const [{ nativeGoogleSignOut }, { billingLogOut }] = await Promise.all([import("@/lib/native/auth"), import("@/lib/native/billing")]);
+        await Promise.all([nativeGoogleSignOut(), billingLogOut()]);
+      }
+      window.location.assign(redirectTo);
+    },
+    [supabase],
+  );
 
   const refreshEntitlements = useCallback(() => loadEntitlements(user), [loadEntitlements, user]);
 
@@ -117,10 +145,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isPremium,
       isAdmin: profile?.role === "admin",
       signInWithGoogle,
+      signInError,
       signOut,
       refreshEntitlements,
     }),
-    [loading, user, profile, isPremium, signInWithGoogle, signOut, refreshEntitlements],
+    [loading, user, profile, isPremium, signInWithGoogle, signInError, signOut, refreshEntitlements],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -99,7 +99,7 @@ export default async function SummaryPage({ params }: Params) {
               </div>
             </div>
           ) : (
-            <SummaryActions slug={slug} total={total} hasAudio={Boolean(summary.content?.audio?.url)} />
+            <SummaryActions slug={slug} title={summary.titleUz || summary.title} total={total} hasAudio={Boolean(summary.content?.audio?.url)} />
           )}
         </div>
       </div>

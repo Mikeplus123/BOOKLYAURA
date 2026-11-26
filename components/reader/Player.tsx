@@ -3,12 +3,19 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { Icon } from "@/components/Icon";
+import { ReportSheet } from "@/components/ReportSheet";
 import { flattenSentences, formatTime, retimeSentences } from "@/lib/text";
 import { getState, saveProgress, setPrefs, setSaved, useBookly, type Theme } from "@/lib/store";
 import { track } from "@/lib/track";
 import type { AudioLang, ReadingMode, StudyFormat, Summary, SummaryContent, SummaryMeta } from "@/lib/types";
 import { levelEn, topicLabel } from "@/lib/types";
+import { haptic } from "@/lib/native/haptics";
+import { rememberTitle } from "@/lib/native/reminders";
+import { useSwipe } from "@/lib/useSwipe";
+import { DownloadButton } from "@/components/DownloadButton";
+import { NowPlaying, SLEEP_OPTIONS, type SleepMode } from "./NowPlaying";
 import { SentenceBlock } from "./SentenceBlock";
+import { useMediaSession } from "./useMediaSession";
 import { RATES, usePlayback, type Playback } from "./usePlayback";
 
 const MODES: { id: ReadingMode; label: string; hint: string }[] = [
@@ -50,9 +57,11 @@ interface Props {
   summary: Summary & { content: SummaryContent };
   initialFormat?: StudyFormat;
   nextUp: SummaryMeta[];
+  /** Rendered from a downloaded copy (offline reader): hide online-only actions. */
+  offline?: boolean;
 }
 
-export default function Player({ summary, initialFormat, nextUp }: Props) {
+export default function Player({ summary, initialFormat, nextUp, offline = false }: Props) {
   const { content, slug } = summary;
   const sentences = useMemo(() => flattenSentences(content.sections), [content.sections]);
   const total = sentences.length;
@@ -96,7 +105,12 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
   const [completed, setCompleted] = useState(false);
   const [readIndex, setReadIndex] = useState(initial.index);
 
+  const [npOpen, setNpOpen] = useState(false);
+  const [sleep, setSleep] = useState<SleepMode>({ kind: "off" });
+  const [sleepToast, setSleepToast] = useState(false);
+
   const onFinish = useCallback(() => {
+    haptic("success");
     setCompleted(true);
     saveProgress(slug, { sentenceIndex: total - 1, percent: 100, completedAt: new Date().toISOString() });
     track("summary_complete", slug, { via: "audio" });
@@ -112,8 +126,62 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
 
   useEffect(() => {
     track("session_start", slug, { format, engine: pb.kind });
+    rememberTitle(slug, summary.titleUz || summary.title);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // ─── lock screen / notification controls ───
+  const sectionHeading = content.sections[playSentences[pb.index]?.sectionIndex ?? 0]?.heading;
+  useMediaSession(
+    pb,
+    {
+      title: summary.titleUz || summary.title,
+      artist: `${summary.author} · Bookly`,
+      album: sectionHeading ? sectionHeading.uz || sectionHeading.en : "Bookly",
+      coverImage: summary.coverImage,
+      coverColor: summary.coverColor,
+    },
+    pb.kind === "audio" || pb.kind === "audio-untimed",
+  );
+
+  // ─── sleep timer (fades out over the last 8 seconds; also runs with the screen off) ───
+  const [clock, setClock] = useState(() => Date.now());
+  useEffect(() => {
+    if (sleep.kind !== "minutes") return;
+    const t = setInterval(() => setClock(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, [sleep]);
+  useEffect(() => {
+    const a = pb.audioElement.current;
+    const stop = () => {
+      pb.pause();
+      if (a) a.volume = 1;
+      setSleep({ kind: "off" });
+      setSleepToast(true);
+      haptic("soft");
+    };
+    if (sleep.kind === "minutes") {
+      const left = sleep.until - Date.now();
+      if (left <= 0) stop();
+      else if (a) a.volume = left < 8000 ? Math.max(0.05, left / 8000) : 1;
+    } else if (sleep.kind === "section" && pb.playing && playSentences[pb.index]?.sectionIndex !== sleep.sectionIndex) {
+      stop();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clock, pb.time, pb.index, sleep]);
+  const chooseSleep = (id: string) => {
+    const opt = SLEEP_OPTIONS.find((o) => o.id === id);
+    const a = pb.audioElement.current;
+    if (a) a.volume = 1;
+    if (!opt || id === "off") setSleep({ kind: "off" });
+    else if (opt.section) setSleep({ kind: "section", sectionIndex: playSentences[pb.index]?.sectionIndex ?? 0 });
+    else if (opt.minutes) setSleep({ kind: "minutes", minutes: opt.minutes, until: Date.now() + opt.minutes * 60_000 });
+  };
+  const sleepLeft = sleep.kind === "minutes" ? formatTime(Math.max(0, (sleep.until - clock) / 1000)) : null;
+  const toggleSaved = () => {
+    haptic(saved ? "soft" : "success");
+    setSaved(slug, !saved);
+  };
 
   // Switching narration keeps the current sentence and, if it was playing, carries on in the new language.
   const resumeAfterSwitch = useRef(false);
@@ -225,6 +293,7 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
     });
 
   const markRead = () => {
+    haptic("success");
     setCompleted(true);
     saveProgress(slug, { sentenceIndex: total - 1, percent: 100, completedAt: new Date().toISOString(), mode, format });
     track("summary_complete", slug, { via: "reading" });
@@ -283,9 +352,16 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
       {/* ─── top bar ─── */}
       <header className="reader-top">
         <div className="reader-top-inner">
-          <Link href={`/s/${slug}`} className="icon-btn" aria-label="Orqaga">
-            <Icon name="back" />
-          </Link>
+          {offline ? (
+            // Full navigation: the offline page reads its state from the URL on load.
+            <a href="/offline" className="icon-btn" aria-label="Orqaga">
+              <Icon name="back" />
+            </a>
+          ) : (
+            <Link href={`/s/${slug}`} className="icon-btn" aria-label="Orqaga">
+              <Icon name="back" />
+            </Link>
+          )}
           <div className="reader-title">
             <strong>{summary.titleUz || summary.title}</strong>
             <span>
@@ -297,10 +373,11 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
             className={`icon-btn${saved ? " is-on" : ""}`}
             aria-pressed={saved}
             aria-label={saved ? "Saqlanganlardan olib tashlash" : "Saqlash"}
-            onClick={() => setSaved(slug, !saved)}
+            onClick={toggleSaved}
           >
             <Icon name={saved ? "bookmark-filled" : "bookmark"} />
           </button>
+          {!offline && <DownloadButton summary={summary} nextUp={nextUp} variant="icon" />}
           <button type="button" className="icon-btn" aria-label="Sozlamalar" aria-expanded={settingsOpen} onClick={() => setSettingsOpen((v) => !v)}>
             <Icon name="settings" />
           </button>
@@ -348,6 +425,15 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
         />
       )}
 
+      {sleepToast && (
+        <div className="toast" role="status">
+          <Icon name="moon" /> <span>Uyqu taymeri: ijro to‘xtatildi. Yaxshi dam oling!</span>
+          <button type="button" className="icon-btn sm" aria-label="Yopish" onClick={() => setSleepToast(false)}>
+            <Icon name="close" />
+          </button>
+        </div>
+      )}
+
       {showResume && !isDone && (
         <div className="toast" role="status">
           <span>Oxirgi joyingizdan davom etyapsiz ({initial.index + 1}/{total}).</span>
@@ -379,7 +465,7 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
         )}
 
         {format === "listen" ? (
-          <ListenPanel pb={pb} total={total} sectionTitle={mode === "uzbek" ? (trLang === "ru" ? currentSection?.heading.ru ?? currentSection?.heading.uz : currentSection?.heading.uz) : currentSection?.heading.en} onShowText={() => changeFormat("both")} />
+          <ListenPanel pb={pb} total={total} sectionTitle={mode === "uzbek" ? (trLang === "ru" ? currentSection?.heading.ru ?? currentSection?.heading.uz : currentSection?.heading.uz) : currentSection?.heading.en} onShowText={() => changeFormat("both")} onExpand={() => setNpOpen(true)} />
         ) : (
           <article className="reader-text" aria-label="Dars matni">
             {content.sections.map((section) => (
@@ -431,7 +517,7 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
           </article>
         )}
 
-        {isDone && <FinishPanel slug={slug} hasPractice={content.questions.length > 0 || content.vocab.length > 0} takeaway={content.takeaway} nextUp={nextUp} onRestart={restart} />}
+        {isDone && <FinishPanel offline={offline} slug={slug} hasPractice={content.questions.length > 0 || content.vocab.length > 0} takeaway={content.takeaway} nextUp={nextUp} onRestart={restart} />}
       </main>
 
       {!follow && pb.playing && format !== "listen" && (
@@ -449,7 +535,19 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
 
       {/* ─── player bar ─── */}
       {format !== "read" && pb.kind !== "none" ? (
-        <PlayerBar pb={pb} progressPct={progressPct} total={total} onRate={setRate} />
+        <PlayerBar
+          pb={pb}
+          progressPct={progressPct}
+          total={total}
+          onRate={setRate}
+          onExpand={() => {
+            haptic("soft");
+            setNpOpen(true);
+          }}
+          sectionTitle={currentSection?.heading.uz || currentSection?.heading.en}
+          cover={{ color: summary.coverColor, image: summary.coverImage }}
+          sleepLeft={sleep.kind === "off" ? null : sleepLeft ?? "bo‘lim"}
+        />
       ) : format === "read" && pb.kind !== "none" ? (
         <div className="read-mode-bar">
           <button type="button" className="btn btn-soft" onClick={() => changeFormat("both")}>
@@ -458,6 +556,30 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
         </div>
       ) : null}
 
+      {npOpen && pb.kind !== "none" && (
+        <NowPlaying
+          pb={pb}
+          meta={summary}
+          sentences={playSentences}
+          sectionTitle={currentSection?.heading.uz || currentSection?.heading.en}
+          trLang={trLang}
+          saved={saved}
+          onSave={() => setSaved(slug, !saved)}
+          onRate={setRate}
+          audioLangs={audioLangs}
+          audioLang={audioLang}
+          onAudioLang={changeAudioLang}
+          sleep={sleep}
+          sleepLeft={sleepLeft}
+          onSleep={chooseSleep}
+          onShowText={() => {
+            setNpOpen(false);
+            if (format === "listen") changeFormat("both");
+          }}
+          onClose={() => setNpOpen(false)}
+        />
+      )}
+
       {vocabOpen && <VocabPopover item={content.vocab[vocabOpen.index]} rect={vocabOpen.rect} onClose={() => setVocabOpen(null)} />}
     </div>
   );
@@ -465,7 +587,25 @@ export default function Player({ summary, initialFormat, nextUp }: Props) {
 
 // ─── sub-components ─────────────────────────────────────────────────────────
 
-function PlayerBar({ pb, progressPct, total, onRate }: { pb: Playback; progressPct: number; total: number; onRate: (r: number) => void }) {
+function PlayerBar({
+  pb,
+  progressPct,
+  total,
+  onRate,
+  onExpand,
+  sectionTitle,
+  cover,
+  sleepLeft,
+}: {
+  pb: Playback;
+  progressPct: number;
+  total: number;
+  onRate: (r: number) => void;
+  onExpand: () => void;
+  sectionTitle?: string;
+  cover: { color: string; image?: string | null };
+  sleepLeft: string | null;
+}) {
   const barRef = useRef<HTMLDivElement>(null);
   const seekFromEvent = (clientX: number) => {
     const rect = barRef.current?.getBoundingClientRect();
@@ -473,10 +613,41 @@ function PlayerBar({ pb, progressPct, total, onRate }: { pb: Playback; progressP
   };
   const cycleRate = () => {
     const i = RATES.indexOf(pb.rate as (typeof RATES)[number]);
+    haptic("select");
     onRate(RATES[(i + 1) % RATES.length] ?? 1);
   };
+  // Swipe the bar left/right to skip sentences; swipe the top row up to open the full player.
+  const skip = useSwipe({
+    axis: "x",
+    disabled: pb.kind === "audio-untimed",
+    onSwipe: (dir) => {
+      haptic("select");
+      if (dir === "left") pb.next();
+      else pb.prev();
+    },
+  });
+  const up = useSwipe({ axis: "y", allow: ["up"], threshold: 40, onSwipe: onExpand });
   return (
-    <div className="player-bar" role="region" aria-label="Audio pleyer">
+    <div
+      className={`player-bar${skip.dragging ? " is-dragging" : ""}`}
+      role="region"
+      aria-label="Audio pleyer"
+      {...skip.handlers}
+      style={skip.offset ? { transform: `translateX(${skip.offset / 3}px)` } : undefined}
+    >
+      <button type="button" className="pb-now" onClick={onExpand} aria-label="Katta pleyerni ochish" {...up.handlers}>
+        <span className="pb-thumb" style={{ background: cover.color }} aria-hidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {cover.image && <img src={cover.image} alt="" />}
+        </span>
+        <span className="pb-now-text">
+          <strong>{sectionTitle}</strong>
+          <small>
+            {pb.index + 1} / {total} jumla{sleepLeft ? <> · <Icon name="moon" size={11} /> {sleepLeft}</> : null}
+          </small>
+        </span>
+        <Icon name="chevron-up" />
+      </button>
       <div className="player-progress">
         <span className="time">{formatTime(pb.time)}</span>
         <div
@@ -510,19 +681,48 @@ function PlayerBar({ pb, progressPct, total, onRate }: { pb: Playback; progressP
         <button type="button" className="chip-btn" onClick={cycleRate} aria-label={`Tezlik ${pb.rate}×`}>
           {pb.rate}×
         </button>
-        <button type="button" className="icon-btn lg" onClick={pb.prev} aria-label="Oldingi jumla" disabled={pb.kind === "audio-untimed"}>
+        <button
+          type="button"
+          className="icon-btn lg"
+          onClick={() => {
+            haptic("select");
+            pb.prev();
+          }}
+          aria-label="Oldingi jumla"
+          disabled={pb.kind === "audio-untimed"}
+        >
           <Icon name="prev" />
         </button>
-        <button type="button" className="play-btn" onClick={pb.toggle} aria-label={pb.playing ? "Pauza" : "Ijro etish"}>
+        <button
+          type="button"
+          className="play-btn"
+          onClick={() => {
+            haptic("medium");
+            pb.toggle();
+          }}
+          aria-label={pb.playing ? "Pauza" : "Ijro etish"}
+        >
           <Icon name={pb.playing ? "pause" : "play"} />
         </button>
-        <button type="button" className="icon-btn lg" onClick={pb.next} aria-label="Keyingi jumla" disabled={pb.kind === "audio-untimed"}>
+        <button
+          type="button"
+          className="icon-btn lg"
+          onClick={() => {
+            haptic("select");
+            pb.next();
+          }}
+          aria-label="Keyingi jumla"
+          disabled={pb.kind === "audio-untimed"}
+        >
           <Icon name="next" />
         </button>
         <button
           type="button"
           className={`chip-btn${pb.loop ? " is-on" : ""}`}
-          onClick={() => pb.setLoop(!pb.loop)}
+          onClick={() => {
+            haptic("select");
+            pb.setLoop(!pb.loop);
+          }}
           aria-pressed={pb.loop}
           aria-label="Joriy jumlani takrorlash"
           title="Jumlani takrorlash (L)"
@@ -535,7 +735,7 @@ function PlayerBar({ pb, progressPct, total, onRate }: { pb: Playback; progressP
   );
 }
 
-function ListenPanel({ pb, total, sectionTitle, onShowText }: { pb: Playback; total: number; sectionTitle?: string; onShowText: () => void }) {
+function ListenPanel({ pb, total, sectionTitle, onShowText, onExpand }: { pb: Playback; total: number; sectionTitle?: string; onShowText: () => void; onExpand: () => void }) {
   return (
     <div className="listen-panel">
       <div className="listen-art" aria-hidden>
@@ -557,6 +757,9 @@ function ListenPanel({ pb, total, sectionTitle, onShowText }: { pb: Playback; to
           <Icon name="slow" /> Sekinroq
         </button>
       </div>
+      <button type="button" className="btn btn-primary" onClick={onExpand}>
+        <Icon name="chevron-up" /> Katta pleyer
+      </button>
       <button type="button" className="link-btn" onClick={onShowText}>
         Matnni ko‘rsatish
       </button>
@@ -632,6 +835,7 @@ function ExplainPanel({ slug, sentenceId }: { slug: string; sentenceId: string }
   const [data, setData] = useState<ExplanationData | null>(explanationCache.get(key) ?? null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [reporting, setReporting] = useState(false);
   const needsLogin = enabled && !user;
 
   const load = useCallback(async () => {
@@ -704,8 +908,19 @@ function ExplainPanel({ slug, sentenceId }: { slug: string; sentenceId: string }
             </ul>
           )}
           {data.grammarUz && <p className="explain-grammar">📐 {data.grammarUz}</p>}
-          <p className="explain-foot">AI tomonidan tayyorlangan · xatolar bo‘lishi mumkin</p>
+          <p className="explain-foot">
+            AI tomonidan tayyorlangan · xatolar bo‘lishi mumkin ·{" "}
+            <button type="button" className="link-btn explain-report" onClick={() => setReporting(true)}>
+              <Icon name="flag" size={13} /> Xato yoki nomaqbul?
+            </button>
+          </p>
         </div>
+      )}
+      {reporting && data && (
+        <ReportSheet
+          target={{ type: "ai_explanation", id: key, slug, snapshot: JSON.stringify(data) }}
+          onClose={() => setReporting(false)}
+        />
       )}
     </div>
   );
@@ -824,12 +1039,14 @@ function SettingsPanel({
 }
 
 function FinishPanel({
+  offline,
   slug,
   hasPractice,
   takeaway,
   nextUp,
   onRestart,
 }: {
+  offline: boolean;
   slug: string;
   hasPractice: boolean;
   takeaway: { en: string; uz: string };
@@ -848,16 +1065,21 @@ function FinishPanel({
         </div>
       )}
       <div className="finish-actions">
-        {hasPractice && (
-          <Link href={`/s/${slug}/practice`} className="btn btn-primary">
-            <Icon name="target" /> Mashq qilish · ~3 daqiqa
-          </Link>
-        )}
+        {hasPractice &&
+          (offline ? (
+            <a href={`/offline?slug=${slug}&view=practice`} className="btn btn-primary">
+              <Icon name="target" /> Mashq qilish · ~3 daqiqa
+            </a>
+          ) : (
+            <Link href={`/s/${slug}/practice`} className="btn btn-primary">
+              <Icon name="target" /> Mashq qilish · ~3 daqiqa
+            </Link>
+          ))}
         <button type="button" className="btn btn-soft" onClick={onRestart}>
           <Icon name="replay" /> Yana bir bor
         </button>
       </div>
-      {nextUp.length > 0 && (
+      {nextUp.length > 0 && !offline && (
         <div className="finish-next">
           <span className="eyebrow">Keyingi dars</span>
           {nextUp.slice(0, 2).map((s) => (

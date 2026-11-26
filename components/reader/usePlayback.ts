@@ -110,9 +110,12 @@ export function usePlayback({ sentences, audioUrl, initialIndex = 0, initialRate
   }, [audioUrl]);
 
   // ─── audio element lifecycle ───
-  const tick = useCallback(() => {
+  // step(): follow the narration (active sentence, single-sentence stop, loop). Driven by
+  // requestAnimationFrame while visible, and by `timeupdate` when the screen is off / app is in the
+  // background (rAF is paused there) so loops and lock-screen controls keep working.
+  const step = useCallback((): boolean => {
     const a = audioRef.current;
-    if (!a) return;
+    if (!a) return false;
     const t = a.currentTime;
     setTime((prev) => (Math.abs(prev - t) >= 0.2 ? t : prev));
     const list = sentencesRef.current;
@@ -132,15 +135,19 @@ export function usePlayback({ sentences, audioUrl, initialIndex = 0, initialRate
           singleIndexRef.current = null;
           if (keep !== null) {
             if (keep !== indexRef.current) setIndex(keep);
-            return;
+            return false;
           }
         }
       }
       const i = loopRef.current ? loopIndexRef.current : singleIndexRef.current ?? sentenceAtTime(list, a.currentTime);
       if (i !== indexRef.current && i >= 0) setIndex(i);
     }
-    if (!a.paused) rafRef.current = requestAnimationFrame(tick);
+    return !a.paused;
   }, [timed, setIndex]);
+
+  const tick = useCallback(() => {
+    if (step()) rafRef.current = requestAnimationFrame(tick);
+  }, [step]);
 
   useEffect(() => {
     if (!audioUrl) return;
@@ -175,7 +182,11 @@ export function usePlayback({ sentences, audioUrl, initialIndex = 0, initialRate
       finish();
     };
     const onError = () => setError("Audio faylni yuklab bo‘lmadi. Internet aloqasini tekshiring.");
+    const onTimeUpdate = () => {
+      if (document.visibilityState === "hidden") step();
+    };
     a.addEventListener("loadedmetadata", onMeta);
+    a.addEventListener("timeupdate", onTimeUpdate);
     a.addEventListener("play", onPlay);
     a.addEventListener("pause", onPause);
     a.addEventListener("ended", onEnded);
@@ -187,11 +198,12 @@ export function usePlayback({ sentences, audioUrl, initialIndex = 0, initialRate
       a.removeEventListener("pause", onPause);
       a.removeEventListener("ended", onEnded);
       a.removeEventListener("error", onError);
+      a.removeEventListener("timeupdate", onTimeUpdate);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       a.src = "";
       audioRef.current = null;
     };
-  }, [audioUrl, timed, tick, finish]);
+  }, [audioUrl, timed, tick, step, finish]);
 
   // ─── speech engine ───
   const speak = useCallback(
@@ -363,6 +375,16 @@ export function usePlayback({ sentences, audioUrl, initialIndex = 0, initialRate
     [kind, timed, estimates, goTo, setIndex],
   );
 
+  /** Jump by seconds (lock-screen ±10 s buttons). */
+  const seekBy = useCallback(
+    (sec: number) => {
+      const a = audioRef.current;
+      if ((kind === "audio" || kind === "audio-untimed") && a && a.duration) seek((a.currentTime + sec) / a.duration);
+      else if (kind === "speech") goTo(indexRef.current + (sec > 0 ? 1 : -1));
+    },
+    [kind, seek, goTo],
+  );
+
   const totalDuration = kind === "speech" ? estimates.total / rate : duration;
   const currentTime = kind === "speech" ? time / rate : time;
   const canFollow = kind === "audio" || kind === "speech";
@@ -388,6 +410,7 @@ export function usePlayback({ sentences, audioUrl, initialIndex = 0, initialRate
     setRate,
     setLoop,
     seek,
+    seekBy,
     setIndex,
     clearError: () => setError(null),
     audioElement: audioRef,

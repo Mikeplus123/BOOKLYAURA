@@ -102,6 +102,25 @@ const paths: Record<string, React.ReactNode> = {
   ),
   star: <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" />,
   sync: <path d="M20 8A8 8 0 006.3 5.7L4 8M4 4v4h4M4 16a8 8 0 0013.7 2.3L20 16M20 20v-4h-4" />,
+  flag: <path d="M5 21V4M5 4h11l-2 4 2 4H5" />,
+  more: (
+    <>
+      <circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none" />
+    </>
+  ),
+  bell: <path d="M6 9a6 6 0 0112 0c0 6 2.5 8 2.5 8h-17S6 15 6 9zM10 20.5a2.2 2.2 0 004 0" />,
+  share: <path d="M12 3v13M7 8l5-5 5 5M5 13v6a2 2 0 002 2h10a2 2 0 002-2v-6" />,
+  shield: <path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z" />,
+  file: <path d="M6 3h8l5 5v13H6zM14 3v5h5M9 13h7M9 17h7" />,
+  "wifi-off": <path d="M3 3l18 18M8.5 16.5a5 5 0 017 0M5 12.5a10 10 0 015-2.6M14.5 10a10 10 0 014.5 2.5M2 8.8a15 15 0 014.4-2.6M11 5a15 15 0 0111 3.8M12 20h.01" />,
+  vibrate: <path d="M8 4h8v16H8zM4 8v8M20 8v8M2 10v4M22 10v4" />,
+  "eye-off": <path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0112 6c5 0 9 6 9 6a17 17 0 01-3 3.4M6.5 7.6C4.3 9.2 3 12 3 12s4 6 9 6a8.6 8.6 0 004.2-1.1M9.9 9.9a3 3 0 004.2 4.2" />,
+  "cloud-done": <path d="M7 18a5 5 0 01-.6-10A6 6 0 0118 9a4.5 4.5 0 01-.5 9zM9 13l2 2 4-4" />,
+  "chevron-up": <path d="M6 15l6-6 6 6" />,
+  moon: <path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z" />,
+  flame: <path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 01-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z" />,
   google: (
     <>
       <path d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 01-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z" fill="#4285F4" stroke="none" />

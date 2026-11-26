@@ -2,7 +2,9 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Icon } from "@/components/Icon";
+import { haptic } from "@/lib/native/haptics";
 import { savePractice, useBookly } from "@/lib/store";
+import { useSwipe } from "@/lib/useSwipe";
 import { track } from "@/lib/track";
 import type { Question, SummaryContent, VocabItem } from "@/lib/types";
 
@@ -21,6 +23,7 @@ export default function Practice({ slug, title, content }: { slug: string; title
   const finishQuestions = (finalAnswers: number[]) => {
     const s = finalAnswers.filter((a, i) => a === questions[i]?.answer).length;
     savePractice(slug, s, questions.length, finalAnswers);
+    haptic(s === questions.length ? "success" : "medium");
     track("practice_complete", slug, { score: s, total: questions.length });
     setStep(vocab.length ? "vocab" : "done");
   };
@@ -136,8 +139,23 @@ function QuestionCard({
   const [choice, setChoice] = useState<number | null>(null);
   const answered = choice !== null;
   const correct = choice === q.answer;
+  // After answering, swipe the card left to go to the next question.
+  const swipe = useSwipe({
+    axis: "x",
+    allow: ["left"],
+    disabled: !answered,
+    onSwipe: () => {
+      haptic("select");
+      onNext();
+    },
+  });
   return (
-    <section className="q-card" aria-labelledby={`q-${q.id}`}>
+    <section
+      className={`q-card${answered ? " is-answered" : ""}${swipe.dragging ? " is-dragging" : ""}`}
+      aria-labelledby={`q-${q.id}`}
+      {...swipe.handlers}
+      style={swipe.offset < 0 ? { transform: `translateX(${swipe.offset}px)`, opacity: Math.max(0.4, 1 + swipe.offset / 400) } : undefined}
+    >
       <p className="q-count">
         Savol {n} / {total}
       </p>
@@ -159,6 +177,7 @@ function QuestionCard({
               onClick={() => {
                 setChoice(i);
                 onAnswer(i);
+                haptic(i === q.answer ? "success" : "error");
               }}
             >
               <span className="option-letter">{String.fromCharCode(65 + i)}</span>
@@ -178,6 +197,9 @@ function QuestionCard({
           <button type="button" className="btn btn-primary" onClick={onNext} autoFocus>
             {n < total ? "Keyingi savol" : "Davom etish"} <Icon name="arrow" />
           </button>
+          <span className="swipe-hint" aria-hidden>
+            ← yoki chapga suring
+          </span>
         </div>
       )}
     </section>
@@ -189,12 +211,27 @@ function VocabReview({ vocab, showUz, onDone }: { vocab: VocabItem[]; showUz: bo
   const [flipped, setFlipped] = useState(false);
   const [known, setKnown] = useState(0);
   const item = vocab[i];
+  const [fly, setFly] = useState<"left" | "right" | null>(null);
   const advance = (knew: boolean) => {
+    haptic(knew ? "success" : "soft");
     if (knew) setKnown((k) => k + 1);
-    setFlipped(false);
-    if (i + 1 < vocab.length) setI(i + 1);
-    else onDone();
+    // Let the card fly off screen, then show the next one.
+    setFly(knew ? "right" : "left");
+    window.setTimeout(() => {
+      setFly(null);
+      setFlipped(false);
+      if (i + 1 < vocab.length) setI(i + 1);
+      else onDone();
+    }, 220);
   };
+  // Swipe right = "Bilaman", left = "Yana takrorlayman" (works on either side of the card).
+  const swipe = useSwipe({ axis: "x", threshold: 80, disabled: fly !== null, onSwipe: (dir) => advance(dir === "right") });
+  const dragStyle = fly
+    ? { transform: `translateX(${fly === "right" ? 120 : -120}%) rotate(${fly === "right" ? 18 : -18}deg)`, opacity: 0 }
+    : swipe.offset
+      ? { transform: `translateX(${swipe.offset}px) rotate(${swipe.offset / 18}deg)` }
+      : undefined;
+  const lean = swipe.offset > 30 ? "right" : swipe.offset < -30 ? "left" : null;
   const speak = () => {
     if (!("speechSynthesis" in window)) return;
     const u = new SpeechSynthesisUtterance(item.term);
@@ -207,7 +244,23 @@ function VocabReview({ vocab, showUz, onDone }: { vocab: VocabItem[]; showUz: bo
       <p className="q-count">
         So‘z {i + 1} / {vocab.length} · bilganlaringiz: {known}
       </p>
-      <button type="button" className={`flashcard${flipped ? " is-flipped" : ""}`} onClick={() => setFlipped((f) => !f)} aria-label={flipped ? "Kartani yopish" : "Kartani ochish"}>
+      <div className={`flash-stage${swipe.dragging ? " is-dragging" : ""}`} {...swipe.handlers}>
+      <button
+        type="button"
+        className={`flashcard${flipped ? " is-flipped" : ""}${lean ? ` lean-${lean}` : ""}`}
+        style={dragStyle}
+        onClick={() => {
+          haptic("tap");
+          setFlipped((f) => !f);
+        }}
+        aria-label={flipped ? "Kartani yopish" : "Kartani ochish"}
+      >
+        <span className="flash-stamp flash-stamp-yes" aria-hidden>
+          Bilaman ✓
+        </span>
+        <span className="flash-stamp flash-stamp-no" aria-hidden>
+          Yana ↺
+        </span>
         <span className="flash-front">
           <strong lang="en">{item.term}</strong>
           {item.definition && !showUz && <small lang="en">{item.definition}</small>}
@@ -219,6 +272,10 @@ function VocabReview({ vocab, showUz, onDone }: { vocab: VocabItem[]; showUz: bo
           {item.exampleUz && <small>{item.exampleUz}</small>}
         </span>
       </button>
+      </div>
+      <p className="swipe-hint center" aria-hidden>
+        ← Yana takrorlayman · Bilaman →
+      </p>
       <div className="vocab-actions">
         <button type="button" className="icon-btn" onClick={speak} aria-label="Talaffuz">
           <Icon name="volume" />

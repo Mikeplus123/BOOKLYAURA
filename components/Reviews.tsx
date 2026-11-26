@@ -4,9 +4,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { Icon } from "@/components/Icon";
+import { blockUser, unblockAll, useBlockedUsers } from "@/lib/blocked";
+import { haptic } from "@/lib/native/haptics";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
 import { track } from "@/lib/track";
 import type { RatingStats, Review } from "@/lib/types";
+import { ReportSheet } from "./ReportSheet";
+import { Sheet } from "./ui/Sheet";
 
 const PAGE = 10;
 const MAX_COMMENT = 1000;
@@ -82,6 +86,11 @@ export function Reviews({ slug, initialStats }: { slug: string; initialStats?: R
   const [comment, setComment] = useState("");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
+  const [menuFor, setMenuFor] = useState<Review | null>(null);
+  const [reporting, setReporting] = useState<Review | null>(null);
+  const blocked = useBlockedUsers();
+  const visible = useMemo(() => reviews.filter((r) => !blocked.includes(r.userId)), [reviews, blocked]);
+  const hiddenCount = reviews.length - visible.length;
 
   const loadStats = useCallback(async () => {
     if (!supabase) return;
@@ -166,6 +175,7 @@ export function Reviews({ slug, initialStats }: { slug: string; initialStats?: R
     setMine(saved);
     setEditing(false);
     setReviews((prev) => [saved, ...prev.filter((r) => r.id !== saved.id)]);
+    haptic("success");
     setMessage({ kind: "ok", text: mine ? "Sharhingiz yangilandi." : "Rahmat! Fikringiz qabul qilindi." });
     track("review_submit", slug, { rating, hasComment: Boolean(text), updated: Boolean(mine) });
     void loadStats();
@@ -261,7 +271,10 @@ export function Reviews({ slug, initialStats }: { slug: string; initialStats?: R
                     onMouseEnter={() => setHover(n)}
                     onFocus={() => setHover(n)}
                     onBlur={() => setHover(0)}
-                    onClick={() => setRating(n)}
+                    onClick={() => {
+                      haptic("select");
+                      setRating(n);
+                    }}
                   >
                     <Icon name="star" size={28} />
                   </button>
@@ -327,11 +340,11 @@ export function Reviews({ slug, initialStats }: { slug: string; initialStats?: R
             <p className="muted">
               <span className="dot-pulse" /> Sharhlar yuklanmoqda…
             </p>
-          ) : reviews.length === 0 ? (
+          ) : visible.length === 0 && hiddenCount === 0 ? (
             <p className="muted">Hali sharh yo‘q — birinchi bo‘lib fikr qoldiring!</p>
           ) : (
             <ul>
-              {reviews.map((r) => (
+              {visible.map((r) => (
                 <li key={r.id} className="review">
                   <div className="review-head">
                     {r.authorAvatar ? (
@@ -352,11 +365,32 @@ export function Reviews({ slug, initialStats }: { slug: string; initialStats?: R
                         {r.updatedAt && r.updatedAt.slice(0, 16) !== r.createdAt.slice(0, 16) && " · tahrirlangan"}
                       </span>
                     </div>
+                    {user?.id !== r.userId && (
+                      <button
+                        type="button"
+                        className="icon-btn sm review-more"
+                        aria-label="Sharh amallari"
+                        onClick={() => {
+                          haptic("tap");
+                          setMenuFor(r);
+                        }}
+                      >
+                        <Icon name="more" />
+                      </button>
+                    )}
                   </div>
                   {r.comment && <p className="review-text">{r.comment}</p>}
                 </li>
               ))}
             </ul>
+          )}
+          {hiddenCount > 0 && (
+            <p className="muted tiny">
+              {hiddenCount} ta sharh yashirilgan.{" "}
+              <button type="button" className="link-btn" onClick={unblockAll}>
+                Hammasini ko‘rsatish
+              </button>
+            </p>
           )}
           {hasMore && (
             <button type="button" className="btn btn-soft btn-sm" onClick={() => void loadPage(reviews.length)}>
@@ -364,6 +398,39 @@ export function Reviews({ slug, initialStats }: { slug: string; initialStats?: R
             </button>
           )}
         </div>
+      )}
+
+      {menuFor && (
+        <Sheet title="Sharh" onClose={() => setMenuFor(null)}>
+          <div className="action-list">
+            <button
+              type="button"
+              onClick={() => {
+                setReporting(menuFor);
+                setMenuFor(null);
+              }}
+            >
+              <Icon name="flag" /> Shikoyat qilish
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                blockUser(menuFor.userId);
+                haptic("medium");
+                setMenuFor(null);
+                setMessage({ kind: "ok", text: "Bu foydalanuvchining sharhlari endi sizga ko‘rsatilmaydi." });
+              }}
+            >
+              <Icon name="eye-off" /> {menuFor.authorName ?? "Foydalanuvchi"} sharhlarini yashirish
+            </button>
+          </div>
+        </Sheet>
+      )}
+      {reporting && (
+        <ReportSheet
+          target={{ type: "review", id: reporting.id, slug, snapshot: `${reporting.rating}★ ${reporting.authorName ?? ""}: ${reporting.comment ?? ""}` }}
+          onClose={() => setReporting(null)}
+        />
       )}
     </section>
   );

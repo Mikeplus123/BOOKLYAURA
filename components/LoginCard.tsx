@@ -7,7 +7,7 @@ import { Icon } from "./Icon";
 import { LogoMark } from "./Logo";
 
 export function LoginCard({ next, error }: { next: string; error: boolean }) {
-  const { enabled, user, loading, signInWithGoogle } = useAuth();
+  const { enabled, user, loading, signInWithGoogle, signInError } = useAuth();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
 
@@ -27,6 +27,12 @@ export function LoginCard({ next, error }: { next: string; error: boolean }) {
         </p>
       )}
 
+      {signInError && (
+        <p className="alert" role="alert">
+          {signInError}
+        </p>
+      )}
+
       {enabled ? (
         <button
           type="button"
@@ -35,6 +41,8 @@ export function LoginCard({ next, error }: { next: string; error: boolean }) {
           onClick={async () => {
             setBusy(true);
             await signInWithGoogle(next);
+            // Native sign-in resolves here when cancelled or failed (web sign-in navigates away).
+            setBusy(false);
           }}
         >
           <Icon name="google" size={22} /> {busy ? "Google’ga yo‘naltirilmoqda…" : "Google bilan davom etish"}
@@ -55,7 +63,7 @@ export function LoginCard({ next, error }: { next: string; error: boolean }) {
         </li>
       </ul>
       <p className="tiny muted">
-        Davom etish orqali siz faqat ism, email va profil rasmingizni Bookly bilan ulashasiz. Hech qachon parolingizni so‘ramaymiz.
+        Davom etish orqali siz <Link href="/terms">Foydalanish shartlari</Link> va <Link href="/privacy">Maxfiylik siyosati</Link>ga rozilik bildirasiz. Bookly bilan faqat ism, email va profil rasmingiz ulashiladi — parolingizni hech qachon so‘ramaymiz.
       </p>
       <Link href="/library" className="link-btn">
         Hisobsiz davom etish →

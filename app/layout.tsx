@@ -5,6 +5,8 @@ import "@fontsource-variable/fraunces";
 import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 import { PrefsEffect } from "@/components/PrefsEffect";
+import { NativeBridge } from "@/components/native/NativeBridge";
+import { OfflineBanner } from "@/components/native/OfflineBanner";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -27,6 +29,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  // Edge-to-edge in the Android app (required on Android 15+); content pads itself with env(safe-area-inset-*).
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#FBFAF6" },
     { media: "(prefers-color-scheme: dark)", color: "#0C1714" },
@@ -34,7 +38,7 @@ export const viewport: Viewport = {
 };
 
 // Applies saved theme + text size before first paint (prevents a flash of the wrong theme).
-const prefsScript = `(function(){try{var s=JSON.parse(localStorage.getItem('bookly:v1')||'{}').prefs||{};var t=s.theme||'system';if(t==='system'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.dataset.textSize=String(s.textSize==null?1:s.textSize)}catch(e){document.documentElement.dataset.theme='light'}})();`;
+const prefsScript = `(function(){try{if(navigator.userAgent.indexOf('BooklyApp')>-1)document.documentElement.classList.add('is-app')}catch(e){}try{var s=JSON.parse(localStorage.getItem('bookly:v1')||'{}').prefs||{};var t=s.theme||'system';if(t==='system'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.dataset.textSize=String(s.textSize==null?1:s.textSize)}catch(e){document.documentElement.dataset.theme='light'}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -45,6 +49,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <AuthProvider>
           <PrefsEffect />
+          <NativeBridge />
+          <OfflineBanner />
           {children}
         </AuthProvider>
       </body>

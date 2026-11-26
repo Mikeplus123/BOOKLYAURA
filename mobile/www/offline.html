@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Bookly — internet yo‘q</title>
+  <style>
+    :root{--bg:#FBFAF6;--ink:#14211D;--muted:#5B6B65;--brand:#0B5D4B;--card:#fff;--line:#E6E2D6}
+    @media (prefers-color-scheme: dark){:root{--bg:#0C1714;--ink:#EEF3F0;--muted:#9FB2AA;--brand:#3FB894;--card:#13221E;--line:#22352F}}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+    body{display:grid;place-items:center;min-height:100vh;padding:calc(24px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom))}
+    main{max-width:380px;text-align:center}
+    .art{width:96px;height:96px;margin:0 auto 20px;border-radius:28px;background:var(--brand);display:grid;place-items:center;box-shadow:0 12px 32px rgba(11,93,75,.25)}
+    .art svg{width:48px;height:48px;stroke:#fff}
+    h1{font-size:1.4rem;margin:0 0 8px}
+    p{color:var(--muted);line-height:1.5;margin:0 0 24px}
+    button{appearance:none;border:0;border-radius:999px;background:var(--brand);color:#fff;font:600 1rem/1 inherit;padding:16px 28px;min-width:200px}
+    button:active{transform:scale(.97)}
+    .tip{margin-top:28px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--card);font-size:.9rem;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M8.5 16.5a5 5 0 017 0M5 12.5a10 10 0 015-2.6M14.5 10a10 10 0 014.5 2.5M2 8.8a15 15 0 014.4-2.6M11 5a15 15 0 0111 3.8M12 20h.01"/></svg>
+    </div>
+    <h1>Internet aloqasi yo‘q</h1>
+    <p>Bookly’ni ochish uchun internetga ulaning. Ulanish tiklanishi bilan avtomatik davom etamiz.</p>
+    <button type="button" id="retry">Qayta urinish</button>
+    <div class="tip">💡 Darslarni oldindan <b>yuklab oling</b> — keyin ularni internetsiz ham tinglashingiz mumkin.</div>
+  </main>
+  <script>
+    // Go back to the app's start page (same origin as this error page in the Capacitor WebView).
+    function retry(){ location.replace(location.origin + "/"); }
+    document.getElementById("retry").addEventListener("click", retry);
+    window.addEventListener("online", retry);
+  </script>
+</body>
+</html>

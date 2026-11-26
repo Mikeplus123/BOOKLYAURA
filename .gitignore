@@ -12,3 +12,4 @@ npm-debug.log*
 .vercel
 .wrangler
 .open-next
+store/raw

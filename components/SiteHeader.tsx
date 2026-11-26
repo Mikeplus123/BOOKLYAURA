@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { Icon } from "./Icon";
 import { Logo } from "./Logo";
+import { isNativeApp } from "@/lib/platform";
+import { haptic } from "@/lib/native/haptics";
 
 const NAV = [
   { href: "/", label: "Bosh sahifa", icon: "home" },
@@ -41,7 +43,13 @@ export function SiteHeader() {
       </header>
       <nav className="bottom-nav" aria-label="Pastki menyu">
         {NAV.map((n) => (
-          <Link key={n.href} href={n.href} className={isActive(n.href) ? "is-active" : ""} aria-current={isActive(n.href) ? "page" : undefined}>
+          <Link
+            key={n.href}
+            href={n.href}
+            className={isActive(n.href) ? "is-active" : ""}
+            aria-current={isActive(n.href) ? "page" : undefined}
+            onClick={() => !isActive(n.href) && haptic("select")}
+          >
             <Icon name={n.icon} size={22} />
             <span>{n.label === "Mening darslarim" ? "Darslarim" : n.label}</span>
           </Link>
@@ -100,12 +108,12 @@ function AccountButton() {
           <Link href="/premium" role="menuitem" onClick={() => setOpen(false)}>
             <Icon name="star" /> {isPremium ? "Premium a’zolik" : "Premium"}
           </Link>
-          {isAdmin && (
+          {isAdmin && !isNativeApp() && (
             <Link href="/admin" role="menuitem" onClick={() => setOpen(false)}>
               <Icon name="settings" /> Kontent boshqaruvi
             </Link>
           )}
-          <button type="button" role="menuitem" onClick={signOut}>
+          <button type="button" role="menuitem" onClick={() => signOut()}>
             <Icon name="logout" /> Chiqish
           </button>
         </div>
