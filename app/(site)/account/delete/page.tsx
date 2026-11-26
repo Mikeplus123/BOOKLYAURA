@@ -23,7 +23,7 @@ export default function DeleteAccountPage() {
         <h2>Qanday o‘chiriladi</h2>
         <ol>
           <li>Bookly ilovasi yoki saytida Google orqali hisobingizga kiring.</li>
-          <li>Shu sahifada (yoki ilovada: Darslarim → Sozlamalar) “Hisobni o‘chirish” tugmasini bosing.</li>
+          <li>Shu sahifada (yoki ilovada: Hisob bo‘limi) “Hisobni o‘chirish” tugmasini bosing.</li>
           <li>Tasdiqlang — hisob darhol o‘chiriladi.</li>
         </ol>
         <DeleteAccount />
@@ -64,7 +64,7 @@ export default function DeleteAccountPage() {
       <section className="legal-section" lang="en">
         <h2>Delete your Bookly account (English)</h2>
         <p>
-          Sign in with Google on this page or in the app (My lessons → Settings) and tap “Hisobni o‘chirish” (Delete account). Your profile, progress, saved lessons, practice results, reviews, analytics events, AI usage and waitlist entry are deleted immediately and removed from backups within 30 days. Deleting the account does not cancel a Google Play subscription — cancel it in Google Play first.
+          Sign in with Google on this page or in the app (Account tab) and tap “Hisobni o‘chirish” (Delete account). Your profile, progress, saved lessons, practice results, reviews, analytics events, AI usage and waitlist entry are deleted immediately and removed from backups within 30 days. Deleting the account does not cancel a Google Play subscription — cancel it in Google Play first.
           {SUPPORT_EMAIL && <> If you can’t sign in, email {SUPPORT_EMAIL} from the address linked to your account and we will delete it within 7 days.</>}
         </p>
         <p>

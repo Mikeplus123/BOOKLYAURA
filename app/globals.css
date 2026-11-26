@@ -5220,3 +5220,71 @@ html.sheet-open {
     display: none;
   }
 }
+
+/* ─── account tab ─── */
+@media (max-width: 760px) {
+  .bottom-nav {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+.account-panel {
+  max-width: 640px;
+}
+.account-card {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.account-card h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.account-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.account-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.account-rows {
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.account-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  font-weight: 600;
+}
+.account-row:last-child {
+  border-bottom: 0;
+}
+.account-row > span:first-of-type {
+  flex: 1;
+}
+.account-row > .icon:first-child {
+  color: var(--brand);
+}
+.account-row-cta {
+  color: var(--brand);
+  font-size: 0.85rem;
+}
+.account-signin {
+  display: grid;
+  gap: 12px;
+}
+.account-signin p {
+  margin: 0;
+}
+.account-panel .settings {
+  margin-top: 28px;
+}

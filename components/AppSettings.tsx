@@ -56,7 +56,7 @@ export function AppSettings() {
   return (
     <section className="settings" id="settings" aria-labelledby="settings-title">
       <h2 className="h3" id="settings-title">
-        <Icon name="settings" /> Sozlamalar
+        Sozlamalar
       </h2>
 
       <div className="settings-group">

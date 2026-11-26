@@ -4,7 +4,6 @@ import { useMemo } from "react";
 import { getState, useBookly, useSyncStatus } from "@/lib/store";
 import { currentStreak } from "@/lib/streak";
 import type { SummaryMeta } from "@/lib/types";
-import { AppSettings } from "./AppSettings";
 import { useAuth } from "./AuthProvider";
 import { Icon } from "./Icon";
 import { SummaryCard } from "./SummaryCard";
@@ -143,8 +142,6 @@ export function MyLibrary({ catalog }: { catalog: SummaryMeta[] }) {
           )}
         </div>
       )}
-
-      <AppSettings />
     </div>
   );
 }

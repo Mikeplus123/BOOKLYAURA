@@ -98,7 +98,7 @@ export const privacyUz = (): LegalSection[] => [
     h: "8. Sizning huquqlaringiz",
     ul: [
       "Ma’lumotlaringiz nusxasini so‘rash, ularni tuzatish yoki o‘chirish;",
-      "Hisobni istalgan vaqtda ilovadan o‘chirish: Mening darslarim → Sozlamalar → Hisobni o‘chirish (yoki /account/delete sahifasi);",
+      "Hisobni istalgan vaqtda ilovadan o‘chirish: Hisob → Hisobni o‘chirish (yoki /account/delete sahifasi);",
       "Bildirishnomalarni o‘chirish va statistikaga rozilikni qaytarib olish.",
     ],
     after: [`So‘rov uchun bog‘laning: ${contactUz()}. 30 kun ichida javob beramiz.`],
@@ -186,7 +186,7 @@ export const privacyEn = (): LegalSection[] => [
     h: "8. Your rights",
     ul: [
       "Request a copy of your data, correct it or delete it;",
-      "Delete your account at any time in the app: My lessons → Settings → Delete account (or the /account/delete page);",
+      "Delete your account at any time in the app: Account (Hisob) → Delete account (or the /account/delete page);",
       "Turn off notifications and withdraw consent to analytics.",
     ],
     after: [`Contact us: ${contactEn()}. We reply within 30 days.`],

@@ -6,7 +6,7 @@ import { useAuth } from "./AuthProvider";
 import { Icon } from "./Icon";
 import { LogoMark } from "./Logo";
 
-export function LoginCard({ next, error }: { next: string; error: boolean }) {
+export function LoginCard({ next, error, aiEnabled = false }: { next: string; error: boolean; aiEnabled?: boolean }) {
   const { enabled, user, loading, signInWithGoogle, signInError } = useAuth();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
@@ -58,9 +58,11 @@ export function LoginCard({ next, error }: { next: string; error: boolean }) {
         <li>
           <Icon name="bookmark" size={18} /> Saqlangan darslar va natijalar
         </li>
-        <li>
-          <Icon name="sparkle" size={18} /> AI yordamchi: jumlalarni o‘zbekcha tushuntirish
-        </li>
+        {aiEnabled && (
+          <li>
+            <Icon name="sparkle" size={18} /> AI yordamchi: jumlalarni o‘zbekcha tushuntirish
+          </li>
+        )}
       </ul>
       <p className="tiny muted">
         Davom etish orqali siz <Link href="/terms">Foydalanish shartlari</Link> va <Link href="/privacy">Maxfiylik siyosati</Link>ga rozilik bildirasiz. Bookly bilan faqat ism, email va profil rasmingiz ulashiladi — parolingizni hech qachon so‘ramaymiz.

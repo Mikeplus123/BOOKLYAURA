@@ -3,6 +3,7 @@ import { Icon } from "@/components/Icon";
 import { SummaryCard } from "@/components/SummaryCard";
 import { BilingualDemo } from "@/components/landing/BilingualDemo";
 import { WaitlistForm } from "@/components/WaitlistForm";
+import { isAIConfigured as AI } from "@/lib/ai";
 import { getCatalog } from "@/lib/content";
 import { TOPICS } from "@/lib/types";
 
@@ -26,10 +27,10 @@ const WAYS = [
 ];
 
 const FAQ = [
-  { q: "Ro‘yxatdan o‘tishim shartmi?", a: "Yo‘q. Bepul namunani darhol boshlashingiz mumkin. Hisob (Google orqali) faqat progressingizni turli qurilmalarda saqlash va AI yordamchidan foydalanish uchun kerak." },
+  { q: "Ro‘yxatdan o‘tishim shartmi?", a: `Yo‘q. Bepul namunani darhol boshlashingiz mumkin. Hisob (Google orqali) faqat progressingizni turli qurilmalarda saqlash${AI ? " va AI yordamchidan foydalanish" : ""} uchun kerak.` },
   { q: "Qisqacha mazmun kitobning o‘rnini bosadimi?", a: "Yo‘q. Bookly kitobning asosiy g‘oyalarini tanishtiradi va tushuntiradi. G‘oya yoqsa, to‘liq kitobni o‘qishni tavsiya qilamiz." },
   { q: "Ingliz tilim yaxshi emas. Menga mos keladimi?", a: "Ha. Har bir darsda daraja ko‘rsatilgan, tezlikni pasaytirish, jumlani qayta tinglash va o‘zbekcha tarjimani ko‘rish mumkin. Qiyin so‘zlarni bosib izohini ko‘rasiz." },
-  { q: "Premium nimani beradi?", a: "Kengroq kutubxona, barcha mashqlar va ko‘proq AI tushuntirishlar. Narx va shartlar to‘lovdan oldin aniq ko‘rsatiladi; obunani istalgan vaqtda bekor qilish mumkin." },
+  { q: "Premium nimani beradi?", a: `Kengroq kutubxona, barcha mashqlar${AI ? " va ko‘proq AI tushuntirishlar" : " va yangi darslarga birinchilardan kirish"}. Narx va shartlar to‘lovdan oldin aniq ko‘rsatiladi; obunani istalgan vaqtda bekor qilish mumkin.` },
   { q: "Bookly hozir qaysi bosqichda?", a: "Bookly hozir beta (sinov) bosqichida: darslar bepul, fikr-mulohazalaringiz asosida yaxshilanmoqda. Rasmiy ishga tushish haqida xabar olish uchun kutish ro‘yxatiga yoziling." },
   { q: "Rus tili ham bo‘ladimi?", a: "Talab va kontent imkoniyatlariga qarab keyinroq qo‘shiladi. Hozir asosiy e’tibor o‘zbek tiliga qaratilgan." },
 ];
@@ -169,7 +170,13 @@ export default async function HomePage() {
           </div>
           <div className="help-strip">
             <p>
-              <strong>Qiyin joy bormi?</strong> Jumlani bosing: qayta tinglang, sekinlashtiring, tarjimasini oching yoki <span className="ai-chip"><Icon name="sparkle" size={14} /> AI</span> dan o‘zbekcha tushuntirish so‘rang. Belgilangan so‘zni bossangiz — ma’nosi va misol: <em>habit → odat</em>.
+              <strong>Qiyin joy bormi?</strong> Jumlani bosing: qayta tinglang, sekinlashtiring{AI ? (
+                <>
+                  , tarjimasini oching yoki <span className="ai-chip"><Icon name="sparkle" size={14} /> AI</span> dan o‘zbekcha tushuntirish so‘rang.
+                </>
+              ) : (
+                " yoki tarjimasini oching."
+              )} Belgilangan so‘zni bossangiz — ma’nosi va misol: <em>habit → odat</em>.
             </p>
           </div>
         </div>
@@ -229,7 +236,7 @@ export default async function HomePage() {
             <div>
               <p className="eyebrow eyebrow-gold">Premium</p>
               <h2 className="section-title">Avval sinab ko‘ring. Yoqsa — davom eting.</h2>
-              <p>Bir nechta to‘liq dars doim bepul. Premium kengroq kutubxona, barcha mashqlar va ko‘proq AI tushuntirishlarni ochadi. Yashirin to‘lovlar yo‘q: narx, yangilanish va bekor qilish shartlari oldindan ko‘rsatiladi.</p>
+              <p>Bir nechta to‘liq dars doim bepul. Premium kengroq kutubxona, barcha mashqlar{AI ? " va ko‘proq AI tushuntirishlarni" : "ni"} ochadi. Yashirin to‘lovlar yo‘q: narx, yangilanish va bekor qilish shartlari oldindan ko‘rsatiladi.</p>
             </div>
             <Link href="/premium" className="btn btn-gold btn-lg">
               Premium haqida <Icon name="arrow" />
