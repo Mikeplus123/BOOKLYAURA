@@ -14,6 +14,7 @@ const NAV = [
   { href: "/library", label: "Kutubxona", icon: "library" },
   { href: "/me", label: "Mening darslarim", icon: "bookmark" },
   { href: "/premium", label: "Premium", icon: "star" },
+  { href: "/account", label: "Hisob", icon: "user" },
 ] as const;
 
 export function SiteHeader() {
@@ -107,6 +108,9 @@ function AccountButton() {
           </Link>
           <Link href="/premium" role="menuitem" onClick={() => setOpen(false)}>
             <Icon name="star" /> {isPremium ? "Premium a’zolik" : "Premium"}
+          </Link>
+          <Link href="/account" role="menuitem" onClick={() => setOpen(false)}>
+            <Icon name="settings" /> Hisob va sozlamalar
           </Link>
           {isAdmin && !isNativeApp() && (
             <Link href="/admin" role="menuitem" onClick={() => setOpen(false)}>

@@ -32,18 +32,19 @@ Run `supabase/migrations/0004_reports_and_app.sql` in the Supabase SQL editor (a
 
 ### 1.3 Environment variables (website hosting, e.g. Vercel)
 
-| Variable | Value |
-| --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | `https://your-domain` |
-| `NEXT_PUBLIC_SUPPORT_EMAIL` | Public support email (shown in Privacy Policy and Play listing) |
-| `NEXT_PUBLIC_SUPPORT_TELEGRAM` | `https://t.me/your_support` |
-| `NEXT_PUBLIC_GOOGLE_WEB_CLIENT_ID` | Google Cloud **Web** OAuth client ID (the one Supabase uses) |
-| `ANDROID_SHA256_CERT_FINGERPRINTS` | Play app-signing SHA-256 (+ upload key), comma-separated |
-| `NEXT_PUBLIC_REVENUECAT_ANDROID_KEY` | RevenueCat public Android SDK key (`goog_…`) |
-| `NEXT_PUBLIC_REVENUECAT_ENTITLEMENT` | `premium` |
-| `REVENUECAT_SECRET_KEY` | RevenueCat secret API key (`sk_…`), server only |
-| `REVENUECAT_WEBHOOK_AUTH` | Long random string; same value in the RevenueCat webhook |
-| `NEXT_PUBLIC_ANDROID_LIVE` | `true` once the app is public (shows "Get the app" on the web) |
+| Variable | Value | Needed for launch? |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | `https://your-domain` | **Yes** |
+| `NEXT_PUBLIC_SUPPORT_EMAIL` | Public support email (shown in Privacy Policy and Play listing) | **Yes** |
+| `NEXT_PUBLIC_SUPPORT_TELEGRAM` | `https://t.me/your_support` | Recommended |
+| `NEXT_PUBLIC_GOOGLE_WEB_CLIENT_ID` | Google Cloud **Web** OAuth client ID (the one Supabase uses) | **Yes** (sign-in in the app) |
+| `ANDROID_SHA256_CERT_FINGERPRINTS` | Play app-signing SHA-256 (+ upload key), comma-separated | After creating the app in Play Console |
+| `ANTHROPIC_API_KEY` | Claude API key — turns on "Tushuntir" (AI explanations) | Later (hidden until set) |
+| `NEXT_PUBLIC_REVENUECAT_ANDROID_KEY` | RevenueCat public Android SDK key (`goog_…`) | Later (Premium) |
+| `NEXT_PUBLIC_REVENUECAT_ENTITLEMENT` | `premium` | Later |
+| `REVENUECAT_SECRET_KEY` | RevenueCat secret API key (`sk_…`), server only | Later |
+| `REVENUECAT_WEBHOOK_AUTH` | Long random string; same value in the RevenueCat webhook | Later |
+| `NEXT_PUBLIC_ANDROID_LIVE` | `true` once the app is public (shows "Get the app" on the web) | After launch |
 
 ### 1.4 Google Sign-In for the app
 1. Google Cloud Console → APIs & Services → Credentials → **Create credentials → OAuth client ID → Android**.
@@ -106,6 +107,6 @@ The signed bundle is at `android/app/build/outputs/bundle/release/app-release.aa
 - [ ] Practice: flashcards swipe right/left with vibration; quiz answers vibrate
 - [ ] Back button closes sheets/player first, then navigates back, then minimises on home
 - [ ] Report a review, hide a user, report an AI explanation; reports appear in /admin (desktop)
-- [ ] Settings → Delete account works; Privacy/Terms open
+- [ ] Account tab → Delete account works; Privacy/Terms open
 - [ ] Premium: subscribe with a licence-test account, restore purchases, "Manage subscription" opens Play
 - [ ] Links to Telegram/email open outside the app; a shared `https://your-domain/s/...` link opens in the app

@@ -5,19 +5,23 @@ import { PremiumActions } from "@/components/PremiumActions";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { PREMIUM_PRICE_UZS, SUPPORT_TELEGRAM, formatUzs } from "@/lib/pricing";
 import { isAppRequest } from "@/lib/platform-server";
+import { isAIConfigured } from "@/lib/ai";
 
 export const metadata: Metadata = {
   title: "Premium",
   description: "Bookly Premium: kengroq kutubxona, barcha mashqlar va ko‘proq AI tushuntirishlar. Shaffof narx va istalgan vaqtda bekor qilish.",
 };
 
-const FREE = ["Bir nechta to‘liq bepul dars", "O‘qish, tinglash va ikki tilli rejim", "Mashqlar (bepul darslarda)", "Kuniga 15 ta AI tushuntirish", "Progressni qurilmalararo saqlash"];
-const PREMIUM = ["Butun kutubxona — har oy yangi darslar", "Barcha darslarda mashq va lug‘at", "Kuniga 100 ta AI tushuntirish", "Yangi darslarga birinchilardan kirish", "Mavzuli o‘quv to‘plamlari (tez orada)"];
+const ALL_FREE = ["Bir nechta to‘liq bepul dars", "O‘qish, tinglash va ikki tilli rejim", "Mashqlar (bepul darslarda)", "Kuniga 15 ta AI tushuntirish", "Progressni qurilmalararo saqlash"];
+const ALL_PREMIUM = ["Butun kutubxona — har oy yangi darslar", "Barcha darslarda mashq va lug‘at", "Kuniga 100 ta AI tushuntirish", "Yangi darslarga birinchilardan kirish", "Mavzuli o‘quv to‘plamlari (tez orada)"];
 
 export default async function PremiumPage() {
   // In the Android app, Premium is sold through Google Play Billing only (Play payments policy):
   // no local-payment prices or wording, and the price comes from the Play Store.
   const inApp = await isAppRequest();
+  // Only promise AI explanations once they are switched on.
+  const FREE = ALL_FREE.filter((f) => isAIConfigured || !f.includes("AI"));
+  const PREMIUM = ALL_PREMIUM.filter((f) => isAIConfigured || !f.includes("AI"));
   return (
     <main id="main" className="container page">
       <header className="page-head center">

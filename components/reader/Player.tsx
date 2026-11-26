@@ -59,9 +59,11 @@ interface Props {
   nextUp: SummaryMeta[];
   /** Rendered from a downloaded copy (offline reader): hide online-only actions. */
   offline?: boolean;
+  /** AI explanations are switched on (ANTHROPIC_API_KEY set). Hidden otherwise. */
+  aiEnabled?: boolean;
 }
 
-export default function Player({ summary, initialFormat, nextUp, offline = false }: Props) {
+export default function Player({ summary, initialFormat, nextUp, offline = false, aiEnabled = false }: Props) {
   const { content, slug } = summary;
   const sentences = useMemo(() => flattenSentences(content.sections), [content.sections]);
   const total = sentences.length;
@@ -496,6 +498,7 @@ export default function Player({ summary, initialFormat, nextUp, offline = false
                           index={fs.index}
                           mode={mode}
                           pb={pb}
+                          aiEnabled={aiEnabled && !offline}
                           revealed={revealed.has(fs.index)}
                           onReveal={() => toggleReveal(fs.index)}
                           onClose={() => setSelected(null)}
@@ -773,6 +776,7 @@ function SentenceActions({
   index,
   mode,
   pb,
+  aiEnabled,
   revealed,
   onReveal,
   onClose,
@@ -782,6 +786,7 @@ function SentenceActions({
   index: number;
   mode: ReadingMode;
   pb: Playback;
+  aiEnabled: boolean;
   revealed: boolean;
   onReveal: () => void;
   onClose: () => void;
@@ -809,14 +814,16 @@ function SentenceActions({
             <Icon name="translate" /> {revealed ? "Tarjimani yashirish" : "Tarjima"}
           </button>
         )}
-        <button type="button" className={`action action-ai${aiOpen ? " is-on" : ""}`} onClick={() => setAiOpen((v) => !v)}>
-          <Icon name="sparkle" /> Tushuntir
-        </button>
+        {aiEnabled && (
+          <button type="button" className={`action action-ai${aiOpen ? " is-on" : ""}`} onClick={() => setAiOpen((v) => !v)}>
+            <Icon name="sparkle" /> Tushuntir
+          </button>
+        )}
         <button type="button" className="action action-close" onClick={onClose} aria-label="Yopish">
           <Icon name="close" />
         </button>
       </div>
-      {aiOpen && <ExplainPanel slug={slug} sentenceId={sentenceId} />}
+      {aiOpen && aiEnabled && <ExplainPanel slug={slug} sentenceId={sentenceId} />}
     </div>
   );
 }

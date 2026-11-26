@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import Player from "@/components/reader/PlayerClient";
+import { isAIConfigured } from "@/lib/ai";
 import { getNextSuggestions, getSummary } from "@/lib/content";
 import type { StudyFormat } from "@/lib/types";
 
@@ -21,5 +22,5 @@ export default async function LearnPage({ params, searchParams }: Props) {
   if (!summary.content) redirect(`/s/${slug}`);
   const nextUp = await getNextSuggestions(summary);
   const initialFormat = FORMATS.includes(format as StudyFormat) ? (format as StudyFormat) : undefined;
-  return <Player key={slug} summary={{ ...summary, content: summary.content }} initialFormat={initialFormat} nextUp={nextUp} />;
+  return <Player key={slug} summary={{ ...summary, content: summary.content }} initialFormat={initialFormat} nextUp={nextUp} aiEnabled={isAIConfigured} />;
 }

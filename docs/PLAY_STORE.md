@@ -35,13 +35,12 @@ Bookly — mashhur nonfiction kitoblarning eng muhim g‘oyalarini 5 daqiqada o�
 📚 Qisqa darslar — har bir dars asosiy g‘oyalar, hayotiy misol va bitta amaliy qadam.
 🎧 Tinglang — diktor ovozi, matn jumlama-jumla belgilanadi. Ekran o‘chiq bo‘lsa ham ijro davom etadi.
 🇺🇿🇬🇧 Ikki tilda — inglizcha matn va o‘zbekcha (yoki ruscha) tarjima yonma-yon.
-✨ AI yordamchi — tushunmagan jumlani bosing, o‘zbekcha tushuntirish oling.
 🃏 Mashqlar — savollar va suriladigan so‘z kartalari bilan yangi so‘zlarni yodlang.
 📥 Oflayn — darslarni yuklab oling va internetsiz tinglang.
 🔔 Eslatmalar — har kuni tanlagan vaqtingizda 5 daqiqalik dars.
 🔥 Seriya — har kungi o‘rganish odatingizni kuzating.
 
-Bepul darslar doim bepul. Premium butun kutubxonani, barcha mashqlarni va ko‘proq AI tushuntirishlarni ochadi.
+Bepul darslar doim bepul.
 
 Bookly darslari kitob g‘oyalarini tanishtiradi va tushuntiradi — ular to‘liq kitobning o‘rnini bosmaydi.
 Supernova’s jamoasi loyihasi.
@@ -53,15 +52,18 @@ Learn the most important ideas of popular nonfiction books in 5 minutes — made
 📚 Short lessons — key ideas, a real-life example and one practical step.
 🎧 Listen — narrated audio with sentence-by-sentence highlighting. Keeps playing with the screen off.
 🇺🇿🇬🇧 Bilingual — English text side by side with Uzbek (or Russian) translation.
-✨ AI helper — tap any sentence for a simple explanation in Uzbek.
 🃏 Practice — quiz questions and swipeable vocabulary cards.
 📥 Offline — download lessons and listen without internet.
 🔔 Reminders — a daily 5-minute lesson at the time you choose.
 🔥 Streaks — track your daily learning habit.
 
-Free lessons stay free. Premium unlocks the full library, all exercises and more AI explanations.
+Free lessons stay free.
 Bookly summaries introduce and explain a book’s ideas; they don’t replace the full book.
 ```
+> When AI explanations (`ANTHROPIC_API_KEY`) and Premium payments are switched on, add them back to the
+> description: "✨ AI yordamchi — tushunmagan jumlani bosing, o‘zbekcha tushuntirish oling." / "Premium butun
+> kutubxonani ochadi." Never list a feature the app doesn't have yet (Play "misleading claims" policy).
+
 **Graphics:** `store/icon-512.png`, `store/feature-graphic.png` (1024×500), phone screenshots
 `store/screenshot-*.png` (1080×2160). Upload 4–8 phone screenshots; tablet screenshots are optional.
 **Category:** Education. **Tags:** Books, Language learning, Education.
@@ -82,7 +84,7 @@ Bookly summaries introduce and explain a book’s ideas; they don’t replace th
 | Data safety | See section 4 |
 | Government app | No |
 | Financial features | None |
-| Account deletion | In-app: My lessons → Settings → Delete account. Web URL: `https://your-domain/account/delete` |
+| Account deletion | In-app: Account tab (Hisob) → Delete account. Web URL: `https://your-domain/account/delete` |
 | Foreground service (if asked) | `mediaPlayback` — "Plays the lesson narration the user started, with lock-screen controls, while the screen is off." Provide a short screen recording. |
 | Photo/video, exact alarm, location permissions | Not used |
 
